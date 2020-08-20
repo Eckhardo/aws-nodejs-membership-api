@@ -16,12 +16,15 @@
   "author": "Eckhard Kirschning",
   "license": "ISC",
   "dependencies": {
-
     "moment": "^2.27.0",
     "underscore": "^1.10.2",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.737.0"
+    "aws-sdk": "^2.737.0",
+    "serverless": "^1.79.0",
+    "serverless-dynamodb-local": "^0.2.39",
+    "serverless-http": "^2.5.0",
+    "serverless-offline": "^6.5.0"
   }
-},
+}
