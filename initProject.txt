@@ -1,0 +1,15 @@
+1.) von DOS
+serverless create --template aws-nodejs --name aws-nodejs-membership-api -p aws-nodejs-membership-api
+2.) Create new Project in WebStorm name:aws-nodejs-membership-api
+-> You want to import existing prject ? YES
+3.) npm init -y (package.son)
+4.)npm install --save moment underscore uuid aws-sdk
+5.) edit package.json: add aws-sdk to devDependencies
+
+
+6.) git init
+7.) git checkout -b master  && git checkout -b dev
+8.) create new repo in GitHub "aws-nodejs-membership-api"
+9.) git remote add origin https://github.com/Eckhardo/aws-nodejs-membership-api.git
+
+

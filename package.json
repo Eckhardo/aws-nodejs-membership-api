@@ -1,0 +1,27 @@
+{
+  "name": "aws-nodejs-membership-api",
+  "version": "1.0.0",
+  "description": "An AWS Serverless Backend Application comprising of different AWS Services like Lambda, API Gateway, Cognito, DynamoDB",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "AWS",
+    "Serverless",
+    "Lambda",
+    "API Gateway",
+    "DynamoDB"
+  ],
+  "author": "Eckhard Kirschning",
+  "license": "ISC",
+  "dependencies": {
+
+    "moment": "^2.27.0",
+    "underscore": "^1.10.2",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.737.0"
+  }
+},
