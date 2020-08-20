@@ -1,6 +1,50 @@
-#
-
 service: aws-nodejs-membership-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-central-1
+  stage: prod
+  memorySize: 128
+  timeout: 5
+  endpointType: regional
+  environment:
+    IS_OFFLINE: ${self:custom.isOffline}
+    CONFIG_USER_TABLE: ${self:custom.tableNames.users}
+    CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "*"
+custom:
+  tableNames:
+    users: 'aige-user'
+  endpoints:
+    dynamodb-url: 'http://localhost:8000'
+  isOffline: true
+  dynamodb:
+    start:
+      migrate: true
+      seed: true
+    stages:
+      - dev
+    seed:
+      domain:
+        sources:
+          - table: aige-user
+            rawsources: [./testdata/seeddata/aige-user.json]
+
+functions:
+  - ${file(resources/lambda/user/lambdas.yml)}
+resources:
+  - ${file(resources/dynamodb/user/dynamodb.yml)}
+
 
 package:
   exclude:
@@ -13,22 +57,3 @@ package:
 plugins:
   - serverless-dynamodb-local
   - serverless-offline # should be last in list
-
-provider:
-  name: aws
-  runtime: nodejs12.x
-  region: eu-central-1
-  stage: prod
-  memorySize: 128
-  timeout: 5
-  endpointType: regional
-
-functions:
-  hello:
-    handler: handler.hello
-    description: Say Hello
-    events:
-      - http:
-          path: hello
-          method: get
-          cors: true

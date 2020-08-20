@@ -1,0 +1,278 @@
+[
+	{
+		"PK": {
+			"S": "user_Eckhardo"
+		},
+		"SK": {
+			"S": "profile"
+		},
+		"user_name": {
+			"S": "Eckhardo"
+		},
+		"first_name": {
+			"S": "Eckhard"
+		},
+		"last_name": {
+			"S": "Kirschning"
+		},
+		"password": {
+			"S": "abc"
+		},
+		"email": {
+			"S": "eckhard.kirschning@freenet.de"
+		},
+		"zip": {
+			"N": "20255"
+		},
+		"city": {
+			"S": "Hamburg"
+		},
+		"address": {
+			"S": "Lutterothstrasse 89"
+		},
+		"phone": {
+			"S": "+4916097023201"
+		},
+		"mobil": {
+			"S": "+4916097023201"
+		},
+		"admission_date": {
+			"N": "2011"
+		},
+		"is_admin": {
+			"BOOL": true
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "user_Maikeli"
+		},
+		"SK": {
+			"S": "profile"
+		},
+		"user_name": {
+			"S": "Maikeli"
+		},
+		"first_name": {
+			"S": "Maike"
+		},
+		"last_name": {
+			"S": "Littkemann"
+		},
+		"password": {
+			"S": "cde"
+		},
+		"email": {
+			"S": "maikeli@freenet.de"
+		},
+		"zip": {
+			"N": "20257"
+		},
+		"city": {
+			"S": "Hamburg"
+		},
+		"address": {
+			"S": "Luruper Wwg 4"
+		},
+		"phone": {
+			"S": "+4917123456"
+		},
+		"mobil": {
+			"S": "+4916097023201"
+		},
+		"admission_date": {
+			"N": "2012"
+		},
+		"is_admin": {
+			"BOOL": false
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "user_Eckhardo"
+		},
+		"SK": {
+			"S": "event_Arbeitsdienst-1"
+		},
+		"year": {
+			"N": "2020"
+		},
+		"type": {
+			"S": "Arbeitsdienst"
+		},
+		"name": {
+			"S": "Arbeitsdienst-1"
+		},
+		"date": {
+			"S": "04-04-2020"
+		},
+		"start": {
+			"S": "07:00"
+		},
+		"end": {
+			"S": "12:00"
+		},
+		"meeting_point": {
+			"S": "07:00"
+		},
+		"comments": {
+			"SS": [
+				"Arbeitschuhe mitbringen",
+				"Anschl. Biertrinken"
+			]
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "user_Eckhardo"
+		},
+		"SK": {
+			"S": "event_Arbeitsdienst-2"
+		},
+		"year": {
+			"N": "2020"
+		},
+		"type": {
+			"S": "Arbeitsdienst"
+		},
+		"name": {
+			"S": "Arbeitsdienst-2"
+		},
+		"date": {
+			"S": "11-04-2020"
+		},
+		"start": {
+			"S": "08:00"
+		},
+		"end": {
+			"S": "12:00"
+		},
+		"meeting_point": {
+			"S": "Elsensee"
+		},
+		"comments": {
+			"SS": [
+				"Muetze aufsetzen",
+				"Anschl. Grillen"
+			]
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "membership_2020"
+		},
+		"SK": {
+			"S": "meta"
+		},
+		"year": {
+			"N": "2020"
+		},
+		"name": {
+			"S": "Saison 2020"
+		},
+		"comments": {
+			"SS": [
+				"Vorletzte Saison",
+				"Beitrag erhoeht"
+			]
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "membership_2021"
+		},
+		"SK": {
+			"S": "meta"
+		},
+		"year": {
+			"N": "2021"
+		},
+		"name": {
+			"S": "Saison 2021"
+		},
+		"comments": {
+			"SS": [
+				"Letzte Saison",
+				"Beitrag reduziert"
+			]
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "membership_2020"
+		},
+		"SK": {
+			"S": "membershipMember_Eckhardo"
+		},
+		"GSI1": {
+			"S": "user_Eckhardo"
+		},
+		"role": {
+			"S": "Schriftfuehrer"
+		},
+		"fees_paid": {
+			"BOOL": true
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "membership_2020"
+		},
+		"SK": {
+			"S": "membershipMember_Maikeli"
+		},
+		"GSI1": {
+			"S": "user_Maikeli"
+		},
+		"role": {
+			"S": "Kassenwart"
+		},
+		"fees_paid": {
+			"BOOL": true
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "membership_2021"
+		},
+		"SK": {
+			"S": "membershipMember_Eckhardo"
+		},
+		"GSI1": {
+			"S": "user_Eckhardo"
+		},
+		"role": {
+			"S": "Gewaesserwart"
+		},
+		"fees_paid": {
+			"BOOL": true
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	}
+]

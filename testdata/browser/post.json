@@ -1,0 +1,15 @@
+{
+  "zip": "20255",
+  "address": "Lutterothstrasse 89",
+  "is_active": "true",
+  "city": "Hamburg",
+  "user_name": "Karlo",
+  "last_name": "Kirschning",
+  "mobil": "+4916097023201",
+  "is_admin": "true",
+  "password": "abc",
+  "phone": "+4916097023201",
+  "admission_date": "2011",
+  "first_name": "Karl",
+  "email": "karl.kirschning@freenet.de"
+}

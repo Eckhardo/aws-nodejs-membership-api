@@ -1,0 +1,52 @@
+hello:
+  handler: handler.hello
+  description: Say Hello
+  events:
+    - http:
+        path: hello
+        method: get
+        cors: true
+get-user:
+  handler: api/user/get.getOne
+  description: GET user by hashkey
+  events:
+    - http:
+        path: user/{username}
+        method: get
+        cors: true
+
+get-users:
+  handler: api/user/get.getAll
+  description: GET all Users
+  events:
+    - http:
+        path: user
+        method: get
+        cors: true
+
+create-user:
+  handler: api/user/create.handler
+  description: POST user
+  events:
+    - http:
+        path: user
+        method: post
+        cors: true
+
+update-user:
+  handler: api/user/update.handler
+  description: PUT user
+  events:
+    - http:
+        path: user
+        method: put
+        cors: true
+
+delete-user:
+  handler: api/user/delete.handler
+  description: DELETE /user
+  events:
+    - http:
+        path: user/{username}
+        method: delete
+        cors: true
