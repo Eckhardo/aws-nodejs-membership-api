@@ -1,0 +1,30 @@
+{
+	"body": {
+		"user_name":"Arsch"
+		,
+		"first_name":"Nachbararsach"
+		,
+		"last_name": "Deraal"
+		,
+		"password": "abc"
+		,
+		"email":"karlotta@freenet.de"
+		,
+		"zip":"20255"
+		,
+		"city":"Hamburg"
+		,
+		"address":"Lutterothstrasse 88"
+		,
+		"phone": "+4916097023201"
+		,
+		"mobil": "+4916097023201"
+		,
+		"admission_date": "2011"
+		,
+		"is_admin": false
+		,
+		"is_active": true
+		
+	}
+}

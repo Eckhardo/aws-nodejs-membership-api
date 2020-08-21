@@ -1,0 +1,16 @@
+aws dynamodb list-tables --endpoint-url http://localhost:8000
+aws dynamodb scan --table-name aige-user --endpoint-url http://localhost:8000
+
+##### query events for user ######
+aws dynamodb query --table-name aige-user  --key-condition-expression ":pk = PK AND begins_with(SK , :sk)" --expression-attribute-values file://testdata/clidata/queryEvent.json --endpoint-url http://localhost:8000
+
+##### query memberships and members for 2020 ######
+aws dynamodb query --table-name aige-user  --key-condition-expression ":pk = PK" --expression-attribute-values file://testdata/cliData/queryMembershipByPK.json --endpoint-url http://localhost:8000
+
+##### query all memberships for User ######
+aws dynamodb query --table-name aige-user  --index-name GSI1-SK-Index  --key-condition-expression ":gsi1 = GSI1  "  --expression-attribute-values file://testdata/clidata/queryMembershipByGSI.json --endpoint-url http://localhost:8000
+
+
+
+
+

@@ -11,18 +11,12 @@ const HASK_KEY_PREFIX='user_';
  *
  * Route: POST /user/
  */
-const validate= (username) => {
 
-    if ( username && typeof username !== 'string' ) {
-        throw Error("key value 'username' not set or not of type string");
-    }
-
-}
 
 exports.handler = async (event) => {
     const item = JSON.parse(event.body);
     const username=item.user_name;
-    validate(username);
+    util.validate(username);
     item.PK = HASK_KEY_PREFIX + username;
     item.SK = SORT_KEY_VALUE;
 
@@ -30,7 +24,7 @@ exports.handler = async (event) => {
         TableName: TABLE_NAME,
         Item: item
     };
-    console.log("getOne.... started", item);
+    console.log("create.... item: ", item);
 
     try {
         // promised is resolved by .promise(), otherwise then((data) => ).catch((error) => )

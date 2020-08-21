@@ -18,7 +18,13 @@ const getResponseHeaders = () => {
     }
 }
 
+const validate= (username) => {
 
+    if ( username && typeof username !== 'string' ) {
+        throw Error("key value 'username' not set or not of type string");
+    }
+
+}
 const makeErrorResponse = (err) => {
     console.log("Error: ", err);
     return {
@@ -69,5 +75,6 @@ module.exports = {
     getResponseHeaders,
     makeErrorResponse,
     makeSingleResponse,
-    makeAllResponse
+    makeAllResponse,
+    validate
 }

@@ -1,0 +1,5 @@
+sls invoke local -f get-users
+sls invoke local  -f create-user  --path testdata/invokePostUser.json
+sls invoke local  -f get-user  --path testdata/invokeGetUser.json
+sls invoke local  -f delete-user  --path testdata/invokeDeleteUser.json
+
