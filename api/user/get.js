@@ -1,17 +1,21 @@
 'use strict';
 
 const util = require('../util.js');
-const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
+
+const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const SORT_KEY_VALUE = 'profile';
-const HASK_KEY_PREFIX = 'user_';
+const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_USER;
+const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
 
 /**
  * GET all users by
  * Route: GET /user/
  */
 module.exports.getAll = async (event) => {
+   console.log("getOne.... pk_prefix:", HASH_KEY_PREFIX);
+    console.log("getOne.... sortkey::", SORT_KEY_VALUE);
+
     let params = {
         TableName: TABLE_NAME,
         FilterExpression: "#sk = :sk_value",
@@ -42,8 +46,11 @@ module.exports.getAll = async (event) => {
 module.exports.getOne = async (event) => {
 
     const username = decodeURIComponent(event.pathParameters.username);
-    const pk = HASK_KEY_PREFIX + username;
-    console.log("getOne.... started", pk);
+    const pk = HASH_KEY_PREFIX + username;
+    console.log("getOne.... username:", username);
+    console.log("getOne.... pk_prefix:", HASH_KEY_PREFIX);
+    console.log("getOne.... sortkey::", SORT_KEY_VALUE);
+    console.log("getOne.... pk:", pk);
     let params = {
         TableName: TABLE_NAME,
         KeyConditionExpression: ':pk = PK and :sk = SK',

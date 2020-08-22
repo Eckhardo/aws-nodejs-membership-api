@@ -1,0 +1,44 @@
+get-membershipMember:
+  handler: api/membershipMember/get.getOne
+  description: GET membershipMember by membership year and username
+  events:
+    - http:
+        path: membershipMember/{year}/{username}
+        method: get
+        cors: true
+
+get-membershipMembers:
+  handler: api/membershipMember/get.getAll
+  description: GET all members for membership year
+  events:
+    - http:
+        path: membershipMember/{year}
+        method: get
+        cors: true
+
+create-membershipMember:
+  handler: api/membershipMember/create.handler
+  description: POST membershipMember
+  events:
+    - http:
+        path: membershipMember
+        method: post
+        cors: true
+
+update-membershipMember:
+  handler: api/membershipMember/update.handler
+  description: PUT membershipMember
+  events:
+    - http:
+        path: membershipMember
+        method: put
+        cors: true
+
+delete-membershipMember:
+  handler: api/membershipMember/delete.handler
+  description: DELETE /membershipMember
+  events:
+    - http:
+        path: membershipMember/{year}/{username}
+        method: delete
+        cors: true

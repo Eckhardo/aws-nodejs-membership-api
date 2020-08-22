@@ -2,31 +2,30 @@ const util = require('../util.js');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const SORT_KEY_VALUE = 'profile';
-const HASK_KEY_PREFIX = 'user_';
-const delimiter = ' ';
+const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_USER;
+const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
 
 
 function getUpdateExpression() {
     let expression = [];
-    expression.push([' SET first_name = fname', ' last_name= lname']);
-    expression.push([' city = city', ' zip = zip', ' address = address']);
-    expression.push([' email = email', ' phone = phone', ' mobil = mobil']);
-    expression.push([' admission_date = date'])
+    expression.push([' SET first_name = :fname', ' last_name= :lname']);
+    expression.push([' city = :city', ' zip = :zip', ' address = :address']);
+    expression.push([' email = :email', ' phone = :phone', ' mobil = :mobil']);
+    expression.push([' admission_date = :admission_date'])
     return expression.toString();
 }
 
 function getUpdateExpressionValues(user) {
     let expressionValues = {
-        fname: user.first_name,
-        lname: user.last_name,
-        city: user.city,
-        zip: user.zip,
-        address: user.address,
-        email: user.email,
-        phone: user.phone,
-        mobil: user.mobil,
-        date: user.admission_date
+        ":fname": user.first_name,
+        ":lname": user.last_name,
+        ":city": user.city,
+        ":zip": user.zip,
+        ":address": user.address,
+        ":email": user.email,
+        ":phone": user.phone,
+        ":mobil": user.mobil,
+        ":admission_date": user.admission_date
 
     };
     return expressionValues;
@@ -35,12 +34,12 @@ function getUpdateExpressionValues(user) {
 
 exports.handler = async (event) => {
     try {
-        const user = JSON.parse(event.body);
-        const username = user.user_name;
-        util.validate(username);
-        const pk = HASK_KEY_PREFIX + username;
+        console.log("update  user.... started");
+        const item = JSON.parse(event.body);
+        util.validateItem(item, 'user_name');
+        const pk = HASH_KEY_PREFIX + item.user_name;
         const updateExpression = getUpdateExpression();
-        const updateExpressionValues = getUpdateExpressionValues(user);
+        const updateExpressionValues = getUpdateExpressionValues(item);
         console.log('updateExpression: ', updateExpression);
         console.log('updateExpressionValues: ', updateExpressionValues);
         const params = {

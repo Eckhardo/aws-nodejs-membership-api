@@ -1,0 +1,4 @@
+{
+ ":pk": {"S": "membership_2020"},
+  ":sk":  {"S": "membershipMember"}
+ }

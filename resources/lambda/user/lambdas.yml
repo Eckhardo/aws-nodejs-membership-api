@@ -1,11 +1,3 @@
-hello:
-  handler: handler.hello
-  description: Say Hello
-  events:
-    - http:
-        path: hello
-        method: get
-        cors: true
 get-user:
   handler: api/user/get.getOne
   description: GET user by hashkey

@@ -100,7 +100,7 @@
 		"SK": {
 			"S": "event_Arbeitsdienst-1"
 		},
-		"year": {
+		"membership_year": {
 			"N": "2020"
 		},
 		"type": {
@@ -138,7 +138,7 @@
 		"SK": {
 			"S": "event_Arbeitsdienst-2"
 		},
-		"year": {
+		"membership_year": {
 			"N": "2020"
 		},
 		"type": {
@@ -176,10 +176,10 @@
 		"SK": {
 			"S": "meta"
 		},
-		"year": {
+		"membership_year": {
 			"N": "2020"
 		},
-		"name": {
+		"membership_name": {
 			"S": "Saison 2020"
 		},
 		"comments": {
@@ -199,10 +199,10 @@
 		"SK": {
 			"S": "meta"
 		},
-		"year": {
+		"membership_year": {
 			"N": "2021"
 		},
-		"name": {
+		"membership_name": {
 			"S": "Saison 2021"
 		},
 		"comments": {

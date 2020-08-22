@@ -2,22 +2,21 @@ const util = require('../util.js');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_USER;
-const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
-
+const SORT_KEY_VALUE= process.env.SORT_KEY_MEMBERSHIP_VALUE;
+const HASH_KEY_PREFIX=process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 
 /**
- * Create new user
+ * Create new membership
  *
- * Route: POST /user/
+ * Route: POST /membership/
  */
 
 
 exports.handler = async (event) => {
-    console.log("create user.... started");
     const item = JSON.parse(event.body);
-    util.validateItem(item, 'user_name'),
-    item.PK = HASH_KEY_PREFIX + item.user_name;
+    const year=item.membership_year;
+    util.validate(year);
+    item.PK = HASH_KEY_PREFIX + year;
     item.SK = SORT_KEY_VALUE;
 
     const params = {

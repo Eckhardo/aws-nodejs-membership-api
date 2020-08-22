@@ -4,7 +4,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: eu-central-1
-  stage: prod
+  stage: ${opt:stage, 'dev'}
   memorySize: 128
   timeout: 5
   endpointType: regional
@@ -12,6 +12,11 @@ provider:
     IS_OFFLINE: ${self:custom.isOffline}
     CONFIG_USER_TABLE: ${self:custom.tableNames.users}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
+    HASH_KEY_PREFIX_USER: user_
+    SORT_KEY_USER_VALUE: profile
+    HASH_KEY_PREFIX_MEMBERSHIP: membership_
+    SORT_KEY_MEMBERSHIP_VALUE: meta
+    SORT_KEY_PREFIX_MEMBERSHIP_MEMBER: membershipMember_
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -42,6 +47,8 @@ custom:
 
 functions:
   - ${file(resources/lambda/user/lambdas.yml)}
+  - ${file(resources/lambda/membershipMember/lambdas.yml)}
+  - ${file(resources/lambda/membership/lambdas.yml)}
 resources:
   - ${file(resources/dynamodb/user/dynamodb.yml)}
 

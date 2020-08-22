@@ -18,12 +18,20 @@ const getResponseHeaders = () => {
     }
 }
 
-const validate= (username) => {
-
-    if ( username && typeof username !== 'string' ) {
-        throw Error("key value 'username' not set or not of type string");
+const validate= (key) => {
+    if (! key || _.isEmpty(key)) {
+        throw Error("key value not set or empty");
     }
+}
 
+
+const validateItem= (item, field) => {
+    const has = Object.prototype.hasOwnProperty;
+    const hasField = has.call(item, field);
+    if (!hasField) {
+        throw Error(`Field ${field} is not defined in input object`);
+
+    }
 }
 const makeErrorResponse = (err) => {
     console.log("Error: ", err);
@@ -76,5 +84,6 @@ module.exports = {
     makeErrorResponse,
     makeSingleResponse,
     makeAllResponse,
-    validate
+    validate,
+    validateItem
 }

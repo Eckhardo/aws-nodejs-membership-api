@@ -1,0 +1,5 @@
+## deploy to cloud formation with verbose information ######
+sls deploy -v
+
+## remove the cloud formation stack ######
+sls remove -v
