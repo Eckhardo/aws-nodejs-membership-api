@@ -5,12 +5,13 @@ provider:
   runtime: nodejs12.x
   region: eu-central-1
   stage: ${opt:stage, 'dev'}
-  memorySize: 128
+  memorySize: 256
   timeout: 5
   endpointType: regional
   environment:
     IS_OFFLINE: ${self:custom.isOffline}
-    CONFIG_USER_TABLE: ${self:custom.tableNames.membership}
+      CONFIG_USER_TABLE_OFFLINE: ${self:custom.tableNames.membership}${self:provider.stage}
+    CONFIG_USER_TABLE: ${self:custom.UserTable.name}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
     HASH_KEY_PREFIX_USER: user_
     SORT_KEY_USER_VALUE: profile
@@ -18,18 +19,13 @@ provider:
     SORT_KEY_MEMBERSHIP_VALUE: meta
     SORT_KEY_PREFIX_MEMBERSHIP_MEMBER: membershipMember_
   iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "*"
+    - ${file(resources/iam/iamMembershipTable.yml):MembershipTableIAM}
 custom:
-  tableNames:
-    membership: 'aige-membership'
+  UserTable:
+    arn: !GetAtt UserTable.Arn
+    name: !Ref UserTable
+  offlineTableName:
+    membership: aige-membership
   endpoints:
     dynamodb-url: 'http://localhost:8000'
   isOffline: false
@@ -42,7 +38,7 @@ custom:
     seed:
       domain:
         sources:
-          - table:  ${self:custom.tableNames.membership}
+          - table:  ${self:custom.offlineTableName.membership}-${self:provider.stage}
             rawsources: [./testdata/seeddata/aige-user.json]
 
 functions:
@@ -50,7 +46,8 @@ functions:
   - ${file(resources/lambda/membershipMember/lambdas.yml)}
   - ${file(resources/lambda/membership/lambdas.yml)}
 resources:
-  - ${file(resources/dynamodb/user/dynamodb.yml)}
+  Resources:
+    UserTable: ${file(resources/dynamodb/user/dynamodb.yml):UserTable}
 
 
 package:
@@ -63,4 +60,5 @@ package:
 
 plugins:
   - serverless-dynamodb-local
+  - serverless-pseudo-parameters
   - serverless-offline # should be last in list

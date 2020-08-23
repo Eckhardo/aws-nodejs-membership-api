@@ -1,9 +1,8 @@
-Resources:
+
   UserTable:
     Type: AWS::DynamoDB::Table
-    DeletionPolicy: Retain
     Properties:
-      TableName: ${self:custom.tableNames.membership}
+      TableName: aige-membership-${self:provider.stage}
       AttributeDefinitions:
         - AttributeName: PK
           AttributeType: S

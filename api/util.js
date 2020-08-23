@@ -60,6 +60,13 @@ const makeSingleResponse = (data) => {
         };
     }
 }
+const make201Response = (item) => {
+    return {
+        statusCode: 201,
+        headers: getResponseHeaders(),
+        body: JSON.stringify(item)
+    };
+}
 
 const  makeAllResponse =(data) =>{
     if (!_.isEmpty(data.Items)) {
@@ -83,6 +90,7 @@ module.exports = {
     getResponseHeaders,
     makeErrorResponse,
     makeSingleResponse,
+    make201Response,
     makeAllResponse,
     validate,
     validateItem

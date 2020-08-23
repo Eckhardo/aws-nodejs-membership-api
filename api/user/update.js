@@ -51,7 +51,7 @@ exports.handler = async (event) => {
             ReturnValues: "UPDATED_NEW"
 
         };
-        let data = dynamoDb.update(params).promise();
+        let data = await  dynamoDb.update(params).promise();
         return util.makeSingleResponse(data);
     } catch (err) {
         return util.makeErrorResponse(err);

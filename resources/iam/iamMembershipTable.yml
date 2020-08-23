@@ -1,0 +1,12 @@
+MembershipTableIAM:
+  Effect: Allow
+  Action:
+    - dynamodb:Query
+    - dynamodb:Scan
+    - dynamodb:GetItem
+    - dynamodb:PutItem
+    - dynamodb:UpdateItem
+    - dynamodb:DeleteItem
+  Resource:
+    - ${self:custom.UserTable.arn}
+

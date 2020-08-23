@@ -13,9 +13,6 @@ module.exports.connectDynamoDB =  tableName => {
             region: 'localhost',
             endpoint: DYNAMODB_ENDPOINT,
         });
-    } else {
-        console.log("remote ", tableName);
-        dynamoDb = new AWS.DynamoDB.DocumentClient();
     }
 
     return dynamoDb;

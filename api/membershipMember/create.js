@@ -38,7 +38,7 @@ exports.handler = async (event) => {
 
         let data = await dynamoDb.put(params).promise();
         console.log("create.d... item: ", data);
-        return util.makeSingleResponse(data);
+        return util.make201Response(item);
     } catch (err) {
         util.makeErrorResponse(err);
     }
