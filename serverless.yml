@@ -10,7 +10,7 @@ provider:
   endpointType: regional
   environment:
     IS_OFFLINE: ${self:custom.isOffline}
-    CONFIG_USER_TABLE: ${self:custom.tableNames.users}
+    CONFIG_USER_TABLE: ${self:custom.tableNames.membership}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
     HASH_KEY_PREFIX_USER: user_
     SORT_KEY_USER_VALUE: profile
@@ -29,10 +29,10 @@ provider:
       Resource: "*"
 custom:
   tableNames:
-    users: 'aige-user'
+    membership: 'aige-membership'
   endpoints:
     dynamodb-url: 'http://localhost:8000'
-  isOffline: true
+  isOffline: false
   dynamodb:
     start:
       migrate: true
@@ -42,7 +42,7 @@ custom:
     seed:
       domain:
         sources:
-          - table: aige-user
+          - table:  ${self:custom.tableNames.membership}
             rawsources: [./testdata/seeddata/aige-user.json]
 
 functions:

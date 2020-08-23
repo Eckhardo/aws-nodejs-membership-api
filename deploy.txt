@@ -3,3 +3,6 @@ sls deploy -v
 
 ## remove the cloud formation stack ######
 sls remove -v
+
+
+sls dynamodb seed --online --region eu-central-1 -s dev

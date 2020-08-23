@@ -3,7 +3,7 @@ Resources:
     Type: AWS::DynamoDB::Table
     DeletionPolicy: Retain
     Properties:
-      TableName: ${self:custom.tableNames.users}
+      TableName: ${self:custom.tableNames.membership}
       AttributeDefinitions:
         - AttributeName: PK
           AttributeType: S
