@@ -44,7 +44,20 @@ const makeErrorResponse = (err) => {
         })
     };
 }
-
+const makeSingleResponseAttributes = (attributes) => {
+    if (!_.isEmpty(attributes)) {
+        return {
+            statusCode: 200,
+            headers: getResponseHeaders(),
+            body: JSON.stringify(attributes)
+        };
+    } else {
+        return {
+            statusCode: 404,
+            headers: getResponseHeaders()
+        };
+    }
+}
 const makeSingleResponse = (data) => {
     if (!_.isEmpty(data.Items)) {
         console.log("result not empty ");
@@ -90,6 +103,7 @@ module.exports = {
     getResponseHeaders,
     makeErrorResponse,
     makeSingleResponse,
+    makeSingleResponseAttributes,
     make201Response,
     makeAllResponse,
     validate,

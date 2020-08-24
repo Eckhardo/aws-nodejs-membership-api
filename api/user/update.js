@@ -4,7 +4,7 @@ const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_USER;
 const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
-
+const get = require('./get')
 
 function getUpdateExpression() {
     let expression = [];
@@ -37,10 +37,21 @@ exports.handler = async (event) => {
         console.log("update  user.... started");
         const item = JSON.parse(event.body);
         util.validateItem(item, 'user_name');
+        let user =await  get.getUser(item.user_name);
+
+        console.log("item user", item.user_name);
+        console.log("user user", user.user_name);
+         if(! user && (! user.user_name === item.user_name)){
+             return {
+                 statusCode: 500,
+                 headers: getResponseHeaders(),
+                 body: JSON.stringify(` user with username ${item.user_name} is unknown !`)
+             };
+         }
         const pk = HASH_KEY_PREFIX + item.user_name;
         const updateExpression = getUpdateExpression();
         const updateExpressionValues = getUpdateExpressionValues(item);
-        console.log('updateExpression: ', updateExpression);
+
         console.log('updateExpressionValues: ', updateExpressionValues);
         const params = {
 
@@ -52,7 +63,7 @@ exports.handler = async (event) => {
 
         };
         let data = await  dynamoDb.update(params).promise();
-        return util.makeSingleResponse(data);
+         return util.makeSingleResponseAttributes(data.Attributes);
     } catch (err) {
         return util.makeErrorResponse(err);
     }

@@ -10,7 +10,6 @@ provider:
   endpointType: regional
   environment:
     IS_OFFLINE: ${self:custom.isOffline}
-      CONFIG_USER_TABLE_OFFLINE: ${self:custom.tableNames.membership}${self:provider.stage}
     CONFIG_USER_TABLE: ${self:custom.UserTable.name}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
     HASH_KEY_PREFIX_USER: user_
@@ -25,7 +24,7 @@ custom:
     arn: !GetAtt UserTable.Arn
     name: !Ref UserTable
   offlineTableName:
-    membership: aige-membership
+    membership: 'aige-membership'
   endpoints:
     dynamodb-url: 'http://localhost:8000'
   isOffline: false
@@ -53,10 +52,12 @@ resources:
 package:
   exclude:
     - .dynamodb/**
+    - .serverless/**
     - node_modules/**
+    - testdata/**
+    - testqueries/**
   include:
     - node_modules/underscore/**
-    - node_modules/uuid/**
 
 plugins:
   - serverless-dynamodb-local
