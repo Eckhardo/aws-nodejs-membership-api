@@ -2,8 +2,8 @@ const util = require('../util.js');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const SORT_KEY_VALUE= process.env.SORT_KEY_MEMBERSHIP_VALUE;
-const HASH_KEY_PREFIX=process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
+const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 
 module.exports.getAll = async () => {
     console.log("getAll.... started");
@@ -27,11 +27,11 @@ module.exports.getAll = async () => {
 }
 module.exports.getOne = async (event) => {
     console.log("getOne.... started");
-    const year =  decodeURIComponent(event.pathParameters.year);
+    const year = decodeURIComponent(event.pathParameters.year);
     util.validate(year);
-    const pk = HASH_KEY_PREFIX +year;
+    const pk = HASH_KEY_PREFIX + year;
 
-    const params= {
+    const params = {
         TableName: TABLE_NAME,
         KeyConditionExpression: ':pk = PK and :sk = SK',
         ExpressionAttributeValues: {':pk': pk, ':sk': SORT_KEY_VALUE},
@@ -39,12 +39,11 @@ module.exports.getOne = async (event) => {
 
     }
     try {
-        const result= await dynamoDb.query(params).promise();
+        const result = await dynamoDb.query(params).promise();
         if (result) {
             return util.makeSingleResponse(result);
         }
-    }
-    catch (e) {
+    } catch (e) {
         util.makeErrorResponse(e);
     }
 

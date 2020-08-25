@@ -13,8 +13,8 @@ const get = async (event) => {
         TableName: TABLE_NAME,
         IndexName: 'statusEndingDate-Index',
         KeyConditionExpression: '#status =:status AND endingDate >= :now',
-        ExpressionAttributeValues: {':status' : 'OPEN', ':now' : now.toISOString()},
-        ExpressionAttributeNames: {'#status' : 'status'}
+        ExpressionAttributeValues: {':status': 'OPEN', ':now': now.toISOString()},
+        ExpressionAttributeNames: {'#status': 'status'}
     }
 
     const result = await dynamoDb.query(params).promise();

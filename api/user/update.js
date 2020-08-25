@@ -37,17 +37,17 @@ exports.handler = async (event) => {
         console.log("update  user.... started");
         const item = JSON.parse(event.body);
         util.validateItem(item, 'user_name');
-        let user =await  get.getUser(item.user_name);
+        let user = await get.getUser(item.user_name);
 
         console.log("item user", item.user_name);
         console.log("user user", user.user_name);
-         if(! user && (! user.user_name === item.user_name)){
-             return {
-                 statusCode: 500,
-                 headers: getResponseHeaders(),
-                 body: JSON.stringify(` user with username ${item.user_name} is unknown !`)
-             };
-         }
+        if (!user && (!user.user_name === item.user_name)) {
+            return {
+                statusCode: 500,
+                headers: getResponseHeaders(),
+                body: JSON.stringify(` user with username ${item.user_name} is unknown !`)
+            };
+        }
         const pk = HASH_KEY_PREFIX + item.user_name;
         const updateExpression = getUpdateExpression();
         const updateExpressionValues = getUpdateExpressionValues(item);
@@ -56,14 +56,14 @@ exports.handler = async (event) => {
         const params = {
 
             TableName: TABLE_NAME,
-            Key: {PK: pk, SK : SORT_KEY_VALUE},
+            Key: {PK: pk, SK: SORT_KEY_VALUE},
             UpdateExpression: updateExpression,
             ExpressionAttributeValues: updateExpressionValues,
             ReturnValues: "UPDATED_NEW"
 
         };
-        let data = await  dynamoDb.update(params).promise();
-         return util.makeSingleResponseAttributes(data.Attributes);
+        let data = await dynamoDb.update(params).promise();
+        return util.makeSingleResponseAttributes(data.Attributes);
     } catch (err) {
         return util.makeErrorResponse(err);
     }

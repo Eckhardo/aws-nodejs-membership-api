@@ -17,7 +17,7 @@ exports.handler = async (event) => {
     console.log("create user.... started");
     const item = JSON.parse(event.body);
     util.validateItem(item, 'user_name'),
-    item.PK = HASH_KEY_PREFIX + item.user_name;
+        item.PK = HASH_KEY_PREFIX + item.user_name;
     item.SK = SORT_KEY_VALUE;
 
     const params = {

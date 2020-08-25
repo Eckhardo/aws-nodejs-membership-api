@@ -18,14 +18,14 @@ const getResponseHeaders = () => {
     }
 }
 
-const validate= (key) => {
-    if (! key || _.isEmpty(key)) {
+const validate = (key) => {
+    if (!key || _.isEmpty(key)) {
         throw Error("key value not set or empty");
     }
 }
 
 
-const validateItem= (item, field) => {
+const validateItem = (item, field) => {
     const has = Object.prototype.hasOwnProperty;
     const hasField = has.call(item, field);
     if (!hasField) {
@@ -81,7 +81,7 @@ const make201Response = (item) => {
     };
 }
 
-const  makeAllResponse =(data) =>{
+const makeAllResponse = (data) => {
     if (!_.isEmpty(data.Items)) {
         console.log("result not empty ");
         return {

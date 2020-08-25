@@ -4,7 +4,7 @@ const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_MEMBER;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
-const GSI_PREFIX= process.env.HASH_KEY_PREFIX_USER;
+const GSI_PREFIX = process.env.HASH_KEY_PREFIX_USER;
 
 /**
  * Create new user
@@ -19,9 +19,9 @@ exports.handler = async (event) => {
     console.log("create membershipMember.... started", item);
     util.validateItem(item, 'user_name');
     util.validateItem(item, 'membership_year'),
-    item.PK = HASH_KEY_PREFIX + item.membership_year;
+        item.PK = HASH_KEY_PREFIX + item.membership_year;
     item.SK = SORT_KEY_PREFIX + item.user_name;
-    item.GSI1= GSI_PREFIX + item.user_name;
+    item.GSI1 = GSI_PREFIX + item.user_name;
     console.log("PK:", item.PK);
     console.log("SK:", item.SK);
     console.log("GSI:", item.GSI1);
