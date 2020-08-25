@@ -10,6 +10,10 @@
           AttributeType: S
         - AttributeName: GSI1
           AttributeType: S
+        - AttributeName: status
+          AttributeType: S
+        - AttributeName: endingDate
+          AttributeType: S
 
       KeySchema:
         - AttributeName: PK
@@ -28,6 +32,20 @@
             - AttributeName: GSI1
               KeyType: HASH
             - AttributeName: SK
+              KeyType: RANGE
+
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+
+
+        - IndexName: statusEndingDate-Index
+          KeySchema:
+            - AttributeName: status
+              KeyType: HASH
+            - AttributeName: endingDate
               KeyType: RANGE
 
           Projection:

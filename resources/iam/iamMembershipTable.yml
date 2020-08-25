@@ -9,4 +9,6 @@ MembershipTableIAM:
     - dynamodb:DeleteItem
   Resource:
     - ${self:custom.UserTable.arn}
+    - !Join ['/', ['${self:custom.UserTable.arn}', 'index', 'GSI1-SK-Index']]
+    - !Join ['/', ['${self:custom.UserTable.arn}', 'index', 'statusEndingDate-Index']]
 

@@ -95,82 +95,6 @@
 	},
 	{
 		"PK": {
-			"S": "user_Eckhardo"
-		},
-		"SK": {
-			"S": "event_Arbeitsdienst-1"
-		},
-		"membership_year": {
-			"N": "2020"
-		},
-		"type": {
-			"S": "Arbeitsdienst"
-		},
-		"name": {
-			"S": "Arbeitsdienst-1"
-		},
-		"date": {
-			"S": "04-04-2020"
-		},
-		"start": {
-			"S": "07:00"
-		},
-		"end": {
-			"S": "12:00"
-		},
-		"meeting_point": {
-			"S": "07:00"
-		},
-		"comments": {
-			"SS": [
-				"Arbeitschuhe mitbringen",
-				"Anschl. Biertrinken"
-			]
-		},
-		"is_active": {
-			"BOOL": true
-		}
-	},
-	{
-		"PK": {
-			"S": "user_Eckhardo"
-		},
-		"SK": {
-			"S": "event_Arbeitsdienst-2"
-		},
-		"membership_year": {
-			"N": "2020"
-		},
-		"type": {
-			"S": "Arbeitsdienst"
-		},
-		"name": {
-			"S": "Arbeitsdienst-2"
-		},
-		"date": {
-			"S": "11-04-2020"
-		},
-		"start": {
-			"S": "08:00"
-		},
-		"end": {
-			"S": "12:00"
-		},
-		"meeting_point": {
-			"S": "Elsensee"
-		},
-		"comments": {
-			"SS": [
-				"Muetze aufsetzen",
-				"Anschl. Grillen"
-			]
-		},
-		"is_active": {
-			"BOOL": true
-		}
-	},
-	{
-		"PK": {
 			"S": "membership_2020"
 		},
 		"SK": {
@@ -273,6 +197,93 @@
 		},
 		"is_active": {
 			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "membership_2020"
+		},
+		"SK": {
+			"S": "event_Arbeitsdienst-1"
+		},
+		"status": {
+			"S": "OPEN"
+		},
+		"name": {
+			"S": "Arbeitsdienst-1"
+		},
+		"startingDate": {
+			"S": "2020-08-25T08:00:00.999Z"
+		},
+		"endingDate": {
+			"S": "2020-08-25T12:00:00.999Z"
+		},
+		"meeting_point": {
+			"S": "Elsensee"
+		},
+		"comments": {
+			"SS": [
+				"Arbeitschuhe mitbringen",
+				"Anschl. Biertrinken"
+			]
+		}
+	},
+	{
+		"PK": {
+			"S": "membership_2020"
+		},
+		"SK": {
+			"S": "event_Arbeitsdienst-2"
+		},
+		"status": {
+			"S": "OPEN"
+		},
+		"name": {
+			"S": "Arbeitsdienst-2"
+		},
+		"startingDate": {
+			"S": "2020-09-25T08:00:00.999Z"
+		},
+		"endingDate": {
+			"S": "2020-09-25T12:00:00.999Z"
+		},
+		"meeting_point": {
+			"S": "Elsensee"
+		},
+		"comments": {
+			"SS": [
+				"Muetze aufsetzen",
+				"Anschl. Grillen"
+			]
+		}
+	},
+	{
+		"PK": {
+			"S": "membership_2020"
+		},
+		"SK": {
+			"S": "event_JHV"
+		},
+		"status": {
+			"S": "OPEN"
+		},
+		"name": {
+			"S": "JHV"
+		},
+		"startingDate": {
+			"S": "2020-11-25T18:00:00.999Z"
+		},
+		"endingDate": {
+			"S": "2020-11-25T23:00:00.999Z"
+		},
+		"meeting_point": {
+			"S": "Rosa-Scholl-Haus"
+		},
+		"comments": {
+			"SS": [
+				"Muetze aufsetzen",
+				"Anschl. Grillen"
+			]
 		}
 	}
 ]
