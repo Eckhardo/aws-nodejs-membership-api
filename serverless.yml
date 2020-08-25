@@ -44,6 +44,7 @@ functions:
   - ${file(resources/lambda/user/lambdas.yml)}
   - ${file(resources/lambda/membershipMember/lambdas.yml)}
   - ${file(resources/lambda/membership/lambdas.yml)}
+  - ${file(resources/lambda/event/lambdas.yml)}
 resources:
   Resources:
     UserTable: ${file(resources/dynamodb/user/dynamodb.yml):UserTable}

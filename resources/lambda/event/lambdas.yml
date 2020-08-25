@@ -1,0 +1,3 @@
+get-ended-events:
+  handler: api/event/get.getEndedEvents
+  description: GET ended events
