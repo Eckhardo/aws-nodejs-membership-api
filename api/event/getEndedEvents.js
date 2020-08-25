@@ -6,7 +6,7 @@ const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 
 
-exports.handler = async (event) => {
+exports.handler = async () => {
     console.log('getEndedEvents::start');
     const now = new Date();
     const params = {

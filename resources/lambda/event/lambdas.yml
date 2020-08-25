@@ -1,3 +1,14 @@
 get-ended-events:
   handler: api/event/getEndedEvents.handler
-  description: GET ended events
+  description: Retrieves ended events
+
+process-events:
+  handler: api/event/processEvents.handler
+  description: Looks for ended events and sets status to CLOSED
+  events:
+    - http:
+        path: event/process
+        method: get
+        cors: true
+  # events:
+  # - schedule: rate(1 minute)

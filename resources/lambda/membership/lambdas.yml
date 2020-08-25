@@ -42,3 +42,4 @@ delete-membership:
         path: membership/{year}
         method: delete
         cors: true
+
