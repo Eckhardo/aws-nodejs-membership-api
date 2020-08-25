@@ -6,7 +6,6 @@ get-user:
         path: user/{username}
         method: get
         cors: true
-
 get-users:
   handler: api/user/get.getAll
   description: GET all Users
