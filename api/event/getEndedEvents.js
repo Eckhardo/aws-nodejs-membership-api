@@ -6,8 +6,8 @@ const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 
 
-const get = async (event) => {
-    console.log('getEndedAuctions::start');
+exports.handler = async (event) => {
+    console.log('getEndedEvents::start');
     const now = new Date();
     const params = {
         TableName: TABLE_NAME,
@@ -18,10 +18,7 @@ const get = async (event) => {
     }
 
     const result = await dynamoDb.query(params).promise();
-    console.log('getEndedAuctions::result: ', result);
+    console.log('getEndedEvents::result: ', result);
     return result.Items;
 
-}
-module.exports = {
-    getEndedEvents: get
 }
