@@ -1,7 +1,3 @@
-get-ended-events:
-  handler: api/event/getEndedEvents.handler
-  description: Retrieves ended events
-
 process-events:
   handler: api/event/processEvents.handler
   description: Looks for ended events and sets status to CLOSED
@@ -12,3 +8,47 @@ process-events:
         cors: true
   # events:
   # - schedule: rate(1 minute)
+get-event:
+  handler: api/event/get.getOne
+  description: GET event by year and name
+  events:
+    - http:
+        path: event/{year}/{name}
+        method: get
+        cors: true
+get-events:
+  handler: api/event/get.getAll
+  description: GET all Events for a particular year
+  events:
+    - http:
+        path: event/{year}
+        method: get
+        cors: true
+
+create-event:
+  handler: api/event/create.handler
+  description: POST event
+  events:
+    - http:
+        path: event
+        method: post
+        cors: true
+
+update-event:
+  handler: api/event/update.handler
+  description: PUT event
+  events:
+    - http:
+        path: event
+        method: put
+        cors: true
+
+delete-event:
+  handler: api/event/delete.handler
+  description: DELETE event by year and name
+  events:
+    - http:
+        path: event/{year}/{name}
+        method: delete
+        cors: true
+

@@ -5,7 +5,11 @@ const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 
-
+/**
+ *
+ * @param event
+ * @returns {Promise<{headers: {"Access-Control-Allow-Origin": string}, body: string, statusCode: (*|number)}|{headers: {"Access-Control-Allow-Origin": string}, body: string, statusCode: number}|{headers: {"Access-Control-Allow-Origin": string}, statusCode: number}>}
+ */
 exports.handler = async (event) => {
 
     const item = JSON.parse(event.body);
@@ -25,13 +29,12 @@ exports.handler = async (event) => {
                 ":comments": item.comments
             },
             ReturnValues: "UPDATED_NEW"
-
         };
+
         let data = await dynamoDb.update(params).promise();
         return util.makeSingleResponseAttributes(data.Attributes);
     } catch (err) {
         return util.makeErrorResponse(err);
     }
-
 }
 

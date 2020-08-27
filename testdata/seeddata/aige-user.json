@@ -206,17 +206,17 @@
 		"SK": {
 			"S": "event_Arbeitsdienst-1"
 		},
-		"status": {
+		"event_status": {
 			"S": "OPEN"
 		},
-		"name": {
+		"event_name": {
 			"S": "Arbeitsdienst-1"
 		},
-		"startingDate": {
+		"starting_date": {
 			"S": "2020-08-25T08:00:00.999Z"
 		},
-		"endingDate": {
-			"S": "2020-08-25T12:00:00.999Z"
+		"ending_date": {
+			"S":"2020-08-25T12:00:00.999Z"
 		},
 		"meeting_point": {
 			"S": "Elsensee"
@@ -235,16 +235,16 @@
 		"SK": {
 			"S": "event_Arbeitsdienst-2"
 		},
-		"status": {
+		"event_status": {
 			"S": "OPEN"
 		},
-		"name": {
+		"event_name": {
 			"S": "Arbeitsdienst-2"
 		},
-		"startingDate": {
+		"starting_date": {
 			"S": "2020-09-25T08:00:00.999Z"
 		},
-		"endingDate": {
+		"ending_date": {
 			"S": "2020-09-25T12:00:00.999Z"
 		},
 		"meeting_point": {
@@ -264,16 +264,16 @@
 		"SK": {
 			"S": "event_JHV"
 		},
-		"status": {
+		"event_status": {
 			"S": "OPEN"
 		},
-		"name": {
+		"event_name": {
 			"S": "JHV"
 		},
-		"startingDate": {
+		"starting_date": {
 			"S": "2020-11-25T18:00:00.999Z"
 		},
-		"endingDate": {
+		"ending_date": {
 			"S": "2020-11-25T23:00:00.999Z"
 		},
 		"meeting_point": {

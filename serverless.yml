@@ -17,6 +17,7 @@ provider:
     HASH_KEY_PREFIX_MEMBERSHIP: membership_
     SORT_KEY_MEMBERSHIP_VALUE: meta
     SORT_KEY_PREFIX_MEMBERSHIP_MEMBER: membershipMember_
+    SORT_KEY_PREFIX_MEMBERSHIP_EVENT: event_
   iamRoleStatements:
     - ${file(resources/iam/iamMembershipTable.yml):MembershipTableIAM}
 custom:
@@ -42,9 +43,9 @@ custom:
 
 functions:
   - ${file(resources/lambda/user/lambdas.yml)}
-  - ${file(resources/lambda/membershipMember/lambdas.yml)}
-  - ${file(resources/lambda/membership/lambdas.yml)}
-  - ${file(resources/lambda/event/lambdas.yml)}
+ # - ${file(resources/lambda/membershipMember/lambdas.yml)}
+ # - ${file(resources/lambda/membership/lambdas.yml)}
+ # - ${file(resources/lambda/event/lambdas.yml)}
 resources:
   Resources:
     UserTable: ${file(resources/dynamodb/user/dynamodb.yml):UserTable}
@@ -54,11 +55,11 @@ package:
   exclude:
     - .dynamodb/**
     - .serverless/**
-    - node_modules/**
+   # - node_modules/**
     - testdata/**
     - testqueries/**
   include:
-    - node_modules/underscore/**
+   # - node_modules/underscore/**
 
 plugins:
   - serverless-dynamodb-local

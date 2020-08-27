@@ -5,48 +5,32 @@ const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_USER;
 const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
 const get = require('./get')
+const middy = require('@middy/core');
+const httpJsonBodyParser = require('@middy/http-json-body-parser');
+const httpEventNormalizer = require('@middy/http-event-normalizer'); //Normalizes HTTP events by adding an empty object for queryStringParameters
+const httpErrorHandler = require('@middy/http-error-handler'); // handles common http errors and returns proper responses
+const createErrors = require('http-errors');
+const middlewares = [httpJsonBodyParser(), httpEventNormalizer(), httpErrorHandler()];
 
-function getUpdateExpression() {
-    let expression = [];
-    expression.push([' SET first_name = :fname', ' last_name= :lname']);
-    expression.push([' city = :city', ' zip = :zip', ' address = :address']);
-    expression.push([' email = :email', ' phone = :phone', ' mobil = :mobil']);
-    expression.push([' admission_date = :admission_date'])
-    return expression.toString();
-}
 
-function getUpdateExpressionValues(user) {
-    let expressionValues = {
-        ":fname": user.first_name,
-        ":lname": user.last_name,
-        ":city": user.city,
-        ":zip": user.zip,
-        ":address": user.address,
-        ":email": user.email,
-        ":phone": user.phone,
-        ":mobil": user.mobil,
-        ":admission_date": user.admission_date
+/**
+ * Update a user
+ *
+ * User name is first validated against the db to make sure that this user exists.
+ *
+ * Route: PUT /user/
+ */
 
-    };
-    return expressionValues;
-
-}
-
-exports.handler = async (event) => {
+const updateHandler = async (event) => {
+    console.log("update  user.... started");
+    const {item} = event.body;
+    validate(item);
     try {
-        console.log("update  user.... started");
-        const item = JSON.parse(event.body);
-        util.validateItem(item, 'user_name');
+        //validate input against db
         let user = await get.getUser(item.user_name);
+        if (!user) {
+            throw  new createErrors(400, `User with user name ${userName}  does not exist !`);
 
-        console.log("item user", item.user_name);
-        console.log("user user", user.user_name);
-        if (!user && (!user.user_name === item.user_name)) {
-            return {
-                statusCode: 500,
-                headers: getResponseHeaders(),
-                body: JSON.stringify(` user with username ${item.user_name} is unknown !`)
-            };
         }
         const pk = HASH_KEY_PREFIX + item.user_name;
         const updateExpression = getUpdateExpression();
@@ -65,7 +49,48 @@ exports.handler = async (event) => {
         let data = await dynamoDb.update(params).promise();
         return util.makeSingleResponseAttributes(data.Attributes);
     } catch (err) {
-        return util.makeErrorResponse(err);
+        console.error('Error:', err);
+        throw new createErrors(err);
     }
+}
 
+function getUpdateExpression() {
+    let expression = [];
+    expression.push([' SET first_name = :fname', ' last_name= :lname']);
+    expression.push([' city = :city', ' zip = :zip', ' address = :address']);
+    expression.push([' email = :email', ' phone = :phone', ' mobil = :mobil']);
+    expression.push([' admission_date = :admission_date'])
+    return expression.toString();
+}
+
+function getUpdateExpressionValues(user) {
+    return {
+        ":fname": user.first_name,
+        ":lname": user.last_name,
+        ":city": user.city,
+        ":zip": user.zip,
+        ":address": user.address,
+        ":email": user.email,
+        ":phone": user.phone,
+        ":mobil": user.mobil,
+        ":admission_date": user.admission_date
+
+    };
+}
+
+function validate(item) {
+    util.validateItem(item, 'user_name')
+    util.validateItem(item, 'first_name');
+    util.validateItem(item, 'last_name');
+    util.validateItem(item, 'email');
+    util.validateItem(item, 'city');
+    util.validateItem(item, 'address');
+    util.validateItem(item, 'zip');
+}
+
+const handler = middy(updateHandler)
+handler.use(middlewares);
+
+module.exports = {
+    handler
 }

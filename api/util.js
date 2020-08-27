@@ -29,6 +29,7 @@ const validateItem = (item, field) => {
     const has = Object.prototype.hasOwnProperty;
     const hasField = has.call(item, field);
     if (!hasField) {
+        console.log(' field not present:', field);
         throw Error(`Field ${field} is not defined in input object`);
 
     }
@@ -83,7 +84,6 @@ const make201Response = (item) => {
 
 const makeAllResponse = (data) => {
     if (!_.isEmpty(data.Items)) {
-        console.log("result not empty ");
         return {
             statusCode: 200,
             headers: getResponseHeaders(),

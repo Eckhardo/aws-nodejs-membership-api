@@ -10,9 +10,9 @@
           AttributeType: S
         - AttributeName: GSI1
           AttributeType: S
-        - AttributeName: status
+        - AttributeName: event_status
           AttributeType: S
-        - AttributeName: endingDate
+        - AttributeName: ending_date
           AttributeType: S
 
       KeySchema:
@@ -43,9 +43,9 @@
 
         - IndexName: statusEndingDate-Index
           KeySchema:
-            - AttributeName: status
+            - AttributeName: event_status
               KeyType: HASH
-            - AttributeName: endingDate
+            - AttributeName: ending_date
               KeyType: RANGE
 
           Projection:
