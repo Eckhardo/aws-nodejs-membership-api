@@ -11,6 +11,8 @@ const httpEventNormalizer = require('@middy/http-event-normalizer'); //Normalize
 const httpErrorHandler = require('@middy/http-error-handler'); // handles common http errors and returns proper responses
 const createErrors = require('http-errors');
 const middlewares = [httpJsonBodyParser(), httpEventNormalizer(), httpErrorHandler()];
+const updateUserSchema = require('./../../lib/json-schema/user/updateUser');
+const middlewares = [httpJsonBodyParser(), httpEventNormalizer(), httpErrorHandler()]
 
 
 /**
@@ -23,30 +25,23 @@ const middlewares = [httpJsonBodyParser(), httpEventNormalizer(), httpErrorHandl
 
 const updateHandler = async (event) => {
     console.log("update  user.... started");
-    const {item} = event.body;
-    validate(item);
+    const {item, user_name} = event.body;
     try {
         //validate input against db
-        let user = await get.getUser(item.user_name);
+        let user = await get.getUser(user_name);
         if (!user) {
-            throw  new createErrors(400, `User with user name ${userName}  does not exist !`);
-
+            throw  new createErrors(400, `User with user name ${user_name}  does not exist !`);
         }
-        const pk = HASH_KEY_PREFIX + item.user_name;
-        const updateExpression = getUpdateExpression();
-        const updateExpressionValues = getUpdateExpressionValues(item);
 
-        console.log('updateExpressionValues: ', updateExpressionValues);
         const params = {
-
             TableName: TABLE_NAME,
-            Key: {PK: pk, SK: SORT_KEY_VALUE},
-            UpdateExpression: updateExpression,
-            ExpressionAttributeValues: updateExpressionValues,
+            Key: {PK: item.PK, SK: SORT_KEY_VALUE},
+            UpdateExpression: getUpdateExpression(),
+            ExpressionAttributeValues: getUpdateExpressionValues(item),
             ReturnValues: "UPDATED_NEW"
-
         };
-        let data = await dynamoDb.update(params).promise();
+
+        const data = await dynamoDb.update(params).promise();
         return util.makeSingleResponseAttributes(data.Attributes);
     } catch (err) {
         console.error('Error:', err);
@@ -78,18 +73,8 @@ function getUpdateExpressionValues(user) {
     };
 }
 
-function validate(item) {
-    util.validateItem(item, 'user_name')
-    util.validateItem(item, 'first_name');
-    util.validateItem(item, 'last_name');
-    util.validateItem(item, 'email');
-    util.validateItem(item, 'city');
-    util.validateItem(item, 'address');
-    util.validateItem(item, 'zip');
-}
-
 const handler = middy(updateHandler)
-handler.use(middlewares);
+handler.use(middlewares).use(validator({inputSchema: updateUserSchema.schema}));
 
 module.exports = {
     handler
