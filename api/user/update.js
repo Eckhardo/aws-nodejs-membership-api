@@ -2,15 +2,10 @@ const util = require('../util.js');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
 const get = require('./get')
-const middy = require('@middy/core');
-const httpJsonBodyParser = require('@middy/http-json-body-parser');
-const httpEventNormalizer = require('@middy/http-event-normalizer'); //Normalizes HTTP events by adding an empty object for queryStringParameters
-const httpErrorHandler = require('@middy/http-error-handler'); // handles common http errors and returns proper responses
-const createErrors = require('http-errors');
-const validator = require('@middy/validator');
-const middlewares = [httpJsonBodyParser(), httpEventNormalizer(), httpErrorHandler()];
+const createError = require('http-errors');
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
 const updateUserSchema = require('./../../lib/json-schema/user/updateUser');
 
 
@@ -31,12 +26,12 @@ const updateHandler = async (event) => {
         //validate input against db
         let user = await get.getUser(user_name);
         if (!user) {
-            throw  new createErrors(400, `User with user name ${user_name}  does not exist !`);
+            throw  new createError(400, `User with user name ${user_name}  does not exist !`);
         }
 
         const params = {
             TableName: TABLE_NAME,
-            Key: {PK: item.PK, SK: SORT_KEY_VALUE},
+            Key: {PK: item.PK, SK: process.env.SORT_KEY_USER_VALUE},
             UpdateExpression: getUpdateExpression(),
             ExpressionAttributeValues: getUpdateExpressionValues(item),
             ReturnValues: "UPDATED_NEW"
@@ -46,7 +41,7 @@ const updateHandler = async (event) => {
         return util.makeSingleResponseAttributes(data.Attributes);
     } catch (err) {
         console.error('Error:', err);
-        throw new createErrors(err);
+        throw new createError(err);
     }
 }
 
@@ -73,9 +68,8 @@ function getUpdateExpressionValues(user) {
 
     };
 }
-
-const handler = middy(updateHandler)
-handler.use(middlewares).use(validator({inputSchema: updateUserSchema.schema}));
+const handler = middy.middy(updateHandler());
+handler.use(middyLibs).use(middy.validator({inputSchema: updateUserSchema.schema}));
 
 module.exports = {
     handler

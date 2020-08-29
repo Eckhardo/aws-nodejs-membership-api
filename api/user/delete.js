@@ -4,11 +4,9 @@ const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_USER;
 const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
-const middy = require('@middy/core');
-const httpEventNormalizer = require('@middy/http-event-normalizer'); //Normalizes HTTP events by adding an empty object for queryStringParameters
-const httpErrorHandler = require('@middy/http-error-handler'); // handles common http errors and returns proper responses
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [ middy.httpEventNormalizer(), middy.httpErrorHandler()];
 const createErrors = require('http-errors');
-const middlewares = [httpEventNormalizer(), httpErrorHandler()];
 
 const deleteHandler = async (event) => {
 
@@ -28,8 +26,8 @@ const deleteHandler = async (event) => {
         throw new createErrors.InternalServerError();
     }
 }
-const handler = middy(deleteHandler);
-handler.use(middlewares);
+const handler = middy.middy(deleteHandler);
+handler.use(middyLibs);
 module.exports = {
     handler
 }

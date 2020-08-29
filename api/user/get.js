@@ -1,17 +1,15 @@
 'use strict';
 
 const util = require('../util');
-const middy = require('@middy/core');
-const httpEventNormalizer = require('@middy/http-event-normalizer'); //Normalizes HTTP events by adding an empty object for queryStringParameters
-const httpErrorHandler = require('@middy/http-error-handler'); // handles common http errors and returns proper responses
 const databaseManager = require('../dynamoDbConnect');
-const createErrors = require('http-errors');
+const createError = require('http-errors');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_USER;
 const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [ middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
-const middlewares = [httpEventNormalizer(), httpErrorHandler()]
 /**
  * GET all users by sort key = profile
  *
@@ -25,16 +23,15 @@ const getAllHandler = async () => {
         FilterExpression: '#sk = :sk_value',
         ExpressionAttributeNames: {'#sk': 'SK',},
         ExpressionAttributeValues: {
-            ':sk_value': SORT_KEY_VALUE
+            ':sk_value': process.env.SORT_KEY_USER_VALUE
         }
     };
     try {
-        // promised is resolved by .promise(), otherwise then((data) => ).catch((error) => )
-        let data = await dynamoDb.scan(params).promise();
+       let data = await dynamoDb.scan(params).promise();
         return util.makeAllResponse(data);
     } catch (err) {
         console.log("Error: ", err);
-        throw new createErrors.InternalServerError(err);
+        throw new createError.InternalServerError(err);
     }
 }
 
@@ -53,11 +50,11 @@ const getOneHandler = async (event) => {
                 body: JSON.stringify(user)
             };
         } else {
-            throw new  createErrors(404, `User with user name ${username}  does not exist !`);
+            throw new  createError(404, `User with user name ${username}  does not exist !`);
         }
     } catch (err) {
         console.error('Error:', err);
-        throw new createErrors(err);
+        throw new createError(err);
     }
 }
 
@@ -85,10 +82,10 @@ const getUser = async (userName) => {
         return null;
     }
 }
-const getOne = middy(getOneHandler);
-getOne.use(middlewares);
-const getAll = middy(getAllHandler);
-getAll.use(middlewares);
+const getOne = middy.middy(getOneHandler);
+getOne.use(middyLibs);
+const getAll = middy.middy(getAllHandler);
+getAll.use(middyLibs);
 
 module.exports = {
     getAll,
