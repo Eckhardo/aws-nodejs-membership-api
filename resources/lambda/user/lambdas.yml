@@ -6,6 +6,9 @@ get-user:
         path: user/{username}
         method: get
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
 get-users:
   handler: api/user/get.getAll
   description: GET all Users
@@ -14,6 +17,8 @@ get-users:
         path: user
         method: get
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 create-user:
   handler: api/user/create.handler
@@ -23,6 +28,8 @@ create-user:
         path: user
         method: post
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 update-user:
   handler: api/user/update.handler
@@ -32,6 +39,8 @@ update-user:
         path: user
         method: put
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 delete-user:
   handler: api/user/delete.handler
@@ -41,3 +50,5 @@ delete-user:
         path: user/{username}
         method: delete
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }

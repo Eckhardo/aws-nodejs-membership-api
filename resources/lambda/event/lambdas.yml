@@ -6,6 +6,9 @@ process-events:
         path: event/process
         method: get
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
   # events:
   # - schedule: rate(1 minute)
 get-event:
@@ -16,6 +19,9 @@ get-event:
         path: event/{year}/{name}
         method: get
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
 get-events:
   handler: api/event/get.getAll
   description: GET all Events for a particular year
@@ -24,6 +30,8 @@ get-events:
         path: event/{year}
         method: get
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 create-event:
   handler: api/event/create.handler
@@ -33,6 +41,8 @@ create-event:
         path: event
         method: post
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 update-event:
   handler: api/event/update.handler
@@ -42,6 +52,8 @@ update-event:
         path: event
         method: put
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 delete-event:
   handler: api/event/delete.handler
@@ -51,4 +63,6 @@ delete-event:
         path: event/{year}/{name}
         method: delete
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 

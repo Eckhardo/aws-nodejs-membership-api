@@ -9,6 +9,7 @@ provider:
   timeout: 5
   endpointType: regional
   environment:
+    NODE_PATH: '/:/opt/node_modules'
     IS_OFFLINE: ${self:custom.isOffline}
     CONFIG_USER_TABLE: ${self:custom.UserTable.name}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
@@ -50,16 +51,20 @@ resources:
   Resources:
     UserTable: ${file(resources/dynamodb/user/dynamodb.yml):UserTable}
 
-
+layers:
+  MiddyDependencies:
+    path: middy-layer
+    description: Middy libraries
+    package:
+      include:
+        - node_modules/**
 package:
   exclude:
     - .dynamodb/**
     - .serverless/**
-   # - node_modules/**
+    - middy-layer/**
     - testdata/**
     - testqueries/**
-  include:
-   # - node_modules/underscore/**
 
 plugins:
   - serverless-dynamodb-local

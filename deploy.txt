@@ -6,3 +6,6 @@ sls remove -v
 
 
 sls dynamodb seed --online --region eu-central-1 -s dev
+
+npm --prefix ./middy-layer install aws-sdk @middy/core @middy/http-json-body-parser @middy/http-error-handler @middy/http-event-normalizer
+

@@ -24,7 +24,8 @@ const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
 
 
 createHandler = async (event) => {
-     const {item, user_name} = event.body;
+     const {item} = event.body;
+     const user_name= item.user_name;
 
     try {
         const theUser = await get.getUser(user_name);

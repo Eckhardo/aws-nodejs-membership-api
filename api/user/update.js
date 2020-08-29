@@ -9,9 +9,10 @@ const httpJsonBodyParser = require('@middy/http-json-body-parser');
 const httpEventNormalizer = require('@middy/http-event-normalizer'); //Normalizes HTTP events by adding an empty object for queryStringParameters
 const httpErrorHandler = require('@middy/http-error-handler'); // handles common http errors and returns proper responses
 const createErrors = require('http-errors');
+const validator = require('@middy/validator');
 const middlewares = [httpJsonBodyParser(), httpEventNormalizer(), httpErrorHandler()];
 const updateUserSchema = require('./../../lib/json-schema/user/updateUser');
-const middlewares = [httpJsonBodyParser(), httpEventNormalizer(), httpErrorHandler()]
+
 
 
 /**
@@ -24,7 +25,8 @@ const middlewares = [httpJsonBodyParser(), httpEventNormalizer(), httpErrorHandl
 
 const updateHandler = async (event) => {
     console.log("update  user.... started");
-    const {item, user_name} = event.body;
+    const {item} = event.body;
+    const user_name= item.user_name;
     try {
         //validate input against db
         let user = await get.getUser(user_name);

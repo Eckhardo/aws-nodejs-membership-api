@@ -6,6 +6,8 @@ get-membershipMember:
         path: membershipMember/{year}/{username}
         method: get
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 get-membershipMembers:
   handler: api/membershipMember/get.getAll
@@ -15,6 +17,8 @@ get-membershipMembers:
         path: membershipMember/{year}
         method: get
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 create-membershipMember:
   handler: api/membershipMember/create.handler
@@ -24,6 +28,8 @@ create-membershipMember:
         path: membershipMember
         method: post
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 update-membershipMember:
   handler: api/membershipMember/update.handler
@@ -33,6 +39,8 @@ update-membershipMember:
         path: membershipMember
         method: put
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 delete-membershipMember:
   handler: api/membershipMember/delete.handler
@@ -42,3 +50,5 @@ delete-membershipMember:
         path: membershipMember/{year}/{username}
         method: delete
         cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
