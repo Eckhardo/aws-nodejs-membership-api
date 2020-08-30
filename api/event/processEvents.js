@@ -13,7 +13,7 @@ exports.handler = async (event, context) => {
         const closedPromises = eventsToClose.map(ev => {
             return closeEvents.handler(ev);
         })
-        if(closedPromises) {
+        if (closedPromises) {
             console.log("Promise.all: called");
             await Promise.all(closedPromises);
         }

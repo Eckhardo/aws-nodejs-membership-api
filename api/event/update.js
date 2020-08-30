@@ -5,22 +5,24 @@ const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const updateEventSchema = require('../../lib/json-schema/event/updateEvent');
 
 
-exports.handler = async (event) => {
+const updateHandler = async (event) => {
 
-    const item = JSON.parse(event.body);
+    const {item} = event.body;
     console.log("update event.... started", item);
 
     try {
-        validate(item);
         const start_date = item.starting_date;
-        const i=start_date.indexOf('-');;
-        const eventYear= start_date.slice(0,i);
+        const i = start_date.indexOf('-');
+        const eventYear = start_date.slice(0, i);
 
         const eventName = item.event_name;
         const theEvent = await get.getEvent(eventYear, eventName);
-        if (! theEvent || (theEvent.event_name !== eventName)) {
+        if (!theEvent || (theEvent.event_name !== eventName)) {
             return {
                 statusCode: 409,
                 headers: util.getResponseHeaders(),
@@ -67,11 +69,11 @@ function getUpdateExpressionValues(theEvent) {
     };
 }
 
-function validate(item) {
-    util.validateItem(item, 'event_name');
-    util.validateItem(item, 'event_status');
-    util.validateItem(item, 'meeting_point');
-    util.validateItem(item, 'starting_date');
-    util.validateItem(item, 'ending_date');
+
+const handler = middy.middy(updateHandler);
+handler.use(middyLibs).use(middy.validator({inputSchema: updateEventSchema.schema}));
+
+module.exports = {
+    handler
 }
 

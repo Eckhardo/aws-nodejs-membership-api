@@ -4,15 +4,18 @@ const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const updateMsSchema = require('./../../lib/json-schema/membership/updateMembership');
 
 /**
  *
  * @param event
  * @returns {Promise<{headers: {"Access-Control-Allow-Origin": string}, body: string, statusCode: (*|number)}|{headers: {"Access-Control-Allow-Origin": string}, body: string, statusCode: number}|{headers: {"Access-Control-Allow-Origin": string}, statusCode: number}>}
  */
-exports.handler = async (event) => {
+const updateHandler = async (event) => {
 
-    const item = JSON.parse(event.body);
+    const item = event.body;
     const year = item.membership_year;
     util.validate(year);
     const pk = HASH_KEY_PREFIX + year;
@@ -38,3 +41,9 @@ exports.handler = async (event) => {
     }
 }
 
+const handler = middy.middy(updateHandler);
+handler.use(middyLibs).use(middyLibs).use(middy.validator({inputSchema: updateMsSchema.schema}));
+
+module.exports = {
+    handler
+}

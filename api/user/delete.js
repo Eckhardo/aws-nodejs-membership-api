@@ -5,7 +5,7 @@ const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_USER;
 const SORT_KEY_VALUE = process.env.SORT_KEY_USER_VALUE;
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [ middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 const createErrors = require('http-errors');
 
 const deleteHandler = async (event) => {
@@ -17,7 +17,7 @@ const deleteHandler = async (event) => {
         Key: {PK: pk, SK: SORT_KEY_VALUE}
     };
     try {
-         await dynamoDb.delete(params).promise();
+        await dynamoDb.delete(params).promise();
         return {
             statusCode: 200,
             headers: util.getResponseHeaders()

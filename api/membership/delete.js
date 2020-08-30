@@ -4,9 +4,11 @@ const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
 
-exports.handler = async (event) => {
+const deleteHandler = async (event) => {
 
     const year = decodeURIComponent(event.pathParameters.year);
     const pk = HASH_KEY_PREFIX + year;
@@ -23,4 +25,11 @@ exports.handler = async (event) => {
     } catch (err) {
         return util.makeErrorResponse(err);
     }
+}
+
+
+const handler = middy.middy(deleteHandler);
+handler.use(middyLibs);
+module.exports = {
+    handler
 }

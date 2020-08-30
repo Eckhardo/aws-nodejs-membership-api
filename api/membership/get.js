@@ -4,8 +4,10 @@ const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
-module.exports.getAll = async () => {
+const getAllHandler = async () => {
     console.log("getAll.... started");
     let params = {
         TableName: TABLE_NAME,
@@ -25,7 +27,7 @@ module.exports.getAll = async () => {
         util.makeErrorResponse(err);
     }
 }
-module.exports.getOne = async (event) => {
+const getOneHandler = async (event) => {
     console.log("getOne.... started");
     const year = decodeURIComponent(event.pathParameters.year);
     util.validate(year);
@@ -47,4 +49,14 @@ module.exports.getOne = async (event) => {
         util.makeErrorResponse(e);
     }
 
+}
+
+const getOne = middy.middy(getOneHandler);
+getOne.use(middyLibs);
+const getAll = middy.middy(getAllHandler);
+getAll.use(middyLibs);
+
+module.exports = {
+    getAll,
+    getOne
 }

@@ -4,7 +4,9 @@ const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
-
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const createMsSchema = require('./../../lib/json-schema/membership/createMembership');
 /**
  * Create new membership
  *
@@ -12,8 +14,8 @@ const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
  */
 
 
-exports.handler = async (event) => {
-    const item = JSON.parse(event.body);
+const createHandler = async (event) => {
+    const {item} = event.body;
     const year = item.membership_year;
     util.validate(year);
     item.PK = HASH_KEY_PREFIX + year;
@@ -32,4 +34,9 @@ exports.handler = async (event) => {
         util.makeErrorResponse(err);
     }
 
+}
+const handler = middy.middy(createHandler);
+handler.use(middyLibs).use(middy.validator({inputSchema: createMsSchema.schema}));
+module.exports = {
+    handler
 }

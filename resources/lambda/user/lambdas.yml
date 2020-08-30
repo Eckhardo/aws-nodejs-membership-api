@@ -1,5 +1,5 @@
 get-user:
-  handler: api/user/get.getOne
+  handler: api/user/get.handler
   description: GET user by hashkey
   events:
     - http:
@@ -10,7 +10,7 @@ get-user:
     - { Ref: MiddyDependenciesLambdaLayer }
 
 get-users:
-  handler: api/user/get.getAll
+  handler: api/user/getAll.handler
   description: GET all Users
   events:
     - http:
@@ -19,6 +19,7 @@ get-users:
         cors: true
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
+
 
 create-user:
   handler: api/user/create.handler

@@ -13,12 +13,12 @@ provider:
     IS_OFFLINE: ${self:custom.isOffline}
     CONFIG_USER_TABLE: ${self:custom.UserTable.name}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
-    HASH_KEY_PREFIX_USER: user_
-    SORT_KEY_USER_VALUE: profile
-    HASH_KEY_PREFIX_MEMBERSHIP: membership_
-    SORT_KEY_MEMBERSHIP_VALUE: meta
-    SORT_KEY_PREFIX_MEMBERSHIP_MEMBER: membershipMember_
-    SORT_KEY_PREFIX_MEMBERSHIP_EVENT: event_
+    HASH_KEY_PREFIX_USER: ${file(resources/.config.yml):USER_KEY}
+    SORT_KEY_USER_VALUE: ${file(resources/.config.yml):USER_RANGE}
+    HASH_KEY_PREFIX_MEMBERSHIP: ${file(resources/.config.yml):MS_KEY}
+    SORT_KEY_MEMBERSHIP_VALUE: ${file(resources/.config.yml):MS_RANGE}
+    SORT_KEY_PREFIX_MEMBERSHIP_MEMBER: ${file(resources/.config.yml):MSM_RANGE}
+    SORT_KEY_PREFIX_MEMBERSHIP_EVENT: ${file(resources/.config.yml):EVENT_RANGE}
   iamRoleStatements:
     - ${file(resources/iam/iamMembershipTable.yml):MembershipTableIAM}
 custom:
@@ -44,9 +44,10 @@ custom:
 
 functions:
   - ${file(resources/lambda/user/lambdas.yml)}
- # - ${file(resources/lambda/membershipMember/lambdas.yml)}
- # - ${file(resources/lambda/membership/lambdas.yml)}
- # - ${file(resources/lambda/event/lambdas.yml)}
+  - ${file(resources/lambda/membership/lambdas.yml)}
+  - ${file(resources/lambda/event/lambdas.yml)}
+  - ${file(resources/lambda/membershipMember/lambdas.yml)}
+
 resources:
   Resources:
     UserTable: ${file(resources/dynamodb/user/dynamodb.yml):UserTable}

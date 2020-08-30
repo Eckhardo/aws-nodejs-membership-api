@@ -9,7 +9,6 @@ const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), midd
 const updateUserSchema = require('./../../lib/json-schema/user/updateUser');
 
 
-
 /**
  * Update a user
  *
@@ -21,7 +20,7 @@ const updateUserSchema = require('./../../lib/json-schema/user/updateUser');
 const updateHandler = async (event) => {
     console.log("update  user.... started");
     const {item} = event.body;
-    const user_name= item.user_name;
+    const user_name = item.user_name;
     try {
         //validate input against db
         let user = await get.getUser(user_name);
@@ -68,7 +67,8 @@ function getUpdateExpressionValues(user) {
 
     };
 }
-const handler = middy.middy(updateHandler());
+
+const handler = middy.middy(updateHandler);
 handler.use(middyLibs).use(middy.validator({inputSchema: updateUserSchema.schema}));
 
 module.exports = {

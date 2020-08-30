@@ -8,12 +8,14 @@ const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
 /**
  * GET all events for a distinct year
  * Route: GET /event/{year}
  */
-const getAll = async (event) => {
+const getAllHandler = async (event) => {
     const year = decodeURIComponent(event.pathParameters.year);
     util.validate(year);
     const pk = HASH_KEY_PREFIX + year;
@@ -38,7 +40,7 @@ const getAll = async (event) => {
  * Retrieve an event for a distinct year and name
  * Route: GET /event/{year}/{name}
  */
-const getOne = async (event) => {
+const getOneHandler = async (event) => {
     const year = decodeURIComponent(event.pathParameters.year);
     const name = decodeURIComponent(event.pathParameters.name);
     util.validate(year);
@@ -60,7 +62,7 @@ const getOne = async (event) => {
             };
         }
     } catch (e) {
-        return util.makeErrorResponse(err);
+        return util.makeErrorResponse(e);
     }
 }
 
@@ -86,8 +88,13 @@ const getEvent = async (year, name) => {
     return result.Items[0];
 }
 
+const getOne = middy.middy(getOneHandler);
+getOne.use(middyLibs);
+const getAll = middy.middy(getAllHandler);
+getAll.use(middyLibs);
+
 module.exports = {
-    getEvent,
+    getAll,
     getOne,
-    getAll
+    getEvent
 }

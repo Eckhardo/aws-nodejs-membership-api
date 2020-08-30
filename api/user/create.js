@@ -13,25 +13,26 @@ const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
  * Create new user
  * Route: POST /user/
  */
-createHandler = async (event) => {
-     const {item} = event.body;
-     const user_name= item.user_name;
+const createHandler = async (event) => {
+    const {item} = event.body;
+    const user_name = item.user_name;
 
     try {
         const theUser = await get.getUser(user_name);
         console.log('.... theUser', theUser);
         if (theUser) {
-          throw new createErrors(400, `User with user name ${user_name}  already exists !`);
+            throw new createErrors(400, `User with user name ${user_name}  already exists !`);
         }
         item.PK = process.env.HASH_KEY_PREFIX_USER + user_name;
         item.SK = process.env.SORT_KEY_USER_VALUE;
 
         const params = {
             TableName: TABLE_NAME,
-            Item: item
+            Item: item,
+            ReturnValues: "NONE"
         };
-       let data = await dynamoDb.put(params).promise();
-         return util.make201Response(item);
+        await dynamoDb.put(params).promise();
+        return util.make201Response(item);
     } catch (err) {
         console.error('Error:', err);
         throw new createErrors(err);

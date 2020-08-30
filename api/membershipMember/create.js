@@ -5,7 +5,10 @@ const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_MEMBER;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const GSI_PREFIX = process.env.HASH_KEY_PREFIX_USER;
-
+const createErrors = require('http-errors');
+const middy = require('./../../lib/commonMiddleware');
+const middyLibs = [middy.httpJsonBodyParser(),middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const createMembershipMemberSchema = require('./../../lib/json-schema/membershipMember/createMembershipMember');
 /**
  * Create new user
  *
@@ -13,13 +16,11 @@ const GSI_PREFIX = process.env.HASH_KEY_PREFIX_USER;
  */
 
 
-exports.handler = async (event) => {
+const createHandler = async (event) => {
 
-    const item = JSON.parse(event.body);
+    const {item} = event.body;
     console.log("create membershipMember.... started", item);
-    util.validateItem(item, 'user_name');
-    util.validateItem(item, 'membership_year'),
-        item.PK = HASH_KEY_PREFIX + item.membership_year;
+    item.PK = HASH_KEY_PREFIX + item.membership_year;
     item.SK = SORT_KEY_PREFIX + item.user_name;
     item.GSI1 = GSI_PREFIX + item.user_name;
     console.log("PK:", item.PK);
@@ -34,13 +35,17 @@ exports.handler = async (event) => {
 
 
     try {
-        // promised is resolved by .promise(), otherwise then((data) => ).catch((error) => )
-
-        let data = await dynamoDb.put(params).promise();
-        console.log("create.d... item: ", data);
+         let data = await dynamoDb.put(params).promise();
+        console.log("created... item: ", item);
         return util.make201Response(item);
     } catch (err) {
-        util.makeErrorResponse(err);
+        console.error('error:', err);
+       throw new createErrors.InternalServerError(err);
     }
 
+}
+const handler = middy.middy(createHandler);
+handler.use(middyLibs).use(middy.validator({inputSchema: createMembershipMemberSchema.schema}));
+module.exports = {
+    handler
 }

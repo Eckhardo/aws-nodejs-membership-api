@@ -1,0 +1,6 @@
+USER_KEY: user_
+USER_RANGE: profile
+MS_KEY: membership_
+MS_RANGE: meta
+MSM_RANGE: membershipMember_
+EVENT_RANGE: event_
