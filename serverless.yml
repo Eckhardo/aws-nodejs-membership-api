@@ -22,6 +22,7 @@ provider:
   iamRoleStatements:
     - ${file(resources/iam/iamMembershipTable.yml):MembershipTableIAM}
 custom:
+  authorizer: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:auth-service-${self:provider.stage}-auth
   UserTable:
     arn: !GetAtt UserTable.Arn
     name: !Ref UserTable
@@ -44,9 +45,9 @@ custom:
 
 functions:
   - ${file(resources/lambda/user/lambdas.yml)}
-  - ${file(resources/lambda/membership/lambdas.yml)}
-  - ${file(resources/lambda/event/lambdas.yml)}
-  - ${file(resources/lambda/membershipMember/lambdas.yml)}
+  # - ${file(resources/lambda/membership/lambdas.yml)}
+  # - ${file(resources/lambda/event/lambdas.yml)}
+  # - ${file(resources/lambda/membershipMember/lambdas.yml)}
 
 resources:
   Resources:

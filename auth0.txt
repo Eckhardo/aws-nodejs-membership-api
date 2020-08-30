@@ -1,0 +1,34 @@
+taerna@gmx.de/RudiKarg@75
+Tenant Domain: aige-membership.eu.auth0.com
+
+-> Application _> new Application -> Name:aige-membership
+-> Reiter Settings:
+-> Settings ( for React): Set http://localhost:3000 to
+- Allowed Callback URLs
+- Allowed Logout URLs
+- Allowed Web Origins
+
+Scroll down...
+Advanced Settings--> Grant Type---> Password
+SAVE
+
+Oben Rechts auf den Account Button: Settings Tab:
+-> Default Directory :Username-Password-Authentication
+SAVE
+
+
+New User: taerna  / Bananenflanke83
+
+curl --location --request POST 'https://aige-membership.eu.auth0.com/oauth/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=HhQsmUZu5bH21jR1Zfeq2mN0m1hhdFJL' \
+--data-urlencode 'username=taerna@gmx.de' \
+--data-urlencode 'password=RudiKarg@75' \
+--data-urlencode 'grant_type=password' \
+--data-urlencode 'scope=openid'
+
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImItaGlFN1Z6UlNMTllKOWFPZlEwayJ9.eyJuaWNrbmFtZSI6InRhZXJuYSIsIm5hbWUiOiJ0YWVybmFAZ214LmRlIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzA4MjRmZGExNDAyYjEyNGMzMTRjM2ZjMTQ2ZmZhMTliP3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGdGEucG5nIiwidXBkYXRlZF9hdCI6IjIwMjAtMDgtMzBUMTE6MDU6MjIuOTk0WiIsImVtYWlsIjoidGFlcm5hQGdteC5kZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly9haWdlLW1lbWJlcnNoaXAuZXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVmNGI4MWE2OGU0YTk1MDA2ODQxYTU1NSIsImF1ZCI6IkhoUXNtVVp1NWJIMjFqUjFaZmVxMm1OMG0xaGhkRkpMIiwiaWF0IjoxNTk4Nzg1NTIzLCJleHAiOjE1OTg4MjE1MjN9.bP2xzhNoeaOdq3wZH_X-MDqE9b6tznatngEd3SRE91PaEVYmvHka_3n-CPiMD_95ddx_hnGobNE-ejQ39e7kKBhdpSkiDS_GNtBC43WJ9KKfJ11GaW9nXd0KcZrlEYBZQwoZX32_LNrYQaYyXEM2DYYC8MG2jwYJCSSF3VhBgpHXL5luTaQ6WMgdFRfvwp_jjsA6BrFEBQ2MxaPFwnjoXQSo8HQX9EugDZm5Cyqio5S6nfztBhsdz_KumojgxBDKZkGRlPaSjKka2OtxJj3uVeYxyuCwdO6EmpassZ_wBoWFi80m1BM1iCzyyTENuyz5ax2j7o1c6DILkg80J7RcMQ
+
+Verify token on jwt.io WEbsite
+
+Private endpoint: https://v0xpt8fozd.execute-api.eu-central-1.amazonaws.com/dev/private
