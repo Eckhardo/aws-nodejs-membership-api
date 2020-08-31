@@ -17,6 +17,10 @@ const createHandler = async (event) => {
     const {item} = event.body;
     const user_name = item.user_name;
 
+    // receive email from lambda authorizer
+    const {email} = event.requestContext.authorizer;
+    console.log('email:', email);
+
     try {
         const theUser = await get.getUser(user_name);
         console.log('.... theUser', theUser);
@@ -25,6 +29,7 @@ const createHandler = async (event) => {
         }
         item.PK = process.env.HASH_KEY_PREFIX_USER + user_name;
         item.SK = process.env.SORT_KEY_USER_VALUE;
+        item.email = email;
 
         const params = {
             TableName: TABLE_NAME,

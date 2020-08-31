@@ -1,0 +1,8 @@
+###########  change remote git repository #################
+
+git remote set-url origin https://github.com/Eckhardo/aige-aws-react-graphql-marketplace.git
+git  branch --set-upstream-to origin/master master
+
+git remote get-url origin
+git remote -v
+
