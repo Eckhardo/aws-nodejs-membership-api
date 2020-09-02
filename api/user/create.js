@@ -7,7 +7,8 @@ const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), midd
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-
+const AWS = require('aws-sdk');
+const sqs = new AWS.SQS();
 
 /**
  * Create new user
@@ -16,14 +17,14 @@ const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const createHandler = async (event) => {
     const {item} = event.body;
     const user_name = item.user_name;
-
+    console.log('data from lambda authorizer:', event.requestContext.authorizer);
     // receive email from lambda authorizer
     const {email} = event.requestContext.authorizer;
-    console.log('email:', email);
+
+    console.log('email received from lambda authorizer:', email);
 
     try {
         const theUser = await get.getUser(user_name);
-        console.log('.... theUser', theUser);
         if (theUser) {
             throw new createErrors(400, `User with user name ${user_name}  already exists !`);
         }
@@ -37,7 +38,18 @@ const createHandler = async (event) => {
             ReturnValues: "NONE"
         };
         await dynamoDb.put(params).promise();
-        return util.make201Response(item);
+
+        const notifyNewUser =  sqs.sendMessage({
+            QueueUrl : process.env.MAIL_QUEUE_URL,
+            MessageBody: JSON.stringify({
+                subject: 'You are registered as a new user!',
+                recipient: email,
+                body:` Your username is ${item.user_name}, you live in ${item.city}`
+            })
+        }).promise();
+
+      await  Promise.all([notifyNewUser]);
+      return util.make201Response(item);
     } catch (err) {
         console.error('Error:', err);
         throw new createErrors(err);

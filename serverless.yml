@@ -10,8 +10,8 @@ provider:
   endpointType: regional
   environment:
     NODE_PATH: '/:/opt/node_modules'
-    MAIL_QUEUE_URL: ${self:custom.isOffline}
-    IS_OFFLINE: ${self:custom.MailQueue.url}
+    IS_OFFLINE: ${self:custom.isOffline}
+    MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
     CONFIG_USER_TABLE: ${self:custom.UserTable.name}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
     HASH_KEY_PREFIX_USER: ${file(resources/.config.yml):USER_KEY}
