@@ -10,7 +10,8 @@ provider:
   endpointType: regional
   environment:
     NODE_PATH: '/:/opt/node_modules'
-    IS_OFFLINE: ${self:custom.isOffline}
+    MAIL_QUEUE_URL: ${self:custom.isOffline}
+    IS_OFFLINE: ${self:custom.MailQueue.url}
     CONFIG_USER_TABLE: ${self:custom.UserTable.name}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
     HASH_KEY_PREFIX_USER: ${file(resources/.config.yml):USER_KEY}
@@ -21,16 +22,24 @@ provider:
     SORT_KEY_PREFIX_MEMBERSHIP_EVENT: ${file(resources/.config.yml):EVENT_RANGE}
   iamRoleStatements:
     - ${file(resources/iam/iamMembershipTable.yml):MembershipTableIAM}
+    - ${file(resources/iam/iamMailQueue.yml):MailQueueIAM}
 custom:
   authorizer: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:auth-service-${self:provider.stage}-auth
+  MailQueue:
+    arn: ${cf:aige-notification-service-${self:provider.stage}.MailQueueArn}
+    url: ${cf:aige-notification-service-${self:provider.stage}.MailQueueUrl}
+
+  # Use  arn and name as references in Iam policy
   UserTable:
     arn: !GetAtt UserTable.Arn
     name: !Ref UserTable
+  # can be deleted.........
   offlineTableName:
     membership: 'aige-membership'
   endpoints:
     dynamodb-url: 'http://localhost:8000'
   isOffline: false
+  #............... can be deleted
   dynamodb:
     start:
       migrate: true
