@@ -14,7 +14,8 @@ const getUserName = (headers) => {
 // Required for CORS support to work
 const getResponseHeaders = () => {
     return {
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
     }
 }
 

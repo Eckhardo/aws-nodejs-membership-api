@@ -28,7 +28,17 @@ custom:
   MailQueue:
     arn: ${cf:aige-notification-service-${self:provider.stage}.MailQueueArn}
     url: ${cf:aige-notification-service-${self:provider.stage}.MailQueueUrl}
-
+  allowedHeaders:
+    - Accept
+    - Content-Type
+    - Content-Length
+    - Authorization
+    - X-Amz-Date
+    - X-Api-Key
+    - X-Amz-Security-Token
+    - X-Amz-User-Agent
+    - app_user_id
+    - app_user_name
   # Use  arn and name as references in Iam policy
   UserTable:
     arn: !GetAtt UserTable.Arn

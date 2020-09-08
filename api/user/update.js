@@ -5,7 +5,7 @@ const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const get = require('./get')
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(),middy.httpCors()];
 const updateUserSchema = require('./../../lib/json-schema/user/updateUser');
 
 

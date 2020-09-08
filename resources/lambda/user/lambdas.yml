@@ -30,7 +30,6 @@ create-user:
         path: user
         method: post
         cors: true
-        authorizer: ${self:custom.authorizer}
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
 
@@ -42,7 +41,6 @@ update-user:
         path: user
         method: put
         cors: true
-        authorizer: ${self:custom.authorizer}
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
 
@@ -54,6 +52,5 @@ delete-user:
         path: user/{username}
         method: delete
         cors: true
-        authorizer: ${self:custom.authorizer}
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }

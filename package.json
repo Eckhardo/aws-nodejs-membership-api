@@ -16,6 +16,7 @@
   "author": "Eckhard Kirschning",
   "license": "ISC",
   "dependencies": {
+    "@middy/http-cors": "^1.4.0",
     "underscore": "^1.10.2"
   },
   "devDependencies": {

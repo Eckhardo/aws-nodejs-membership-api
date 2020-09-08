@@ -8,7 +8,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="auth-service" />
-    <orderEntry type="module" module-name="aige-notification-service" />
   </component>
 </module>
