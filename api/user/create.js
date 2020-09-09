@@ -13,6 +13,10 @@ const AWS = require('aws-sdk');
 /**
  * Create new user
  * Route: POST /user/
+ *
+ *
+ * A Lambda authorizer for auth0 authentication is deactivated: THus the routine to put  a message
+ * in the SQS message queue is uncommented.
  */
 const createHandler = async (event) => {
     const {item} = event.body;
@@ -26,7 +30,11 @@ const createHandler = async (event) => {
     try {
         const theUser = await get.getUser(user_name);
         if (theUser) {
-            throw new createErrors(400, `User with user name ${user_name}  already exists !`);
+             return {
+                statusCode: 400,
+                headers: util.getResponseHeaders(),
+                body: JSON.stringify(`User with user name ${user_name}  already exists !`)
+            };
         }
         item.PK = process.env.HASH_KEY_PREFIX_USER + user_name;
         item.SK = process.env.SORT_KEY_USER_VALUE;
