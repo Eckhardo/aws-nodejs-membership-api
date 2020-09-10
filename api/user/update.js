@@ -25,8 +25,11 @@ const updateHandler = async (event) => {
         //validate input against db
         let user = await get.getUser(user_name);
         if (!user) {
-            throw  new createError(400, `User with user name ${user_name}  does not exist !`);
-        }
+            return {
+                statusCode: 400,
+                headers: util.getResponseHeaders(),
+                body: JSON.stringify(`User with user name ${user_name}  does not exist !`)
+            };       }
 
         const params = {
             TableName: TABLE_NAME,

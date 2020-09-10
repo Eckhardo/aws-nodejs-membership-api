@@ -5,7 +5,7 @@ const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(),middy.httpCors()];
 const createMsSchema = require('./../../lib/json-schema/membership/createMembership');
 /**
  * Create new membership
