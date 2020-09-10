@@ -15,7 +15,7 @@ const updateMsSchema = require('./../../lib/json-schema/membership/updateMembers
  */
 const updateHandler = async (event) => {
 
-    const item = event.body;
+    const {item} = event.body;
     const year = item.membership_year;
     util.validate(year);
     const pk = HASH_KEY_PREFIX + year;
