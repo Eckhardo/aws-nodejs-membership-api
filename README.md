@@ -13,6 +13,6 @@ a distinct serverless.yml IaaC configuration file and a distinct
 package.json file.
 
 Workflow is as follows When a new User logs in, he connects against auth0 to
-receieve a JSON WEb Token. This token is passed to the API Gateway
+receive a JSON Web Token. This token is passed to the API Gateway
 where a Lambda Authorizer validates the token against auth0. In case the token is valid, the user will be 
 forwarded to the Lambda proxy function.
