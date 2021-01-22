@@ -1,14 +1,14 @@
 aws dynamodb list-tables --endpoint-url http://localhost:8000
-aws dynamodb scan --table-name aige-user --endpoint-url http://localhost:8000
+aws dynamodb scan --table-name aige-membership-dev --endpoint-url http://localhost:8000
 
 ##### query events for user ######
-aws dynamodb query --table-name aige-user  --key-condition-expression ":pk = PK AND begins_with(SK , :sk)" --expression-attribute-values file://testdata/clidata/queryEvent.json --endpoint-url http://localhost:8000
+aws dynamodb query --table-name aige-membership-dev  --key-condition-expression ":pk = PK AND begins_with(SK , :sk)" --expression-attribute-values file://testdata/clidata/queryEvent.json --endpoint-url http://localhost:8000
 
 ##### query memberships for 2020 ######
-aws dynamodb query --table-name aige-user  --key-condition-expression ":pk = PK AND begins_with(SK , :sk)" --expression-attribute-values file://testdata/cliData/membership/queryMembershipByPK.json --endpoint-url http://localhost:8000
+aws dynamodb query --table-name aige-membership-dev  --key-condition-expression ":pk = PK AND begins_with(SK , :sk)" --expression-attribute-values file://testdata/cliData/membership/queryMembershipByPK.json --endpoint-url http://localhost:8000
 
 ##### query  memberships for User Eckhardo ######
-aws dynamodb query --table-name aige-user  --index-name GSI1-SK-Index  --key-condition-expression ":gsi1 = GSI1 AND begins_with(SK , :sk)"  --expression-attribute-values file://testdata/clidata/membership/queryMembershipByGSI.json --endpoint-url http://localhost:8000
+aws dynamodb query --table-name aige-membership-dev  --index-name GSI1-SK-Index  --key-condition-expression ":gsi1 = GSI1 AND begins_with(SK , :sk)"  --expression-attribute-values file://testdata/clidata/membership/queryMembershipByGSI.json --endpoint-url http://localhost:8000
 
 
 
