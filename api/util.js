@@ -92,7 +92,8 @@ const makeAllResponse = (data) => {
         };
     } else {
         return {
-            statusCode: 404,
+            statusCode: 204,
+            body:"No content",
             headers: getResponseHeaders()
         };
     }

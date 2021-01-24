@@ -3,7 +3,8 @@
 const util = require('../util');
 const databaseManager = require('../dynamoDbConnect');
 const createError = require('http-errors');
-const TABLE_NAME = process.env.CONFIG_USER_TABLE;
+const TABLE_NAME =process.env.CONFIG_USER_TABLE_OFFLINE;
+
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
@@ -15,7 +16,9 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.
  * Route: GET /user/
  */
 const getAllHandler = async () => {
-    console.log("getAllHandler: start");
+    console.log("getAllHandler: Table Name::" + JSON.stringify(TABLE_NAME));
+    console.log("isOffline::" + process.env.IS_OFFLINE);
+
     const params = {
         TableName: TABLE_NAME,
         FilterExpression: '#sk = :sk_value',
@@ -32,8 +35,7 @@ const getAllHandler = async () => {
         throw new createError.InternalServerError(err);
     }
 }
-const handler = middy.middy(getAllHandler);
-handler.use(middyLibs);
+const handler = middy.middy(getAllHandler).use(middyLibs);
 
 module.exports = {
     handler

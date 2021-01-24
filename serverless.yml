@@ -13,6 +13,7 @@ provider:
     IS_OFFLINE: ${self:custom.isOffline}
     MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
     CONFIG_USER_TABLE: ${self:custom.UserTable.name}
+    CONFIG_USER_TABLE_OFFLINE: ${self:custom.offlineTableName.membership}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
     HASH_KEY_PREFIX_USER: ${file(resources/.config.yml):USER_KEY}
     SORT_KEY_USER_VALUE: ${file(resources/.config.yml):USER_RANGE}
@@ -45,10 +46,10 @@ custom:
     name: !Ref UserTable
   # can be deleted.........
   offlineTableName:
-    membership: 'aige-membership'
+    membership: aige-membership-${self:provider.stage}
   endpoints:
     dynamodb-url: 'http://localhost:8000'
-  isOffline: false
+  isOffline: true
   #............... can be deleted
   dynamodb:
     start:
@@ -59,14 +60,14 @@ custom:
     seed:
       domain:
         sources:
-          - table:  ${self:custom.offlineTableName.membership}-${self:provider.stage}
-            rawsources: [./testdata/seeddata/aige-user.json]
+          - table:  ${self:custom.offlineTableName.membership}
+            rawsources: [test/testdata/seeddata/aige-user.json]
 
 functions:
   - ${file(resources/lambda/user/lambdas.yml)}
   - ${file(resources/lambda/membership/lambdas.yml)}
-  # - ${file(resources/lambda/event/lambdas.yml)}
-  # - ${file(resources/lambda/membershipMember/lambdas.yml)}
+  - ${file(resources/lambda/event/lambdas.yml)}
+  - ${file(resources/lambda/membershipMember/lambdas.yml)}
 
 resources:
   Resources:

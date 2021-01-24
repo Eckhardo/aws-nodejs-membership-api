@@ -10,8 +10,8 @@ exports.handler = async (event, context) => {
         const eventsToClose = await endedEvents.handler();
         console.log("eventsToClose: result", eventsToClose);
         // this is heavy.....
-        const closedPromises = eventsToClose.map(ev => {
-            return closeEvents.handler(ev);
+        const closedPromises = eventsToClose.map(event => {
+            return closeEvents.handler(event);
         })
         if (closedPromises) {
             console.log("Promise.all: called");

@@ -1,0 +1,17 @@
+{
+  "body": {
+    "item": {
+      "starting_date": "2022-08-25T08:00:00.999Z",
+      "comments": [
+        "Anschl. Grillen",
+        "Arbeithandschuhe mitbringen"
+      ],
+      "SK": "event_Arbeitsdienst-1",
+      "event_name": "Arbeitsdienst-1",
+      "PK":"membership_2022",
+      "ending_date":"2022-08-25T12: 00:00.999Z",
+      "meeting_point":"Elsensee Huette",
+      "event_status":"OPEN"
+    }
+  }
+}

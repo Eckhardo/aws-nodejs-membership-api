@@ -4,7 +4,7 @@ const get = require('./get');
 const createErrors = require('http-errors');
 const createUserSchema = require('./../../lib/json-schema/user/createUser');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(),middy.httpCors()];
-const TABLE_NAME = process.env.CONFIG_USER_TABLE;
+const TABLE_NAME =process.env.CONFIG_USER_TABLE_OFFLINE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const AWS = require('aws-sdk');
@@ -21,7 +21,7 @@ const AWS = require('aws-sdk');
 const createHandler = async (event) => {
     const {item} = event.body;
     const user_name = item.user_name;
-    console.log('data from lambda authorizer:', event.requestContext.authorizer);
+  //  console.log('data from lambda authorizer:', event.requestContext.authorizer);
  /*   // receive email from lambda authorizer
     const {email} = event.requestContext.authorizer;
 

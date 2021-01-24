@@ -2,7 +2,7 @@
   "name": "aws-nodejs-membership-api",
   "version": "1.0.0",
   "description": "An AWS Serverless Backend Application comprising of different AWS Services like Lambda, API Gateway, Cognito, DynamoDB",
-  "main": "handler.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

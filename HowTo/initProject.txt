@@ -15,5 +15,6 @@ serverless create --template aws-nodejs --name aws-nodejs-membership-api -p aws-
 
 10.) sls dynamodb install
 11.)sls dynamodb start -s dev
+12.) sls offline start
 
 

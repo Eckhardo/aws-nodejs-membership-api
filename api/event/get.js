@@ -4,7 +4,7 @@ const util = require('../util.js');
 
 const databaseManager = require('../dynamoDbConnect');
 
-const TABLE_NAME = process.env.CONFIG_USER_TABLE;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE_OFFLINE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;
@@ -19,8 +19,8 @@ const getAllHandler = async (event) => {
     const year = decodeURIComponent(event.pathParameters.year);
     util.validate(year);
     const pk = HASH_KEY_PREFIX + year;
-    console.log("getAll:: ", pk);
-
+    console.log("getAll:: PK ", pk);
+    console.log("getAll:: SK begins with ", SORT_KEY_PREFIX);
     const params = {
         TableName: TABLE_NAME,
         KeyConditionExpression: 'PK = :pk and begins_with(SK, :sk)',
@@ -29,7 +29,7 @@ const getAllHandler = async (event) => {
 
     try {
         let data = await dynamoDb.query(params).promise();
-        return util.makeAllResponse(data);
+         return util.makeAllResponse(data);
     } catch (err) {
         util.makeErrorResponse(err);
     }

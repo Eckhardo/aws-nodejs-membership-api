@@ -1,0 +1,15 @@
+1.)  go to DOS console and run:
+sls dynamodb start -s dev
+2.) Go to serverless.yml and set env variables:
+-  isOffline:true
+-  CONFIG_USER_TABLE_OFFLINE: ${self:custom.offlineTableName.membership}
+3.) Go to lambda function of choice and set:
+const TABLE_NAME =process.env.CONFIG_USER_TABLE_OFFLINE;
+
+############## START single Lambda function ###############################
+
+4a.) Invoke lambda handlers locally (Example with test ata):
+sls invoke local  -f get-user  --path test/testdata/clidata/user/invokeGetUser.json
+
+############## START whole Backend ########################################
+4b.) sls offline start (do not start local dynmamodb, will be done by serverless.yml)
