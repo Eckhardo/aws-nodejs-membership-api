@@ -70,7 +70,7 @@ const makeSingleResponse = (data) => {
         };
     } else {
         return {
-            statusCode: 404,
+            statusCode: 204,
             headers: getResponseHeaders()
         };
     }

@@ -1,5 +1,5 @@
 const util = require('../util.js');
-const TABLE_NAME = process.env.CONFIG_USER_TABLE;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE_OFFLINE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;

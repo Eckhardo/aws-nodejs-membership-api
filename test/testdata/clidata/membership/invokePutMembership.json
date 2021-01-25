@@ -1,0 +1,14 @@
+{
+  "body": {
+    "item": {
+      "membership_year": "2022",
+      "membership_name": "Saison 2022",
+      "comments": [
+        "Naechste Saison",
+        "Beitrag erhoeht",
+        "Auf nach Uetersen"
+      ],
+      "is_active": false
+    }
+  }
+}
