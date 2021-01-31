@@ -1,6 +1,6 @@
 const util = require('./../util');
 const databaseManager = require('../dynamoDbConnect');
-const TABLE_NAME = process.env.CONFIG_USER_TABLE_OFFLINE;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;

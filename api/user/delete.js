@@ -1,5 +1,5 @@
 const util = require('../util.js');
-const TABLE_NAME =process.env.CONFIG_USER_TABLE_OFFLINE;
+const TABLE_NAME =process.env.CONFIG_USER_TABLE;
 
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
@@ -11,24 +11,21 @@ const createErrors = require('http-errors');
 
 const deleteHandler = async (event) => {
 
-    const username = decodeURIComponent(event.pathParameters.username);
-    const pk = HASH_KEY_PREFIX + username;
+    let  {username} = event.pathParameters;
+
     const params = {
         TableName: TABLE_NAME,
-        Key: {PK: pk, SK: SORT_KEY_VALUE}
+        Key: {PK: HASH_KEY_PREFIX + username, SK: SORT_KEY_VALUE}
     };
     try {
         await dynamoDb.delete(params).promise();
-        return {
-            statusCode: 200,
-            headers: util.getResponseHeaders()
-        };
+
     } catch (err) {
-        throw new createErrors.InternalServerError();
+        throw new createErrors.InternalServerError(err);
     }
+    return {
+        statusCode: 200,
+        headers: util.getResponseHeaders()
+    };
 }
-const handler = middy.middy(deleteHandler);
-handler.use(middyLibs);
-module.exports = {
-    handler
-}
+module.exports.handler = middy.middy(deleteHandler).use(middyLibs);

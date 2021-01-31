@@ -1,12 +1,12 @@
 const util = require('../util.js');
-const TABLE_NAME =process.env.CONFIG_USER_TABLE_OFFLINE;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const get = require('./get')
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(),middy.httpCors()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const updateUserSchema = require('./../../lib/json-schema/user/updateUser');
 
 
@@ -19,18 +19,16 @@ const updateUserSchema = require('./../../lib/json-schema/user/updateUser');
  */
 
 const updateHandler = async (event) => {
-    console.log("update  user.... started");
-    const {item} = event.body;
-    const user_name = item.user_name;
+    let updatedUser;
+    let {item} = event.body;
     try {
-        //validate input against db
-        let user = await get.getUser(user_name);
+        let user = await get.getUser(item.user_name);
         if (!user) {
             return {
-                statusCode: 400,
-                headers: util.getResponseHeaders(),
-                body: JSON.stringify(`User with user name ${user_name}  does not exist !`)
-            };       }
+                statusCode: 204,
+                body: JSON.stringify(`User with user name ${item.user_name}  does not exist !`)
+            };
+        }
 
         const params = {
             TableName: TABLE_NAME,
@@ -40,15 +38,17 @@ const updateHandler = async (event) => {
             ReturnValues: "UPDATED_NEW"
         };
 
-        const data = await dynamoDb.update(params).promise();
-        return util.makeSingleResponseAttributes(data.Attributes);
+        updatedUser = await dynamoDb.update(params).promise();
+
     } catch (err) {
         console.error('Error:', err);
-        throw new createError(err);
+        throw new createError.InternalServerError(err);
     }
+
+    return util.makeSingleResponseAttributes(updatedUser.Attributes);
 }
 
-function getUpdateExpression() {
+const getUpdateExpression =() =>{
     let expression = [];
     expression.push([' SET first_name = :fname', ' last_name= :lname']);
     expression.push([' city = :city', ' zip = :zip', ' address = :address']);
@@ -57,7 +57,7 @@ function getUpdateExpression() {
     return expression.toString();
 }
 
-function getUpdateExpressionValues(user) {
+const  getUpdateExpressionValues =(user) =>{
     return {
         ":fname": user.first_name,
         ":lname": user.last_name,
@@ -72,9 +72,6 @@ function getUpdateExpressionValues(user) {
     };
 }
 
-const handler = middy.middy(updateHandler);
-handler.use(middyLibs).use(middy.validator({inputSchema: updateUserSchema.schema}));
-
-module.exports = {
-    handler
-}
+module.exports.handler = middy.middy(updateHandler)
+    .use(middyLibs)
+    .use(middy.validator({inputSchema: updateUserSchema.schema}));

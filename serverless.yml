@@ -8,10 +8,13 @@ provider:
   memorySize: 256
   timeout: 5
   endpointType: regional
+  apiGateway:
+    shouldStartNameWithService: true
+  lambdaHashingVersion: 20201221
   environment:
     NODE_PATH: '/:/opt/node_modules'
     IS_OFFLINE: ${self:custom.isOffline}
-    MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
+    # MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
     CONFIG_USER_TABLE: ${self:custom.UserTable.name}
     CONFIG_USER_TABLE_OFFLINE: ${self:custom.offlineTableName.membership}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
@@ -23,12 +26,12 @@ provider:
     SORT_KEY_PREFIX_MEMBERSHIP_EVENT: ${file(resources/.config.yml):EVENT_RANGE}
   iamRoleStatements:
     - ${file(resources/iam/iamMembershipTable.yml):MembershipTableIAM}
-    - ${file(resources/iam/iamMailQueue.yml):MailQueueIAM}
+    # - ${file(resources/iam/iamMailQueue.yml):MailQueueIAM}
 custom:
-  authorizer: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:auth-service-${self:provider.stage}-auth
-  MailQueue:
-    arn: ${cf:aige-notification-service-${self:provider.stage}.MailQueueArn}
-    url: ${cf:aige-notification-service-${self:provider.stage}.MailQueueUrl}
+  # authorizer: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:auth-service-${self:provider.stage}-auth
+  # MailQueue:
+    # arn: ${cf:aige-notification-service-${self:provider.stage}.MailQueueArn}
+    # url: ${cf:aige-notification-service-${self:provider.stage}.MailQueueUrl}
   allowedHeaders:
     - Accept
     - Content-Type
@@ -49,7 +52,7 @@ custom:
     membership: aige-membership-${self:provider.stage}
   endpoints:
     dynamodb-url: 'http://localhost:8000'
-  isOffline: true
+  isOffline: false
   #............... can be deleted
   dynamodb:
     start:

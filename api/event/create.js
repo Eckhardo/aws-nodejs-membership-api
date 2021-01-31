@@ -1,7 +1,7 @@
 const util = require('../util.js');
 const get = require('./get')
 const createEventSchema = require('../../lib/json-schema/event/createEvent');
-const TABLE_NAME = process.env.CONFIG_USER_TABLE_OFFLINE;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;
 const databaseManager = require('../dynamoDbConnect');
@@ -56,9 +56,4 @@ const createHandler = async (event) => {
 }
 
 
-const handler = middy.middy(createHandler);
-handler.use(middyLibs).use(middy.validator({inputSchema: createEventSchema.schema}));
-
-module.exports = {
-    handler
-}
+module.exports.handler = middy.middy(createHandler).use(middyLibs).use(middy.validator({inputSchema: createEventSchema.schema}));

@@ -1,6 +1,7 @@
 ## deploy to cloud formation with verbose information ######
 sls deploy -v
 
+sls deploy -f get-membershipMember -v
 ## remove the cloud formation stack ######
 sls remove -v
 

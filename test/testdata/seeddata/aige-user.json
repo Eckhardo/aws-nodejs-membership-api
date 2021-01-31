@@ -169,7 +169,7 @@
 		"GSI1": {
 			"S": "user_Maikeli"
 		},
-		"role": {
+		"position_role": {
 			"S": "Kassenwart"
 		},
 		"fees_paid": {
@@ -189,7 +189,7 @@
 		"GSI1": {
 			"S": "user_Eckhardo"
 		},
-		"role": {
+		"position_role": {
 			"S": "Gewaesserwart"
 		},
 		"fees_paid": {

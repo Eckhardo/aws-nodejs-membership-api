@@ -1,0 +1,11 @@
+{
+  "body": {
+    "item": {
+      "user_name": "Eckhardo",
+      "membership_year": "2022",
+      "position_role": "Zielscheibe",
+      "fees_paid": true,
+      "is_active": true
+    }
+  }
+}

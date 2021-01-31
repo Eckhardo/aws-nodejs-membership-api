@@ -9,15 +9,15 @@ const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
 const deleteHandler = async (event) => {
-    const year = decodeURIComponent(event.pathParameters.year);
-    const username = decodeURIComponent(event.pathParameters.username);
+    const {membership_year} = event.pathParameters;
+    const {user_name} = event.pathParameters;
 
-    util.validate(year);
-    util.validate(username);
+    util.validate(membership_year);
+    util.validate(user_name);
 
-    const pk = HASH_KEY_PREFIX + year;
-    const sk = SORT_KEY_PREFIX + username;
-    const gsi = GSI_PREFIX + username;
+    const pk = HASH_KEY_PREFIX + membership_year;
+    const sk = SORT_KEY_PREFIX + user_name;
+    const gsi = GSI_PREFIX + user_name;
     console.log("PK:", pk);
     console.log("SK:", sk);
     console.log("GSI:", gsi);
@@ -36,8 +36,5 @@ const deleteHandler = async (event) => {
     }
 }
 
-const handler = middy.middy(deleteHandler);
-handler.use(middyLibs);
-module.exports = {
-    handler
-}
+module.exports.handler = middy.middy(deleteHandler).use(middyLibs);
+

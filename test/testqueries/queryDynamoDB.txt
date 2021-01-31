@@ -8,7 +8,12 @@ aws dynamodb query --table-name aige-membership-dev  --key-condition-expression 
 aws dynamodb query --table-name aige-membership-dev  --key-condition-expression ":pk = PK AND begins_with(SK , :sk)" --expression-attribute-values file://testdata/cliData/membership/queryMembershipByPK.json --endpoint-url http://localhost:8000
 
 ##### query  memberships for User Eckhardo ######
-aws dynamodb query --table-name aige-membership-dev  --index-name GSI1-SK-Index  --key-condition-expression ":gsi1 = GSI1 AND begins_with(SK , :sk)"  --expression-attribute-values file://testdata/clidata/membership/queryMembershipByGSI.json --endpoint-url http://localhost:8000
+aws dynamodb query --table-name aige-membership-dev  --index-name GSI1-SK-Index  --key-condition-expression ":gsi1 = GSI1 AND begins_with(SK , :sk)"  --expression-attribute-values file://test/testdata/clidata/membership/queryMembershipByGSI.json --endpoint-url http://localhost:8000
+
+
+##### query  events for Membership by Status=OPEN ######
+aws dynamodb query --table-name aige-membership-dev  --index-name statusEndingDate-Index  --key-condition-expression "event_status =:event_status" --expression-attribute-values  file://test/testdata/clidata/event/queryEventsByGSIStatusPK.json --endpoint-url http://localhost:8000
+
 
 
 

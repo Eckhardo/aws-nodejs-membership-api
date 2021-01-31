@@ -4,7 +4,7 @@ const get = require('./get');
 const createErrors = require('http-errors');
 const createUserSchema = require('./../../lib/json-schema/user/createUser');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(),middy.httpCors()];
-const TABLE_NAME =process.env.CONFIG_USER_TABLE_OFFLINE;
+const TABLE_NAME =process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const AWS = require('aws-sdk');
@@ -19,8 +19,8 @@ const AWS = require('aws-sdk');
  * in the SQS message queue is uncommented.
  */
 const createHandler = async (event) => {
-    const {item} = event.body;
-    const user_name = item.user_name;
+    let {item} = event.body;
+
   //  console.log('data from lambda authorizer:', event.requestContext.authorizer);
  /*   // receive email from lambda authorizer
     const {email} = event.requestContext.authorizer;
@@ -28,15 +28,14 @@ const createHandler = async (event) => {
     console.log('email received from lambda authorizer:', email);
 */
     try {
-        const theUser = await get.getUser(user_name);
+        const theUser = await get.getUser(item.user_name);
         if (theUser) {
              return {
                 statusCode: 400,
-                headers: util.getResponseHeaders(),
-                body: JSON.stringify(`User with user name ${user_name}  already exists !`)
+                 body: JSON.stringify(`User with user name ${item.user_name}  already exists !`)
             };
         }
-        item.PK = process.env.HASH_KEY_PREFIX_USER + user_name;
+        item.PK = process.env.HASH_KEY_PREFIX_USER + item.user_name;
         item.SK = process.env.SORT_KEY_USER_VALUE;
      //   item.email = email;
 
@@ -58,17 +57,14 @@ const createHandler = async (event) => {
 
       await  Promise.all([notifyNewUser]);
  */
-        return util.make201Response(item);
+
     } catch (err) {
         console.error('Error:', err);
-        throw new createErrors(err);
+        throw new createErrors.InternalServerError(err);
     }
-
+    return util.make201Response(item);
 }
-const handler = middy.middy(createHandler);
-handler.use(middyLibs).use(middy.validator({inputSchema: createUserSchema.schema}));
+module.exports.handler= middy.middy(createHandler)
+    .use(middyLibs)
+    .use(middy.validator({inputSchema: createUserSchema.schema}));
 
-
-module.exports = {
-    handler
-}

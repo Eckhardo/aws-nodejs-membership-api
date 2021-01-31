@@ -20,17 +20,17 @@
     "underscore": "^1.10.2"
   },
   "devDependencies": {
-    "aws-sdk": "^2.737.0",
-    "@middy/core": "^1.2.0",
-    "@middy/http-error-handler": "^1.2.0",
-    "@middy/http-event-normalizer": "^1.2.0",
-    "@middy/http-json-body-parser": "^1.2.0",
-    "@middy/validator": "^1.2.0",
+    "@middy/core": "^1.5.2",
+    "@middy/http-error-handler": "^1.5.2",
+    "@middy/http-event-normalizer": "^1.5.2",
+    "@middy/http-json-body-parser": "^1.5.2",
+    "@middy/validator": "^1.5.2",
+    "aws-sdk": "^2.834.0",
     "http-errors": "^1.8.0",
-    "serverless": "^1.79.0",
+    "serverless": "^2.21.1",
     "serverless-dynamodb-local": "^0.2.39",
-    "serverless-http": "^2.5.0",
-    "serverless-offline": "^6.5.0",
+    "serverless-http": "^2.7.0",
+    "serverless-offline": "^6.8.0",
     "serverless-pseudo-parameters": "^2.5.0"
   }
 }

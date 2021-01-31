@@ -49,7 +49,7 @@
               KeyType: RANGE
 
           Projection:
-            ProjectionType: ALL
+            ProjectionType: KEYS_ONLY
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1

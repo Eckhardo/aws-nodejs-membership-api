@@ -1,5 +1,5 @@
 const util = require('../util.js');
-const TABLE_NAME = process.env.CONFIG_USER_TABLE_OFFLINE;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
@@ -29,7 +29,7 @@ const createHandler = async (event) => {
 
     try {
         let data = await dynamoDb.put(params).promise();
-        return util.make201Response(item);
+        return util.make201Response(data);
     } catch (err) {
         util.makeErrorResponse(err);
     }
