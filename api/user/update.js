@@ -35,7 +35,7 @@ const updateHandler = async (event) => {
             Key: {PK: item.PK, SK: process.env.SORT_KEY_USER_VALUE},
             UpdateExpression: getUpdateExpression(),
             ExpressionAttributeValues: getUpdateExpressionValues(item),
-            ReturnValues: "UPDATED_NEW"
+            ReturnValues: "NONE"
         };
 
         updatedUser = await dynamoDb.update(params).promise();
@@ -45,7 +45,9 @@ const updateHandler = async (event) => {
         throw new createError.InternalServerError(err);
     }
 
-    return util.makeSingleResponseAttributes(updatedUser.Attributes);
+    return {
+        statusCode: 200
+    }
 }
 
 const getUpdateExpression =() =>{

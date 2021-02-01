@@ -55,8 +55,7 @@ const getUser = async (userName) => {
     }
     return user;
 }
-const handler = middy.middy(getOneHandler);
-handler.use(middyLibs);
+const handler = middy.middy(getOneHandler).use(middyLibs);
 
 module.exports = {
     handler,

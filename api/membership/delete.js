@@ -1,11 +1,11 @@
-const util = require('../util.js');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(),middy.httpCors()];
+const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 
 
 const deleteHandler = async (event) => {
@@ -17,19 +17,15 @@ const deleteHandler = async (event) => {
         Key: {PK: pk, SK: SORT_KEY_VALUE}
     };
     try {
-        const result = await dynamoDb.delete(params).promise();
-        return {
-            statusCode: 200,
-            headers: util.getResponseHeaders()
-        };
+        await dynamoDb.delete(params).promise();
+
     } catch (err) {
-        return util.makeErrorResponse(err);
+        throw  new createError.InternalServerError(err);
     }
+    return {
+        statusCode: 200
+    };
 }
 
+module.exports.handler = middy.middy(deleteHandler).use(middyLibs);
 
-const handler = middy.middy(deleteHandler);
-handler.use(middyLibs);
-module.exports = {
-    handler
-}

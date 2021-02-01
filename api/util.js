@@ -56,32 +56,22 @@ const makeSingleResponseAttributes = (attributes) => {
     } else {
         return {
             statusCode: 404,
-            headers: getResponseHeaders()
         };
     }
 }
 const makeSingleResponse = (data) => {
     if (!_.isEmpty(data.Items)) {
-        console.log("result not empty ");
         return {
             statusCode: 200,
-            headers: getResponseHeaders(),
-            body: JSON.stringify(data.Items[0])
+             body: JSON.stringify(data.Items[0])
         };
     } else {
         return {
-            statusCode: 204,
-            headers: getResponseHeaders()
+            statusCode: 404
         };
     }
 }
-const make201Response = (item) => {
-    return {
-        statusCode: 201,
-        headers: getResponseHeaders(),
-        body: JSON.stringify(item)
-    };
-}
+
 
 const makeAllResponse = (data) => {
     if (!_.isEmpty(data.Items)) {
@@ -92,9 +82,7 @@ const makeAllResponse = (data) => {
         };
     } else {
         return {
-            statusCode: 204,
-            body:"No content",
-            headers: getResponseHeaders()
+            statusCode: 204
         };
     }
 }
@@ -106,8 +94,7 @@ module.exports = {
     makeErrorResponse,
     makeSingleResponse,
     makeSingleResponseAttributes,
-    make201Response,
-    makeAllResponse,
+     makeAllResponse,
     validate,
     validateItem
 }

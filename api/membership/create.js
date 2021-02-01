@@ -1,9 +1,11 @@
-const util = require('../util.js');
+
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
 const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+const util = require('../util.js');
+const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(),middy.httpCors()];
 const createMsSchema = require('./../../lib/json-schema/membership/createMembership');
@@ -29,14 +31,18 @@ const createHandler = async (event) => {
 
     try {
         let data = await dynamoDb.put(params).promise();
-        return util.make201Response(data);
+
     } catch (err) {
-        util.makeErrorResponse(err);
+        throw new createError.InternalServerError(err);
+
+    }
+    return {
+        statusCode: 201
     }
 
+
 }
-const handler = middy.middy(createHandler);
-handler.use(middyLibs).use(middy.validator({inputSchema: createMsSchema.schema}));
-module.exports = {
-    handler
-}
+module.exports.handler = middy
+    .middy(createHandler)
+    .use(middyLibs)
+    .use(middy.validator({inputSchema: createMsSchema.schema}));

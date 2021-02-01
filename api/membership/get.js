@@ -28,6 +28,13 @@ const getAllHandler = async () => {
     }
     return util.makeAllResponse(memberships);
 }
+
+
+/**
+ *
+ * @param event
+ * @returns {Promise<{body: string, statusCode: number}>}
+ */
 const getOneHandler = async (event) => {
     let myMembership;
     const {year} = event.pathParameters;
@@ -49,17 +56,13 @@ const getOneHandler = async (event) => {
         throw new createError.NotFound(`Membership for year "${year}" does not exist !`)
     }
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify(myMembership)
-    };
+    return util.makeSingleResponse(myMembership);
+
 
 }
 
-const getOne = middy.middy(getOneHandler);
-getOne.use(middyLibs);
-const getAll = middy.middy(getAllHandler);
-getAll.use(middyLibs);
+const getOne = middy.middy(getOneHandler).use(middyLibs);
+const getAll = middy.middy(getAllHandler).use(middyLibs);
 
 module.exports = {
     getAll,
