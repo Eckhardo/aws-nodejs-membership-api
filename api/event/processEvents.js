@@ -17,13 +17,12 @@ exports.handler = async (event, context) => {
             console.log("Promise.all: called");
             await Promise.all(closedPromises);
         }
-        return {
-            statusCode: 200,
-            headers: util.getResponseHeaders()
-        };
+
     } catch (e) {
         console.error(e);
         util.makeErrorResponse(e);
     }
-
+    return {
+        statusCode: 200
+    };
 }

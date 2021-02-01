@@ -3,7 +3,7 @@
 const util = require('../util');
 const databaseManager = require('../dynamoDbConnect');
 const createError = require('http-errors');
-const TABLE_NAME = process.env.CONFIG_USER_TABLE;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE_OFFLINE;
 
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const middy = require('./../../lib/commonMiddleware');

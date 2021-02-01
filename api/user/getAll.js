@@ -2,7 +2,7 @@
 
 
 const databaseManager = require('../dynamoDbConnect');
-const TABLE_NAME =process.env.CONFIG_USER_TABLE;
+const TABLE_NAME =process.env.CONFIG_USER_TABLE_OFFLINE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const util = require('../util');
 const createError = require('http-errors');

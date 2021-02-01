@@ -8,17 +8,16 @@ const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
 const updateEventSchema = require('../../lib/json-schema/event/updateEvent');
-
+const createError = require('http-errors');
 
 const updateHandler = async (event) => {
 
     const {item} = event.body;
-    console.log("update event.... started", item);
+    const start_date = item.starting_date;
+    const i = start_date.indexOf('-');
+    const eventYear = start_date.slice(0, i);
 
     try {
-        const start_date = item.starting_date;
-        const i = start_date.indexOf('-');
-        const eventYear = start_date.slice(0, i);
 
         const eventName = item.event_name;
         const theEvent = await get.getEvent(eventYear, eventName);
@@ -31,21 +30,22 @@ const updateHandler = async (event) => {
                 })
             };
         }
-        const pk = HASH_KEY_PREFIX + eventYear;
-        const sk = SORT_KEY_PREFIX + eventName;
 
         const params = {
             TableName: TABLE_NAME,
-            Key: {PK: pk, SK: sk},
+            Key: {PK: HASH_KEY_PREFIX + eventYear, SK: SORT_KEY_PREFIX + eventName},
             UpdateExpression: getUpdateExpression(),
             ExpressionAttributeValues: getUpdateExpressionValues(item),
-            ReturnValues: "UPDATED_NEW"
+            ReturnValues: "NONE"
         };
 
-        let data = await dynamoDb.update(params).promise();
-        return util.makeSingleResponseAttributes(data.Attributes);
+      await dynamoDb.update(params).promise();
+
     } catch (err) {
-        return util.makeErrorResponse(err);
+         throw new createError.InternalServerError(err);
+    }
+    return {
+        statusCode: 200
     }
 }
 

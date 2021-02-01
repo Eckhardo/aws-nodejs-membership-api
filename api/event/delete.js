@@ -6,35 +6,28 @@ const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
-
+const createError = require('http-errors');
 const deleteHandler = async (event) => {
-    const year = decodeURIComponent(event.pathParameters.year);
-    const eventName = decodeURIComponent(event.pathParameters.name);
-
+    const {year} = event.pathParameters;
+    const {name} = event.pathParameters;
+    console.log(year, name);
     util.validate(year);
-    util.validate(eventName);
+    util.validate(name);
 
-    const pk = HASH_KEY_PREFIX + year;
-    const sk = SORT_KEY_PREFIX + eventName;
-    console.log("PK:", pk);
-    console.log("SK:", sk);
+
     const params = {
         TableName: TABLE_NAME,
-        Key: {PK: pk, SK: sk}
+        Key: {PK: HASH_KEY_PREFIX + year, SK: SORT_KEY_PREFIX + name}
     };
     try {
-        const result = await dynamoDb.delete(params).promise();
-        return {
-            statusCode: 200,
-            headers: util.getResponseHeaders()
-        };
+        await dynamoDb.delete(params).promise();
+
     } catch (err) {
-        return util.makeErrorResponse(err);
+        throw  new createError.InternalServerError(err);
     }
+    return {
+        statusCode: 200
+    };
 }
 
-const handler = middy.middy(deleteHandler);
-handler.use(middyLibs);
-module.exports = {
-    handler
-}
+module.exports.handler = middy.middy(deleteHandler).use(middyLibs);

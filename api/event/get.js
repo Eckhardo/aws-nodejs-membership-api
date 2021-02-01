@@ -49,7 +49,7 @@ const getOneHandler = async (event) => {
         myEvent = await getEvent(year, name);
 
     } catch (e) {
-        return throw new createError.InternalServerError(e)
+        throw new createError.InternalServerError(e)
     }
     if (!myEvent) {
         throw new createError.NotFound(`Event with user name ${name}  for ${year} does not exist !`)
@@ -79,7 +79,7 @@ const getEvent = async (year, name) => {
         Limit: 1
     }
     const result = await dynamoDb.query(params).promise();
-    return result.Items[0];
+    return  result ? result.Items[0] : null;
 }
 
 const getOne = middy.middy(getOneHandler).use(middyLibs);
