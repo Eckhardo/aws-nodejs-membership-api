@@ -8,7 +8,7 @@ const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const GSI_PREFIX = process.env.HASH_KEY_PREFIX_USER;
 const createErrors = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpJsonBodyParser(),middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
 const createMembershipMemberSchema = require('./../../lib/json-schema/membershipMember/createMembershipMember');
 /**
  * Create new Membership Member
@@ -16,8 +16,13 @@ const createMembershipMemberSchema = require('./../../lib/json-schema/membership
  * Route: POST /membershipMember/
  */
 
-
+/**
+ *
+ * @param event
+ * @returns {Promise<{body: string, statusCode: number}|{statusCode: number}>}
+ */
 const createHandler = async (event) => {
+
 
     const {item} = event.body;
 
@@ -28,7 +33,7 @@ const createHandler = async (event) => {
 
 
     try {
-        const theItem = await get.getMembershipMember(item.membership_year,item.user_name);
+        const theItem = await get.getMembershipMember(item.membership_year, item.user_name);
         if (theItem) {
             return {
                 statusCode: 400,
@@ -40,24 +45,21 @@ const createHandler = async (event) => {
         delete item.membership_year;
         const params = {
             TableName: TABLE_NAME,
-            Item: item
+            Item: item,
+            ReturnValues: "NONE"
         };
-        console.log("PK:", item.PK);
-        console.log("SK:", item.SK);
-        console.log("GSI:", item.GSI1);
-
-        let data = await dynamoDb.put(params).promise();
-
-        console.log("....created item:: ", data);
-         return util.make201Response(item);
+        await dynamoDb.put(params).promise();
     } catch (err) {
-        console.error('error:', err);
-       throw new createErrors.InternalServerError(err);
+        throw new createErrors.InternalServerError(err);
+    }
+    return {
+        statusCode: 201
     }
 
 }
-const handler = middy.middy(createHandler);
-handler.use(middyLibs).use(middy.validator({inputSchema: createMembershipMemberSchema.schema}));
-module.exports = {
-    handler
-}
+
+module.exports.handler = middy
+    .middy(createHandler)
+    .use(middyLibs)
+    .use(middy.validator({inputSchema: createMembershipMemberSchema.schema}));
+

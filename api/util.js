@@ -82,7 +82,7 @@ const makeAllResponse = (data) => {
         };
     } else {
         return {
-            statusCode: 204
+            statusCode: 404
         };
     }
 }

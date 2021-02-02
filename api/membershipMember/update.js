@@ -20,13 +20,9 @@ const updateMembershipMemberSchema = require('./../../lib/json-schema/membership
 const updateHandler = async (event) => {
 
     const {item} = event.body;
-    console.log("update membershipMember.... started:", item);
     item.PK = HASH_KEY_PREFIX + item.membership_year;
-    item.SK = SORT_KEY_PREFIX + item.user_name;
+    item.SK=SORT_KEY_PREFIX + item.user_name;
     item.GSI1 = GSI_PREFIX + item.user_name;
-    console.log("PK:", item.PK);
-    console.log("SK:", item.SK);
-    console.log("GSI:", item.GSI1);
     delete item.user_name;
     delete item.membership_year;
 
@@ -34,28 +30,31 @@ const updateHandler = async (event) => {
         const params = {
 
             TableName: TABLE_NAME,
-            Key: {PK: item.PK, SK: SORT_KEY_PREFIX + item.user_name},
+            Key: {PK: item.PK, SK: item.SK },
 
-            UpdateExpression: "SET position_role = :role, is_active= :active, fees_paid= :fees_paid,GSI1: :GSI1",
+            UpdateExpression: "SET position_role = :role, is_active= :active, fees_paid= :fees_paid,GSI1 = :GSI1",
             ExpressionAttributeValues: {
                 ":active": item.is_active,
                 ":fees_paid": item.fees_paid,
                 ":role": item.position_role,
                 ":GSI1": item.GSI1
             },
-            ReturnValues: "UPDATED_NEW"
+            ReturnValues: "NONE"
         };
-        let data =   await dynamoDb.update(params).promise();
-        console.log("updated: ", JSON.stringify(data));
-        return util.make201Response(data.Item);
+        await dynamoDb.update(params).promise();
+
+
     } catch (err) {
-        console.error('error:', err);
+
         throw new createErrors.InternalServerError(err);
+    }
+    return {
+        statusCode: 200
     }
 
 }
-const handler = middy.middy(updateHandler);
-handler.use(middyLibs).use(middy.validator({inputSchema: updateMembershipMemberSchema.schema}));
-module.exports = {
-    handler
-}
+module.exports.handler = middy
+    .middy(updateHandler)
+    .use(middyLibs)
+    .use(middy.validator({inputSchema: updateMembershipMemberSchema.schema}));
+

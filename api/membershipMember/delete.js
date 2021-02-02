@@ -7,33 +7,30 @@ const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const GSI_PREFIX = process.env.HASH_KEY_PREFIX_USER;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
-
+const createErrors = require('http-errors');
 const deleteHandler = async (event) => {
     const {membership_year} = event.pathParameters;
     const {user_name} = event.pathParameters;
-
     util.validate(membership_year);
     util.validate(user_name);
 
     const pk = HASH_KEY_PREFIX + membership_year;
     const sk = SORT_KEY_PREFIX + user_name;
     const gsi = GSI_PREFIX + user_name;
-    console.log("PK:", pk);
-    console.log("SK:", sk);
-    console.log("GSI:", gsi);
     const params = {
         TableName: TABLE_NAME,
-        Key: {PK: pk, SK: sk}
+        Key: {PK: pk, SK: sk},
+        ReturnValues: "NONE"
     };
     try {
-        const result = await dynamoDb.delete(params).promise();
-        return {
-            statusCode: 200,
-            headers: util.getResponseHeaders()
-        };
+      await dynamoDb.delete(params).promise();
+
     } catch (err) {
-        return util.makeErrorResponse(err);
+        throw new createErrors.InternalServerError(err)
     }
+    return {
+        statusCode: 200
+    };
 }
 
 module.exports.handler = middy.middy(deleteHandler).use(middyLibs);
