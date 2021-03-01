@@ -1,8 +1,11 @@
 const util = require('../util.js');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
+const HASH_KEY_USER =process.env.HASH_KEY_USER;
+const SORT_KEY_PREFIX_USER =process.env.SORT_KEY_PREFIX_USER;
 
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
+
 const get = require('./get')
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
@@ -19,7 +22,7 @@ const updateUserSchema = require('./../../lib/json-schema/user/updateUser');
  */
 
 const updateHandler = async (event) => {
-    let updatedUser;
+
     let {item} = event.body;
     try {
         let user = await get.getUser(item.user_name);
@@ -32,19 +35,19 @@ const updateHandler = async (event) => {
 
         const params = {
             TableName: TABLE_NAME,
-            Key: {PK: item.PK, SK: process.env.SORT_KEY_USER_VALUE},
+            Key: {PK: HASH_KEY_USER, SK: SORT_KEY_PREFIX_USER + item.user_name},
             UpdateExpression: getUpdateExpression(),
             ExpressionAttributeValues: getUpdateExpressionValues(item),
             ReturnValues: "NONE"
         };
 
-        updatedUser = await dynamoDb.update(params).promise();
+      await dynamoDb.update(params).promise();
 
     } catch (err) {
         console.error('Error:', err);
         throw new createError.InternalServerError(err);
     }
-
+    console.error('Return OK:');
     return {
         statusCode: 200
     }

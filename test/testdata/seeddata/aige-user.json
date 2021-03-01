@@ -1,10 +1,10 @@
 [
 	{
 		"PK": {
-			"S": "user_Eckhardo"
+			"S": "user"
 		},
 		"SK": {
-			"S": "profile"
+			"S": "profile_Eckhardo"
 		},
 		"user_name": {
 			"S": "Eckhardo"
@@ -48,10 +48,10 @@
 	},
 	{
 		"PK": {
-			"S": "user_Maikeli"
+			"S": "user"
 		},
 		"SK": {
-			"S": "profile"
+			"S": "profile_Maikeli"
 		},
 		"user_name": {
 			"S": "Maikeli"
@@ -201,13 +201,13 @@
 	},
 	{
 		"PK": {
-			"S": "membership_2020"
+			"S": "event"
 		},
 		"SK": {
-			"S": "event_Arbeitsdienst-1"
+			"S": "profile_AD-1"
 		},
-		"event_status": {
-			"S": "OPEN"
+		"event_short": {
+			"S": "AD-1"
 		},
 		"event_name": {
 			"S": "Arbeitsdienst-1"
@@ -230,13 +230,13 @@
 	},
 	{
 		"PK": {
-			"S": "membership_2020"
+			"S": "event"
 		},
 		"SK": {
-			"S": "event_Arbeitsdienst-2"
+			"S": "profile_AD-2"
 		},
-		"event_status": {
-			"S": "OPEN"
+		"event_short": {
+			"S": "AD-2"
 		},
 		"event_name": {
 			"S": "Arbeitsdienst-2"
@@ -259,16 +259,16 @@
 	},
 	{
 		"PK": {
-			"S": "membership_2020"
+			"S": "event"
 		},
 		"SK": {
-			"S": "event_JHV"
+			"S": "profile_JHV"
 		},
-		"event_status": {
-			"S": "OPEN"
+		"event_short": {
+			"S": "JHV"
 		},
 		"event_name": {
-			"S": "JHV"
+			"S": "Jahreshauptversammlung"
 		},
 		"starting_date": {
 			"S": "2020-11-25T18:00:00.999Z"

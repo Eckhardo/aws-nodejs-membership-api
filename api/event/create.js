@@ -2,9 +2,8 @@ const util = require('../util.js');
 const get = require('./get')
 const createEventSchema = require('../../lib/json-schema/event/createEvent');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
-const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
-const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;
-const databaseManager = require('../dynamoDbConnect');
+const HASH_KEY= process.env.HASH_KEY_EVENT;
+const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
@@ -33,7 +32,7 @@ const createHandler = async (event) => {
             };
         }
 
-        item.PK = HASH_KEY_PREFIX + eventYear;
+        item.PK = HASH_KEY ;
         item.SK = SORT_KEY_PREFIX + eventName;
          const params = {
             TableName: TABLE_NAME,

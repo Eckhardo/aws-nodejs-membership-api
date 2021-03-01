@@ -10,13 +10,13 @@ const createError = require('http-errors');
 
 const getAllHandler = async (event) => {
     let myMembershipMembers;
-    const {membership_year} = event.pathParameters;
-    util.validate(membership_year);
+    const {year} = event.pathParameters;
+    util.validate(year);
 
     let params = {
         TableName: TABLE_NAME,
         KeyConditionExpression: 'PK = :pk and begins_with(SK, :sk)',
-        ExpressionAttributeValues: {":pk": HASH_KEY_PREFIX + membership_year, ":sk": SORT_KEY_PREFIX}
+        ExpressionAttributeValues: {":pk": HASH_KEY_PREFIX + year, ":sk": SORT_KEY_PREFIX}
     };
     try {
         myMembershipMembers = await dynamoDb.query(params).promise();

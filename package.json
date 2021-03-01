@@ -32,5 +32,10 @@
     "serverless-http": "^2.7.0",
     "serverless-offline": "^6.8.0",
     "serverless-pseudo-parameters": "^2.5.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Eckhardo/aws-java-membership-api.git"
+  },
+  "homepage": "https://github.com/Eckhardo/aws-java-membership-api.git#README"
 }

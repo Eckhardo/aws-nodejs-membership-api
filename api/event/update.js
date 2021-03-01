@@ -3,8 +3,9 @@ const get = require('./get')
 const databaseManager = require('../dynamoDbConnect');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
-const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;
+const HASH_KEY= process.env.HASH_KEY_EVENT;
+const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;const databaseManager = require('../dynamoDbConnect');
+
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
 const updateEventSchema = require('../../lib/json-schema/event/updateEvent');
@@ -33,7 +34,7 @@ const updateHandler = async (event) => {
 
         const params = {
             TableName: TABLE_NAME,
-            Key: {PK: HASH_KEY_PREFIX + eventYear, SK: SORT_KEY_PREFIX + eventName},
+            Key: {PK: HASH_KEY, SK: SORT_KEY_PREFIX + eventName},
             UpdateExpression: getUpdateExpression(),
             ExpressionAttributeValues: getUpdateExpressionValues(item),
             ReturnValues: "NONE"

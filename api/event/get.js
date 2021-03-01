@@ -6,8 +6,8 @@ const databaseManager = require('../dynamoDbConnect');
 
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
-const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_MEMBERSHIP_EVENT;
+const HASH_KEY= process.env.HASH_KEY_EVENT;
+const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
@@ -15,20 +15,18 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
  * GET all events for a distinct year
  * Route: GET /event/{year}
  */
-const getAllHandler = async (event) => {
+const getAllHandler = async () => {
     let events;
-    const {year} =event.pathParameters;
-    util.validate(year);
     const params = {
         TableName: TABLE_NAME,
-        KeyConditionExpression: 'PK = :pk and begins_with(SK, :sk)',
-        ExpressionAttributeValues: {':pk': HASH_KEY_PREFIX + year, ':sk': SORT_KEY_PREFIX},
+        KeyConditionExpression: 'PK = :pk ',
+        ExpressionAttributeValues: {':pk':HASH_KEY },
     }
 
     try {
         events = await dynamoDb.query(params).promise();
-     } catch (err) {
-        throw new createError.InternalServerError(err)
+    } catch (err) {
+        throw new createError.InternalServerError(err);
     }
     return util.makeAllResponse(events);
 }
@@ -40,13 +38,13 @@ const getAllHandler = async (event) => {
  */
 const getOneHandler = async (event) => {
     let myEvent;
-    const {year} = event.pathParameters;
+
     const {name} = event.pathParameters;
-    util.validate(year);
+
     util.validate(name);
 
     try {
-        myEvent = await getEvent(year, name);
+        myEvent = await getEvent(name);
 
     } catch (e) {
         throw new createError.InternalServerError(e)
@@ -63,14 +61,14 @@ const getOneHandler = async (event) => {
 
 
 /**
- * Retrieve an event for a distinct year and name
+ * Retrieve an event for a distinct name
  */
-const getEvent = async (year, name) => {
-    util.validate(year);
+const getEvent = async ( name) => {
+
     util.validate(name);
 
-    const pk = HASH_KEY_PREFIX + year;
-    const sk = SORT_KEY_PREFIX + name;
+    const pk = HASH_KEY;
+    const sk = SORT_KEY_PREFIX  + name;
 
     const params = {
         TableName: TABLE_NAME,

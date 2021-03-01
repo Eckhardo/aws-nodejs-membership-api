@@ -3,6 +3,7 @@
 
 const databaseManager = require('../dynamoDbConnect');
 const TABLE_NAME =process.env.CONFIG_USER_TABLE_OFFLINE;
+const HASH_KEY_PREFIX =process.env.HASH_KEY_USER;
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
 const util = require('../util');
 const createError = require('http-errors');
@@ -17,17 +18,15 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.
  */
 const getAllHandler = async () => {
  let users;
+
     const params = {
         TableName: TABLE_NAME,
-        FilterExpression: '#sk = :sk_value',
-        ExpressionAttributeNames: {'#sk': 'SK',},
-        ExpressionAttributeValues: {
-            ':sk_value': process.env.SORT_KEY_USER_VALUE
-        }
-    };
-    try {
-        users= await dynamoDb.scan(params).promise();
+        KeyConditionExpression: 'PK = :pk ',
+        ExpressionAttributeValues: {':pk': HASH_KEY_PREFIX},
+    }
 
+    try {
+        users = await dynamoDb.query(params).promise();
     } catch (err) {
          throw new createError.InternalServerError(err);
     }

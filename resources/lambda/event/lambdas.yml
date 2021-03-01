@@ -13,10 +13,10 @@ process-events:
   # - schedule: rate(1 minute)
 get-event:
   handler: api/event/get.getOne
-  description: GET event by year and name
+  description: GET event by name
   events:
     - http:
-        path: event/{year}/{name}
+        path: event/{name}
         method: get
         cors: true
   layers:
@@ -27,7 +27,7 @@ get-events:
   description: GET all Events for a particular year
   events:
     - http:
-        path: event/{year}
+        path: event
         method: get
         cors: true
   layers:
