@@ -1,0 +1,10 @@
+1.) create file: jest.config.js
+2.) npm install --save-dev @shelf/jest-dynamodb
+3.) in jest.config.js set:
+
+module.exports = {
+    verbose:true,
+    presets:'@shelf/jet-dynamodb'
+
+}
+4.) create file:  jest-dynamodb-config.js

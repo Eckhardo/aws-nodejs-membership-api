@@ -1,11 +1,9 @@
 'use strict';
-
-const databaseManager = require('../dynamoDbConnect');
-
-const TABLE_NAME = process.env.CONFIG_USER_TABLE_OFFLINE;
+const dynamoDb = require('../Dynamo');
+const TABLE_NAME  = process.env.CONFIG_USER_TABLE;
 const HASH_KEY_USER =process.env.HASH_KEY_USER;
 const SORT_KEY_PREFIX_USER =process.env.SORT_KEY_PREFIX_USER;
-const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
+
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const createError = require('http-errors');
@@ -38,21 +36,9 @@ const getOneHandler = async (event) => {
  */
 
 const getUser = async (userName) => {
-    let user;
-    let params = {
-        TableName: TABLE_NAME,
-        KeyConditionExpression: ':pk = PK and :sk = SK',
-        ExpressionAttributeValues: {
-            ':pk': HASH_KEY_USER,
-            ':sk': SORT_KEY_PREFIX_USER + userName
-        },
-        Limit: 1
-    };
-    let data = await dynamoDb.query(params).promise();
-    if (data && data.Items.length > 0) {
-        user = data.Items[0];
 
-    }
+    let user= await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY_USER, SORT_KEY_PREFIX_USER + userName);
+
     return user;
 }
 const handler = middy.middy(getOneHandler).use(middyLibs);

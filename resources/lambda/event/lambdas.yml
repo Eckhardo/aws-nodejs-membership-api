@@ -60,7 +60,7 @@ delete-event:
   description: DELETE event by year and name
   events:
     - http:
-        path: event/{year}/{name}
+        path: event/{name}
         method: delete
         cors: true
   layers:

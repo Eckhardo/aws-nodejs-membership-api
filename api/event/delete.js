@@ -1,7 +1,7 @@
 const util = require('./../util');
-const databaseManager = require('../dynamoDbConnect');
+
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
-const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
+const dynamoDb = require('../Dynamo')
 const HASH_KEY= process.env.HASH_KEY_EVENT;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;const databaseManager = require('../dynamoDbConnect');
 const middy = require('./../../lib/commonMiddleware');
@@ -9,16 +9,12 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 const createError = require('http-errors');
 const deleteHandler = async (event) => {
      const {name} = event.pathParameters;
-    console.log( name);
+    console.log("delete event::", name);
     util.validate(name);
 
 
-    const params = {
-        TableName: TABLE_NAME,
-        Key: {PK: HASH_KEY, SK: SORT_KEY_PREFIX + name}
-    };
     try {
-        await dynamoDb.delete(params).promise();
+        await dynamoDb.remove(TABLE_NAME, HASH_KEY, SORT_KEY_PREFIX + name);
 
     } catch (err) {
         throw  new createError.InternalServerError(err);

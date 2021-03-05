@@ -2,10 +2,10 @@
 
 const util = require('../util.js');
 const createError = require('http-errors');
-const databaseManager = require('../dynamoDbConnect');
+
 
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
-const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
+const dynamoDb = require('../Dynamo');
 const HASH_KEY= process.env.HASH_KEY_EVENT;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;
 const middy = require('./../../lib/commonMiddleware');
@@ -17,18 +17,16 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
  */
 const getAllHandler = async () => {
     let events;
-    const params = {
-        TableName: TABLE_NAME,
-        KeyConditionExpression: 'PK = :pk ',
-        ExpressionAttributeValues: {':pk':HASH_KEY },
-    }
 
     try {
-        events = await dynamoDb.query(params).promise();
+        events = await dynamoDb.getAll(TABLE_NAME, HASH_KEY);
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
-    return util.makeAllResponse(events);
+    return {
+        statusCode: 200,
+        body: JSON.stringify(events)
+    }
 }
 
 
@@ -65,19 +63,16 @@ const getOneHandler = async (event) => {
  */
 const getEvent = async ( name) => {
 
+    console.log('Event name:', name);
+
     util.validate(name);
 
     const pk = HASH_KEY;
     const sk = SORT_KEY_PREFIX  + name;
 
-    const params = {
-        TableName: TABLE_NAME,
-        KeyConditionExpression: ':pk = PK and :sk = SK',
-        ExpressionAttributeValues: {':pk': pk, ':sk': sk},
-        Limit: 1
-    }
-    const result = await dynamoDb.query(params).promise();
-    return  result ? result.Items[0] : null;
+
+    const result = await dynamoDb.getByKeys(TABLE_NAME,pk,sk);
+    return result;
 }
 
 const getOne = middy.middy(getOneHandler).use(middyLibs);

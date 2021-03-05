@@ -1,8 +1,8 @@
 const util = require('../util.js');
 const get = require('./get')
-const databaseManager = require('../dynamoDbConnect');
+
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
-const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
+const dynamoDb = require('../Dynamo');
 const HASH_KEY= process.env.HASH_KEY_EVENT;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;const databaseManager = require('../dynamoDbConnect');
 
@@ -14,35 +14,28 @@ const createError = require('http-errors');
 const updateHandler = async (event) => {
 
     const {item} = event.body;
-    const start_date = item.starting_date;
-    const i = start_date.indexOf('-');
-    const eventYear = start_date.slice(0, i);
 
     try {
 
-        const eventName = item.event_name;
-        const theEvent = await get.getEvent(eventYear, eventName);
-        if (!theEvent || (theEvent.event_name !== eventName)) {
+        const eventName = item.event_short;
+        console.log("vorher", eventName);
+        const theEvent = await get.getEvent( eventName);
+        console.log("nachher", JSON.stringify(theEvent));
+        if (!theEvent || (theEvent.event_short !== eventName)) {
             return {
                 statusCode: 409,
                 headers: util.getResponseHeaders(),
                 body: JSON.stringify({
-                    message: `Event with name ${eventName} for year ${eventYear} already exists.`
+                    message: `Event with name ${eventName}  does not  exist.`
                 })
             };
         }
 
-        const params = {
-            TableName: TABLE_NAME,
-            Key: {PK: HASH_KEY, SK: SORT_KEY_PREFIX + eventName},
-            UpdateExpression: getUpdateExpression(),
-            ExpressionAttributeValues: getUpdateExpressionValues(item),
-            ReturnValues: "NONE"
-        };
 
-      await dynamoDb.update(params).promise();
+      await dynamoDb.update(TABLE_NAME,item.PK, item.SK, getKeys(),getValues(item));
 
     } catch (err) {
+        console.error("Error in Update", err);
          throw new createError.InternalServerError(err);
     }
     return {
@@ -51,17 +44,17 @@ const updateHandler = async (event) => {
 }
 
 
-function getUpdateExpression() {
+function getKeys() {
     let expression = [];
-    expression.push([' SET event_status = :event_status', ' event_name= :event_name']);
+    expression.push([' SET event_short = :event_short', ' event_name= :event_name']);
     expression.push([' starting_date = :starting_date', ' ending_date = :ending_date', ' meeting_point = :meeting_point']);
     expression.push([' comments = :comments']);
     return expression.toString();
 }
 
-function getUpdateExpressionValues(theEvent) {
+function getValues(theEvent) {
     return {
-        ":event_status": theEvent.event_status,
+        ":event_short": theEvent.event_short,
         ":event_name": theEvent.event_name,
         ":starting_date": theEvent.starting_date,
         ":ending_date": theEvent.ending_date,

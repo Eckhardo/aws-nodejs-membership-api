@@ -4,9 +4,8 @@ const get = require('./get');
 const createErrors = require('http-errors');
 const createUserSchema = require('./../../lib/json-schema/user/createUser');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const TABLE_NAME = process.env.CONFIG_USER_TABLE;
-const databaseManager = require('../dynamoDbConnect');
-const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
+const TABLE_NAME  = process.env.CONFIG_USER_TABLE;
+const dynamoDb = require('../Dynamo');
 const AWS = require('aws-sdk');
 // const sqs = new AWS.SQS();
 const HASH_KEY_USER =process.env.HASH_KEY_USER;
@@ -32,6 +31,7 @@ const createHandler = async (event) => {
     try {
         const theUser = await get.getUser(item.user_name);
         if (theUser) {
+            console.log('theUser:', theUser);
             return {
                 statusCode: 400,
                 body: JSON.stringify(`User with user name ${item.user_name}  already exists !`)
@@ -40,13 +40,9 @@ const createHandler = async (event) => {
         item.PK =HASH_KEY_USER ;
         item.SK = SORT_KEY_PREFIX_USER + item.user_name;
         //   item.email = email;
+        console.log('New Create:', JSON.stringify(item));
+   await dynamoDb.write(TABLE_NAME,item);
 
-        const params = {
-            TableName: TABLE_NAME,
-            Item: item,
-            ReturnValues: "NONE"
-        };
-        await dynamoDb.put(params).promise();
 
         /*       const notifyNewUser =  sqs.sendMessage({
                    QueueUrl : process.env.MAIL_QUEUE_URL,

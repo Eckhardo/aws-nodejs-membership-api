@@ -1,5 +1,5 @@
 service: aws-nodejs-membership-api
-
+useDotenv: true
 provider:
   name: aws
   runtime: nodejs12.x
@@ -95,4 +95,5 @@ package:
 plugins:
   - serverless-dynamodb-local
   - serverless-pseudo-parameters
+  - serverless-export-env
   - serverless-offline # should be last in list
