@@ -1,4 +1,3 @@
-
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
@@ -7,7 +6,7 @@ const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
 const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(),middy.httpCors()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const createMsSchema = require('./../../lib/json-schema/membership/createMembership');
 /**
  * Create new membership

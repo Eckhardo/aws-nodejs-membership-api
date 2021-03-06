@@ -54,7 +54,7 @@ const getOneHandler = async (event) => {
 
         throw new createError.InternalServerError(err);
     }
-     if (myMembershipMember) {
+    if (myMembershipMember) {
         return {
             statusCode: 200,
             body: JSON.stringify(myMembershipMember)

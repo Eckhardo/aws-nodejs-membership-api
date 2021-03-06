@@ -204,7 +204,7 @@
 			"S": "event"
 		},
 		"SK": {
-			"S": "profile_AD-1"
+			"S": "profile_Arbeitsdienst-1"
 		},
 		"event_short": {
 			"S": "AD-1"
@@ -220,12 +220,6 @@
 		},
 		"meeting_point": {
 			"S": "Elsensee"
-		},
-		"comments": {
-			"SS": [
-				"Arbeitschuhe mitbringen",
-				"Anschl. Biertrinken"
-			]
 		}
 	},
 	{
@@ -233,7 +227,7 @@
 			"S": "event"
 		},
 		"SK": {
-			"S": "profile_AD-2"
+			"S": "profile_Arbeitsdienst-2"
 		},
 		"event_short": {
 			"S": "AD-2"
@@ -262,7 +256,7 @@
 			"S": "event"
 		},
 		"SK": {
-			"S": "profile_JHV"
+			"S": "profile_Jahreshauptversammlung"
 		},
 		"event_short": {
 			"S": "JHV"

@@ -6,7 +6,7 @@ const createError = require('http-errors');
 
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = require('../Dynamo');
-const HASH_KEY= process.env.HASH_KEY_EVENT;
+const HASH_KEY = process.env.HASH_KEY_EVENT;
 const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
@@ -32,23 +32,23 @@ const getAllHandler = async () => {
 
 /**
  * Retrieve an event for a distinct year and name
- * Route: GET /event/{year}/{name}
+ * Route: GET /event/{SK}
  */
 const getOneHandler = async (event) => {
     let myEvent;
 
-    const {name} = event.pathParameters;
+    const {SK} = event.pathParameters;
 
-    util.validate(name);
+    util.validate(SK);
 
     try {
-        myEvent = await getEvent(name);
+        myEvent = await getEvent(SK);
 
     } catch (e) {
         throw new createError.InternalServerError(e)
     }
     if (!myEvent) {
-        throw new createError.NotFound(`Event with user name ${name}  for ${year} does not exist !`)
+        throw new createError.NotFound(`Event with user name ${name}  does not exist !`)
     }
 
     return {
@@ -61,17 +61,9 @@ const getOneHandler = async (event) => {
 /**
  * Retrieve an event for a distinct name
  */
-const getEvent = async ( name) => {
+const getEvent = async (SK) => {
 
-    console.log('Event name:', name);
-
-    util.validate(name);
-
-    const pk = HASH_KEY;
-    const sk = SORT_KEY_PREFIX  + name;
-
-
-    const result = await dynamoDb.getByKeys(TABLE_NAME,pk,sk);
+    const result = await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY, SK);
     return result;
 }
 

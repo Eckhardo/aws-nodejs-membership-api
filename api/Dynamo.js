@@ -26,6 +26,7 @@ const Dynamo = {
      * @returns {Promise<*>}
      */
     async getByKey(TableName, PK) {
+        let item;
         const params = {
             TableName,
             Key: {
@@ -35,10 +36,9 @@ const Dynamo = {
 
         const data = await documentClient.get(params).promise();
         if (data && data.Item) {
-            return data.Item;
+            item = data.Item;
         }
-        console.log('DynamoDB GET User:', JSON.stringify(data));
-        return null;
+        return item;
     },
     /**
      *
@@ -48,6 +48,7 @@ const Dynamo = {
      * @returns {Promise<*>}
      */
     async getByKeys(TableName, PK, SK) {
+        let item;
         const params = {
             TableName,
             Key: {
@@ -57,10 +58,10 @@ const Dynamo = {
         };
         let data = await documentClient.get(params).promise();
         if (data && data.Item) {
-            return data.Item;
+            item = data.Item;
         }
         console.log('DynamoDB GET User:', JSON.stringify(data));
-        return null;
+        return item;
     },
     /**
      *
@@ -69,6 +70,7 @@ const Dynamo = {
      * @returns {Promise<*>}
      */
     async getAll(TableName, PK) {
+        let items = [];
         const params = {
             TableName,
             KeyConditionExpression: 'PK = :pk ',
@@ -78,9 +80,9 @@ const Dynamo = {
         const data = await documentClient.query(params).promise();
 
         if (data && data.Items) {
-            return data.Items;
+            items = data.Items;
         }
-        return null;
+        return items;
 
 
     },
@@ -93,6 +95,7 @@ const Dynamo = {
      * @returns {Promise<null|*>}
      */
     async queryByIndex(TableName, index, keys, values) {
+        let items = [];
         const params = {
             TableName,
             IndexName: index,
@@ -103,9 +106,9 @@ const Dynamo = {
         const data = await documentClient.query(params).promise();
 
         if (data && data.Items) {
-            return data.Items;
+            items = data.Items;
         }
-        return null;
+        return items;
 
 
     },
@@ -124,8 +127,8 @@ const Dynamo = {
             TableName,
             Item: data
         };
-        console.log("Item  create:", JSON.stringify(data));
-        await documentClient.put(params).promise();
+        let response = await documentClient.put(params).promise();
+        console.log('create::', response);
         return data;
     },
     /**
@@ -147,9 +150,8 @@ const Dynamo = {
             UpdateExpression: updateExpression,
             ExpressionAttributeValues: updateValues
         };
-        console.log("Item:", JSON.stringify(params));
-        await documentClient.update(params).promise();
-
+        let response = await documentClient.update(params).promise();
+        console.log('update::', response);
         return null;
 
     },
@@ -169,8 +171,37 @@ const Dynamo = {
             },
         };
 
-        await documentClient.delete(params).promise();
+        let response = await documentClient.delete(params).promise();
+        console.log('delete::', response);
         return null;
     },
+
+    async search(TableName, PK, SK, searchTerm) {
+        let items = [];
+        const params = {
+            TableName: TableName,
+
+
+            KeyConditionExpression: '#pk = :pk and begins_with(#sk, :sk)',
+            ExpressionAttributeNames: {
+                "#pk": "PK",
+                "#sk": 'SK'
+            },
+            ExpressionAttributeValues: {
+                ':pk': PK,
+                ":sk": SK + searchTerm
+            }
+        }
+        console.log("search::", params);
+        const data = await documentClient.query(params).promise();
+
+        if (data && data.Items) {
+            items = data.Items;
+        }
+        console.log("items::", JSON.stringify(items));
+        return items;
+    },
+
+
 };
 module.exports = Dynamo;

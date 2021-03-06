@@ -21,7 +21,7 @@ const updateHandler = async (event) => {
 
     const {item} = event.body;
     item.PK = HASH_KEY_PREFIX + item.membership_year;
-    item.SK=SORT_KEY_PREFIX + item.user_name;
+    item.SK = SORT_KEY_PREFIX + item.user_name;
     item.GSI1 = GSI_PREFIX + item.user_name;
     delete item.user_name;
     delete item.membership_year;
@@ -30,7 +30,7 @@ const updateHandler = async (event) => {
         const params = {
 
             TableName: TABLE_NAME,
-            Key: {PK: item.PK, SK: item.SK },
+            Key: {PK: item.PK, SK: item.SK},
 
             UpdateExpression: "SET position_role = :role, is_active= :active, fees_paid= :fees_paid,GSI1 = :GSI1",
             ExpressionAttributeValues: {

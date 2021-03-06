@@ -63,7 +63,7 @@ const makeSingleResponse = (data) => {
     if (!_.isEmpty(data.Items)) {
         return {
             statusCode: 200,
-             body: JSON.stringify(data.Items[0])
+            body: JSON.stringify(data.Items[0])
         };
     } else {
         return {
@@ -94,7 +94,7 @@ module.exports = {
     makeErrorResponse,
     makeSingleResponse,
     makeSingleResponseAttributes,
-     makeAllResponse,
+    makeAllResponse,
     validate,
     validateItem
 }

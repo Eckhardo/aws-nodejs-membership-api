@@ -1,9 +1,8 @@
 'use strict';
 
 
-
-const TABLE_NAME =process.env.CONFIG_USER_TABLE_OFFLINE;
-const HASH_KEY_PREFIX =process.env.HASH_KEY_USER;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE_OFFLINE;
+const HASH_KEY_PREFIX = process.env.HASH_KEY_USER;
 const dynamoDb = require('../Dynamo');
 const util = require('../util');
 const createError = require('http-errors');
@@ -17,12 +16,12 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.
  * Route: GET /user/
  */
 const getAllHandler = async () => {
- let users;
+    let users;
 
-   try {
-        users = await dynamoDb.getAll(TABLE_NAME,HASH_KEY_PREFIX);
+    try {
+        users = await dynamoDb.getAll(TABLE_NAME, HASH_KEY_PREFIX);
     } catch (err) {
-         throw new createError.InternalServerError(err);
+        throw new createError.InternalServerError(err);
     }
 
     return {
@@ -30,4 +29,4 @@ const getAllHandler = async () => {
         body: JSON.stringify(users)
     }
 }
-module.exports.handler= middy.middy(getAllHandler).use(middyLibs);
+module.exports.handler = middy.middy(getAllHandler).use(middyLibs);

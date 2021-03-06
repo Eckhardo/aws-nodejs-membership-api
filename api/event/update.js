@@ -3,8 +3,9 @@ const get = require('./get')
 
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = require('../Dynamo');
-const HASH_KEY= process.env.HASH_KEY_EVENT;
-const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;const databaseManager = require('../dynamoDbConnect');
+const HASH_KEY = process.env.HASH_KEY_EVENT;
+const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;
+const databaseManager = require('../dynamoDbConnect');
 
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
@@ -14,29 +15,20 @@ const createError = require('http-errors');
 const updateHandler = async (event) => {
 
     const {item} = event.body;
+    const {SK}=item;
 
     try {
+        const theEvent = await get.getEvent(SK);
+        if (!theEvent || (theEvent.SK !== SK)) {
+            throw new createError.NotAcceptable(`Event with SK ${SK}  does not exist.`);
 
-        const eventName = item.event_short;
-        console.log("vorher", eventName);
-        const theEvent = await get.getEvent( eventName);
-        console.log("nachher", JSON.stringify(theEvent));
-        if (!theEvent || (theEvent.event_short !== eventName)) {
-            return {
-                statusCode: 409,
-                headers: util.getResponseHeaders(),
-                body: JSON.stringify({
-                    message: `Event with name ${eventName}  does not  exist.`
-                })
-            };
         }
 
-
-      await dynamoDb.update(TABLE_NAME,item.PK, item.SK, getKeys(),getValues(item));
+        await dynamoDb.update(TABLE_NAME, HASH_KEY, item.SK, getKeys(), getValues(item));
 
     } catch (err) {
         console.error("Error in Update", err);
-         throw new createError.InternalServerError(err);
+        throw new createError.InternalServerError(err);
     }
     return {
         statusCode: 200

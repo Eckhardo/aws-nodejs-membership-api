@@ -1,8 +1,8 @@
 'use strict';
 const dynamoDb = require('../Dynamo');
-const TABLE_NAME  = process.env.CONFIG_USER_TABLE;
-const HASH_KEY_USER =process.env.HASH_KEY_USER;
-const SORT_KEY_PREFIX_USER =process.env.SORT_KEY_PREFIX_USER;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE;
+const HASH_KEY_USER = process.env.HASH_KEY_USER;
+const SORT_KEY_PREFIX_USER = process.env.SORT_KEY_PREFIX_USER;
 
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
@@ -18,7 +18,7 @@ const getOneHandler = async (event) => {
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
-    if(! user) {
+    if (!user) {
         throw new createError.NotFound(`User with name "${username}" not found !`)
 
     }
@@ -37,7 +37,7 @@ const getOneHandler = async (event) => {
 
 const getUser = async (userName) => {
 
-    let user= await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY_USER, SORT_KEY_PREFIX_USER + userName);
+    let user = await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY_USER, SORT_KEY_PREFIX_USER + userName);
 
     return user;
 }

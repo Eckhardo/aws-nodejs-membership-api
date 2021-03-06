@@ -23,7 +23,7 @@ const deleteHandler = async (event) => {
         ReturnValues: "NONE"
     };
     try {
-      await dynamoDb.delete(params).promise();
+        await dynamoDb.delete(params).promise();
 
     } catch (err) {
         throw new createErrors.InternalServerError(err)

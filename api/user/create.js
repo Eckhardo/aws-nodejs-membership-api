@@ -4,12 +4,12 @@ const get = require('./get');
 const createErrors = require('http-errors');
 const createUserSchema = require('./../../lib/json-schema/user/createUser');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const TABLE_NAME  = process.env.CONFIG_USER_TABLE;
+const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = require('../Dynamo');
 const AWS = require('aws-sdk');
 // const sqs = new AWS.SQS();
-const HASH_KEY_USER =process.env.HASH_KEY_USER;
-const SORT_KEY_PREFIX_USER =process.env.SORT_KEY_PREFIX_USER;
+const HASH_KEY_USER = process.env.HASH_KEY_USER;
+const SORT_KEY_PREFIX_USER = process.env.SORT_KEY_PREFIX_USER;
 
 /**
  * Create new user
@@ -37,11 +37,11 @@ const createHandler = async (event) => {
                 body: JSON.stringify(`User with user name ${item.user_name}  already exists !`)
             };
         }
-        item.PK =HASH_KEY_USER ;
+        item.PK = HASH_KEY_USER;
         item.SK = SORT_KEY_PREFIX_USER + item.user_name;
         //   item.email = email;
         console.log('New Create:', JSON.stringify(item));
-   await dynamoDb.write(TABLE_NAME,item);
+        await dynamoDb.write(TABLE_NAME, item);
 
 
         /*       const notifyNewUser =  sqs.sendMessage({

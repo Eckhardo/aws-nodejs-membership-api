@@ -9,14 +9,25 @@ process-events:
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
 
-  # events:
-  # - schedule: rate(1 minute)
 get-event:
   handler: api/event/get.getOne
-  description: GET event by name
+  description: GET event by SK
   events:
     - http:
-        path: event/{name}
+        path: event/{SK}
+        method: get
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+
+
+search-event:
+  handler: api/event/search.getAll
+  description: GET event by SK + search String
+  events:
+    - http:
+        path: event/search/{searchTerm}
         method: get
         cors: true
   layers:
@@ -60,7 +71,7 @@ delete-event:
   description: DELETE event by year and name
   events:
     - http:
-        path: event/{name}
+        path: event/{SK}
         method: delete
         cors: true
   layers:

@@ -1,7 +1,7 @@
 const util = require('../util.js');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
-const PK =process.env.HASH_KEY_USER;
-const SK_Prefix =process.env.SORT_KEY_PREFIX_USER;
+const PK = process.env.HASH_KEY_USER;
+const SK_Prefix = process.env.SORT_KEY_PREFIX_USER;
 
 const dynamoDb = require('../Dynamo');
 const get = require('./get')
@@ -32,7 +32,7 @@ const updateHandler = async (event) => {
             };
         }
         console.log("Item:", JSON.stringify(item));
-      await dynamoDb.update(TABLE_NAME,PK,SK_Prefix + item.user_name, getExpression(),getValues(item));
+        await dynamoDb.update(TABLE_NAME, PK, SK_Prefix + item.user_name, getExpression(), getValues(item));
 
     } catch (err) {
         console.error('Error:', err);
@@ -44,7 +44,7 @@ const updateHandler = async (event) => {
     }
 }
 
-const getExpression =() =>{
+const getExpression = () => {
     let expression = [];
     expression.push([' SET first_name = :fname', ' last_name= :lname']);
     expression.push([' city = :city', ' zip = :zip', ' address = :address']);
@@ -53,7 +53,7 @@ const getExpression =() =>{
     return expression.toString();
 }
 
-const  getValues =(user) =>{
+const getValues = (user) => {
     return {
         ":fname": user.first_name,
         ":lname": user.last_name,
