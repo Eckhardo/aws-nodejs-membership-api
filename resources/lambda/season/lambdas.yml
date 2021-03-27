@@ -1,0 +1,55 @@
+get-season:
+  handler: api/season/get.getOne
+  description: GET season by year
+  events:
+    - http:
+        path: season/{year}
+        method: get
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+get-seasons:
+  handler: api/season/get.getAll
+  description: GET all seasons
+  events:
+    - http:
+        path: season
+        method: get
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+create-season:
+  handler: api/season/create.handler
+  description: POST season
+  events:
+    - http:
+        path: season
+        method: post
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+update-season:
+  handler: api/season/update.handler
+  description: PUT season
+  events:
+    - http:
+        path: season
+        method: put
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+delete-season:
+  handler: api/season/delete.handler
+  description: DELETE /season
+  events:
+    - http:
+        path: season/{year}
+        method: delete
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+

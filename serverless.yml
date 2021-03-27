@@ -12,6 +12,7 @@ provider:
     shouldStartNameWithService: true
   lambdaHashingVersion: 20201221
   environment:
+
     NODE_PATH: '/:/opt/node_modules'
     IS_OFFLINE: ${self:custom.isOffline}
     # MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
@@ -19,7 +20,9 @@ provider:
     CONFIG_USER_TABLE_OFFLINE: ${self:custom.offlineTableName.membership}
     CONFIG_DYNAMODB_ENDPOINT: ${self:custom.endpoints.dynamodb-url}
     HASH_KEY_USER: ${file(resources/.config.yml):USER_KEY}
-    SORT_KEY_PREFIX_USER: ${file(resources/.config.yml):USER_RANGE}
+    SORT_KEY_USER: ${file(resources/.config.yml):USER_RANGE}
+    INDEX_KEY_USER: ${file(resources/.config.yml):USER_INDEX}
+
     HASH_KEY_PREFIX_MEMBERSHIP: ${file(resources/.config.yml):MS_KEY}
     SORT_KEY_MEMBERSHIP_VALUE: ${file(resources/.config.yml):MS_RANGE}
     SORT_KEY_PREFIX_MEMBERSHIP_MEMBER: ${file(resources/.config.yml):MSM_RANGE}
@@ -69,7 +72,7 @@ custom:
 
 functions:
   - ${file(resources/lambda/user/lambdas.yml)}
-  - ${file(resources/lambda/membership/lambdas.yml)}
+  - ${file(resources/lambda/season/lambdas.yml)}
   - ${file(resources/lambda/event/lambdas.yml)}
   - ${file(resources/lambda/membershipMember/lambdas.yml)}
 

@@ -1,7 +1,7 @@
 module.exports = {
     tables: [
         {
-            TableName: 'aige-membership-dev',
+            TableName: 'aige-season-dev',
             KeySchema: [
                 {
                     AttributeName: 'PK',

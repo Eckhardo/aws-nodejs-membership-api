@@ -163,15 +163,16 @@ const Dynamo = {
      * @returns {Promise<{statusCode: number}>}
      */
     async remove(TableName, PK, SK) {
-        const params = {
-            TableName,
-            Key: {
-                PK,
-                SK
-            },
-        };
-
-        let response = await documentClient.delete(params).promise();
+        let params = {
+            TableName, Key: {
+                PK
+            }
+        }
+        if (arguments.length === 3) {
+           params.Key.SK= SK;
+        }
+        console.log('delete Key::', params);
+         let response = await documentClient.delete(params).promise();
         console.log('delete::', response);
         return null;
     },

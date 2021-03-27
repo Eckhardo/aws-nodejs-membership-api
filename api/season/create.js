@@ -7,17 +7,17 @@ const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const createMsSchema = require('./../../lib/json-schema/membership/createMembership');
+const createMsSchema = require('../../lib/json-schema/season/createSeason');
 /**
- * Create new membership
+ * Create new season
  *
- * Route: POST /membership/
+ * Route: POST /season/
  */
 
 
 const createHandler = async (event) => {
     const {item} = event.body;
-    const year = item.membership_year;
+    const year = item.season_year;
     util.validate(year);
     item.PK = HASH_KEY_PREFIX + year;
     item.SK = SORT_KEY_VALUE;

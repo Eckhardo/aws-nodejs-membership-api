@@ -2,7 +2,7 @@
 
 
 const TABLE_NAME = process.env.CONFIG_USER_TABLE_OFFLINE;
-const HASH_KEY_PREFIX = process.env.HASH_KEY_USER;
+const USER_INDEX = process.env.INDEX_KEY_USER;
 const dynamoDb = require('../Dynamo');
 const util = require('../util');
 const createError = require('http-errors');
@@ -17,9 +17,14 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.
  */
 const getAllHandler = async () => {
     let users;
+    console.log("get All users", USER_INDEX);
 
     try {
-        users = await dynamoDb.getAll(TABLE_NAME, HASH_KEY_PREFIX);
+      //  users = await dynamoDb.getAll(TABLE_NAME, HASH_KEY);
+
+
+         users = await dynamoDb.queryByIndex(TABLE_NAME, USER_INDEX,'SK =:SK',{':SK': 'USER'});
+
     } catch (err) {
         throw new createError.InternalServerError(err);
     }

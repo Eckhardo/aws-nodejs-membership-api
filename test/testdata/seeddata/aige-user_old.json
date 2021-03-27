@@ -1,10 +1,10 @@
 [
 	{
 		"PK": {
-			"S": "user_Eckhardo"
+			"S": "user"
 		},
 		"SK": {
-			"S": "USER"
+			"S": "profile_Eckhardo"
 		},
 		"user_name": {
 			"S": "Eckhardo"
@@ -48,10 +48,10 @@
 	},
 	{
 		"PK": {
-			"S": "user_Maikeli"
+			"S": "user"
 		},
 		"SK": {
-			"S": "USER"
+			"S": "profile_Maikeli"
 		},
 		"user_name": {
 			"S": "Maikeli"
@@ -95,25 +95,22 @@
 	},
 	{
 		"PK": {
-			"S": "season_2020"
+			"S": "membership_2020"
 		},
 		"SK": {
 			"S": "meta"
 		},
-		"season_year": {
+		"membership_year": {
 			"N": "2020"
 		},
-		"season_name": {
+		"membership_name": {
 			"S": "Saison 2020"
 		},
-		"members": {
+		"comments": {
 			"SS": [
-				"Maikeli",
-				"Eckhardo"
+				"Vorletzte Saison",
+				"Beitrag erhoeht"
 			]
-		},
-		"events": {
-			"SS": ["Anangeln-1", "Arbeitsdienst-1"]
 		},
 		"is_active": {
 			"BOOL": true
@@ -121,22 +118,22 @@
 	},
 	{
 		"PK": {
-			"S": "season_2021"
+			"S": "membership_2021"
 		},
 		"SK": {
 			"S": "meta"
 		},
-		"season_year": {
+		"membership_year": {
 			"N": "2021"
 		},
-		"season_name": {
+		"membership_name": {
 			"S": "Saison 2021"
 		},
-		"members": {
-			"SS": [""]
-		},
-		"events": {
-			"SS": [""]
+		"comments": {
+			"SS": [
+				"Letzte Saison",
+				"Beitrag reduziert"
+			]
 		},
 		"is_active": {
 			"BOOL": true
@@ -149,7 +146,9 @@
 		"SK": {
 			"S": "membershipMember_Eckhardo"
 		},
-
+		"GSI1": {
+			"S": "user_Eckhardo"
+		},
 		"role": {
 			"S": "Schriftfuehrer"
 		},
@@ -167,6 +166,9 @@
 		"SK": {
 			"S": "membershipMember_Maikeli"
 		},
+		"GSI1": {
+			"S": "user_Maikeli"
+		},
 		"position_role": {
 			"S": "Kassenwart"
 		},
@@ -183,6 +185,9 @@
 		},
 		"SK": {
 			"S": "membershipMember_Eckhardo"
+		},
+		"GSI1": {
+			"S": "user_Eckhardo"
 		},
 		"position_role": {
 			"S": "Gewaesserwart"
@@ -206,6 +211,15 @@
 		},
 		"event_name": {
 			"S": "Arbeitsdienst-1"
+		},
+		"starting_date": {
+			"S": "2020-08-25T08:00:00.999Z"
+		},
+		"ending_date": {
+			"S":"2020-08-25T12:00:00.999Z"
+		},
+		"meeting_point": {
+			"S": "Elsensee"
 		}
 	},
 	{
@@ -220,6 +234,21 @@
 		},
 		"event_name": {
 			"S": "Arbeitsdienst-2"
+		},
+		"starting_date": {
+			"S": "2020-09-25T08:00:00.999Z"
+		},
+		"ending_date": {
+			"S": "2020-09-25T12:00:00.999Z"
+		},
+		"meeting_point": {
+			"S": "Elsensee"
+		},
+		"comments": {
+			"SS": [
+				"Muetze aufsetzen",
+				"Anschl. Grillen"
+			]
 		}
 	},
 	{
@@ -234,6 +263,21 @@
 		},
 		"event_name": {
 			"S": "Jahreshauptversammlung"
+		},
+		"starting_date": {
+			"S": "2020-11-25T18:00:00.999Z"
+		},
+		"ending_date": {
+			"S": "2020-11-25T23:00:00.999Z"
+		},
+		"meeting_point": {
+			"S": "Rosa-Scholl-Haus"
+		},
+		"comments": {
+			"SS": [
+				"Muetze aufsetzen",
+				"Anschl. Grillen"
+			]
 		}
 	}
 ]

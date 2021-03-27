@@ -7,7 +7,7 @@ const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const updateMsSchema = require('./../../lib/json-schema/membership/updateMembership');
+const updateMsSchema = require('../../lib/json-schema/season/updateSeason');
 
 /**
  *
@@ -17,7 +17,7 @@ const updateMsSchema = require('./../../lib/json-schema/membership/updateMembers
 const updateHandler = async (event) => {
 
     const {item} = event.body;
-    const year = item.membership_year;
+    const year = item.season_year;
     util.validate(year);
 
     try {

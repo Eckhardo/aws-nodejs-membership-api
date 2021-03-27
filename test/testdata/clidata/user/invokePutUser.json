@@ -2,6 +2,7 @@
   "body": {
     "item": {
       "PK": "user_Eckhardo",
+      "SK": "USER",
       "zip": "20255",
       "address": "Lutterothstrasse 89",
       "is_active": "true",
@@ -12,7 +13,7 @@
       "is_admin": "true",
       "password": "abc",
       "phone": "+4916097023201",
-      "admission_date": "2011",
+      "admission_date": 2011,
       "first_name": "Eckhard",
       "email": "Neue.Email@freenet.de"
     }

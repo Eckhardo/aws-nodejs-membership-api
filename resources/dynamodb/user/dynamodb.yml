@@ -8,8 +8,8 @@
           AttributeType: S
         - AttributeName: SK
           AttributeType: S
-        - AttributeName: GSI1
-          AttributeType: S
+        - AttributeName: admission_date
+          AttributeType: N
         - AttributeName: event_status
           AttributeType: S
         - AttributeName: ending_date
@@ -27,11 +27,11 @@
         WriteCapacityUnits: 1
 
       GlobalSecondaryIndexes:
-        - IndexName: GSI1-SK-Index
+        - IndexName: GSI1_SK_admission_date
           KeySchema:
-            - AttributeName: GSI1
-              KeyType: HASH
             - AttributeName: SK
+              KeyType: HASH
+            - AttributeName: admission_date
               KeyType: RANGE
 
           Projection:

@@ -1,5 +1,6 @@
-USER_KEY: user
-USER_RANGE: profile_
+USER_KEY: user_
+USER_RANGE: USER
+USER_INDEX: GSI1_SK_admission_date
 MS_KEY: membership_
 MS_RANGE: meta
 MSM_RANGE: membershipMember_

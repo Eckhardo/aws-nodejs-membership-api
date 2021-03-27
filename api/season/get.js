@@ -8,7 +8,7 @@ const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const createError = require('http-errors');
 const getAllHandler = async () => {
-    let memberships;
+    let seasons;
     let params = {
         TableName: TABLE_NAME,
         FilterExpression: "#sk = :sk_value",
@@ -21,12 +21,12 @@ const getAllHandler = async () => {
     };
     try {
         // promised is resolved by .promise(), otherwise then((data) => ).catch((error) => )
-        memberships = await dynamoDb.scan(params).promise();
+        seasons = await dynamoDb.scan(params).promise();
 
     } catch (err) {
         throw new createError.InternalServerError(err)
     }
-    return util.makeAllResponse(memberships);
+    return util.makeAllResponse(seasons);
 }
 
 
@@ -36,7 +36,7 @@ const getAllHandler = async () => {
  * @returns {Promise<{body: string, statusCode: number}>}
  */
 const getOneHandler = async (event) => {
-    let myMembership;
+    let mySeason;
     const {year} = event.pathParameters;
     util.validate(year);
 
@@ -48,15 +48,15 @@ const getOneHandler = async (event) => {
 
     }
     try {
-        myMembership = await dynamoDb.query(params).promise();
+        mySeason = await dynamoDb.query(params).promise();
     } catch (e) {
         throw new createError.InternalServerError(e)
     }
-    if (!myMembership) {
+    if (!mySeason) {
         throw new createError.NotFound(`Membership for year "${year}" does not exist !`)
     }
 
-    return util.makeSingleResponse(myMembership);
+    return util.makeSingleResponse(mySeason);
 
 
 }

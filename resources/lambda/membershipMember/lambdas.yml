@@ -1,6 +1,6 @@
 get-membershipMember:
   handler: api/membershipMember/get.getOne
-  description: GET membershipMember by membership year and username
+  description: GET membershipMember by season year and username
   events:
     - http:
         path: membershipMember/{year}/{username}
@@ -11,7 +11,7 @@ get-membershipMember:
 
 get-membershipMembers:
   handler: api/membershipMember/get.getAll
-  description: GET all members for membership year
+  description: GET all members for season year
   events:
     - http:
         path: membershipMember/{year}
