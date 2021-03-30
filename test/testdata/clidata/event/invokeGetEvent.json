@@ -1,6 +1,5 @@
 {
   "pathParameters": {
-    "year":"2020",
-    "name": "Arbeitsdienst-1"
+    "event_name": "Arbeitsdienst-1"
   }
 }

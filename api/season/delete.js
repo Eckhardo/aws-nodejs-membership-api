@@ -1,8 +1,7 @@
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
-const databaseManager = require('../dynamoDbConnect');
-const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
-const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+const dynamoDb = require('../Dynamo')
+const SORT_KEY = process.env.SORT_KEY_SEASON;
+const HASH_KEY = process.env.HASH_KEY_SEASON;
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
@@ -11,13 +10,9 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.
 const deleteHandler = async (event) => {
 
     const year = decodeURIComponent(event.pathParameters.year);
-    const pk = HASH_KEY_PREFIX + year;
-    const params = {
-        TableName: TABLE_NAME,
-        Key: {PK: pk, SK: SORT_KEY_VALUE}
-    };
+    const pk = HASH_KEY + year;
     try {
-        await dynamoDb.delete(params).promise();
+        await dynamoDb.remove(TABLE_NAME,pk, SORT_KEY);
 
     } catch (err) {
         throw  new createError.InternalServerError(err);

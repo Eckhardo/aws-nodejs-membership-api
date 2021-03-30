@@ -1,8 +1,9 @@
+
+
+const dynamoDb = require('../Dynamo');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
-const databaseManager = require('../dynamoDbConnect');
-const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
-const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+const SORT_KEY = process.env.SORT_KEY_SEASON;
+const HASH_KEY = process.env.HASH_KEY_SEASON;
 const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
@@ -19,17 +20,19 @@ const createHandler = async (event) => {
     const {item} = event.body;
     const year = item.season_year;
     util.validate(year);
-    item.PK = HASH_KEY_PREFIX + year;
-    item.SK = SORT_KEY_VALUE;
+    item.PK = HASH_KEY + year;
+    item.SK = SORT_KEY;
 
     const params = {
         TableName: TABLE_NAME,
         Item: item
     };
+    console.log("params delete:", params);
+
     console.log("create.... item: ", item);
 
     try {
-        let data = await dynamoDb.put(params).promise();
+        let data = await dynamoDb.write(TABLE_NAME,item);
 
     } catch (err) {
         throw new createError.InternalServerError(err);

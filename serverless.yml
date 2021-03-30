@@ -12,7 +12,6 @@ provider:
     shouldStartNameWithService: true
   lambdaHashingVersion: 20201221
   environment:
-
     NODE_PATH: '/:/opt/node_modules'
     IS_OFFLINE: ${self:custom.isOffline}
     # MAIL_QUEUE_URL: ${self:custom.MailQueue.url}
@@ -22,12 +21,12 @@ provider:
     HASH_KEY_USER: ${file(resources/.config.yml):USER_KEY}
     SORT_KEY_USER: ${file(resources/.config.yml):USER_RANGE}
     INDEX_KEY_USER: ${file(resources/.config.yml):USER_INDEX}
-
-    HASH_KEY_PREFIX_MEMBERSHIP: ${file(resources/.config.yml):MS_KEY}
-    SORT_KEY_MEMBERSHIP_VALUE: ${file(resources/.config.yml):MS_RANGE}
-    SORT_KEY_PREFIX_MEMBERSHIP_MEMBER: ${file(resources/.config.yml):MSM_RANGE}
     HASH_KEY_EVENT: ${file(resources/.config.yml):EVENT_KEY}
-    SORT_KEY_PREFIX_EVENT: ${file(resources/.config.yml):EVENT_RANGE}
+    SORT_KEY_EVENT: ${file(resources/.config.yml):EVENT_RANGE}
+    HASH_KEY_SEASON: ${file(resources/.config.yml):SEASON_KEY}
+    SORT_KEY_SEASON: ${file(resources/.config.yml):SEASON_RANGE}
+    SORT_KEY_PREFIX_MEMBERSHIP_MEMBER: ${file(resources/.config.yml):MSM_RANGE}
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
   iamRoleStatements:
     - ${file(resources/iam/iamMembershipTable.yml):MembershipTableIAM}
     # - ${file(resources/iam/iamMailQueue.yml):MailQueueIAM}

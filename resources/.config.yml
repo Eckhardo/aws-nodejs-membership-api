@@ -1,8 +1,8 @@
 USER_KEY: user_
 USER_RANGE: USER
 USER_INDEX: GSI1_SK_admission_date
-MS_KEY: membership_
-MS_RANGE: meta
+SEASON_KEY: season_
+SEASON_RANGE: SEASON
 MSM_RANGE: membershipMember_
 EVENT_KEY: event
 EVENT_RANGE: profile_

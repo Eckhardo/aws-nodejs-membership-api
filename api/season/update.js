@@ -1,8 +1,8 @@
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
-const databaseManager = require('../dynamoDbConnect');
-const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
-const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+
+const dynamoDb = require('../Dynamo');
+const SORT_KEY = process.env.SORT_KEY_SEASON;
+const HASH_KEY = process.env.HASH_KEY_SEASON;
 const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
@@ -16,23 +16,15 @@ const updateMsSchema = require('../../lib/json-schema/season/updateSeason');
  */
 const updateHandler = async (event) => {
 
+
+
     const {item} = event.body;
     const year = item.season_year;
     util.validate(year);
+    console.log("season::", JSON.stringify(item));
 
     try {
-        const params = {
-            TableName: TABLE_NAME,
-            Key: {PK: HASH_KEY_PREFIX + year, SK: SORT_KEY_VALUE},
-            UpdateExpression: "SET membership_name = :ms_name, is_active= :active, comments= :comments",
-            ExpressionAttributeValues: {
-                ":ms_name": item.membership_name,
-                ":active": item.is_active,
-                ":comments": item.comments
-            },
-            ReturnValues: "NONE"
-        };
-        let data = await dynamoDb.update(params).promise();
+       await dynamoDb.update(TABLE_NAME, item.PK, item.SK,getKeys(),getValues(item) );
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
@@ -41,6 +33,23 @@ const updateHandler = async (event) => {
     }
 }
 
+
+function getKeys() {
+    let expression = [];
+    expression.push([' SET season_name = :name, is_active= :active, season_year= :year']);
+    expression.push([' members = :members, events= :events']);
+    return expression.toString();
+}
+
+function getValues(item) {
+    return {
+        ":name": item.season_name,
+        ":active": item.is_active,
+        ":year": item.season_year,
+        ":members": item.members,
+        ":events": item.events
+    };
+}
 module.exports.handler = middy
     .middy(updateHandler)
     .use(middyLibs)

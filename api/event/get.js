@@ -7,7 +7,7 @@ const createError = require('http-errors');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = require('../Dynamo');
 const HASH_KEY = process.env.HASH_KEY_EVENT;
-const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;
+const SORT_KEY = process.env.SORT_KEY_EVENT;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
@@ -37,12 +37,12 @@ const getAllHandler = async () => {
 const getOneHandler = async (event) => {
     let myEvent;
 
-    const {SK} = event.pathParameters;
+    const {event_name} = event.pathParameters;
 
-    util.validate(SK);
+    util.validate(event_name);
 
     try {
-        myEvent = await getEvent(SK);
+        myEvent = await getEvent(SORT_KEY + event_name);
 
     } catch (e) {
         throw new createError.InternalServerError(e)
@@ -63,8 +63,8 @@ const getOneHandler = async (event) => {
  */
 const getEvent = async (SK) => {
 
-    const result = await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY, SK);
-    return result;
+    return await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY, SK);
+
 }
 
 const getOne = middy.middy(getOneHandler).use(middyLibs);

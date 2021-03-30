@@ -60,7 +60,6 @@ const Dynamo = {
         if (data && data.Item) {
             item = data.Item;
         }
-        console.log('DynamoDB GET User:', JSON.stringify(data));
         return item;
     },
     /**
@@ -104,7 +103,6 @@ const Dynamo = {
         };
 
         const data = await documentClient.query(params).promise();
-
         if (data && data.Items) {
             items = data.Items;
         }
@@ -169,10 +167,10 @@ const Dynamo = {
             }
         }
         if (arguments.length === 3) {
-           params.Key.SK= SK;
+            params.Key.SK = SK;
         }
         console.log('delete Key::', params);
-         let response = await documentClient.delete(params).promise();
+        let response = await documentClient.delete(params).promise();
         console.log('delete::', response);
         return null;
     },
@@ -181,8 +179,6 @@ const Dynamo = {
         let items = [];
         const params = {
             TableName: TableName,
-
-
             KeyConditionExpression: '#pk = :pk and begins_with(#sk, :sk)',
             ExpressionAttributeNames: {
                 "#pk": "PK",
@@ -199,7 +195,6 @@ const Dynamo = {
         if (data && data.Items) {
             items = data.Items;
         }
-        console.log("items::", JSON.stringify(items));
         return items;
     },
 

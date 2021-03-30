@@ -98,10 +98,10 @@
 			"S": "season_2020"
 		},
 		"SK": {
-			"S": "meta"
+			"S": "SEASON"
 		},
 		"season_year": {
-			"N": "2020"
+			"S": "2020-01-01T00:00:02.021Z"
 		},
 		"season_name": {
 			"S": "Saison 2020"
@@ -124,10 +124,10 @@
 			"S": "season_2021"
 		},
 		"SK": {
-			"S": "meta"
+			"S": "SEASON"
 		},
 		"season_year": {
-			"N": "2021"
+			"S": "2021-01-01T00:00:02.021Z"
 		},
 		"season_name": {
 			"S": "Saison 2021"

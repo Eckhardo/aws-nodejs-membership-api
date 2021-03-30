@@ -7,7 +7,7 @@ const createError = require('http-errors');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = require('../Dynamo');
 const HASH_KEY = process.env.HASH_KEY_EVENT;
-const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;
+const SORT_KEY = process.env.SORT_KEY_EVENT;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
@@ -42,15 +42,12 @@ const searchHandler = async (event) => {
  * Retrieve an event for a distinct search term
  */
 const searchEvent = async (searchTerm) => {
+    console.log("search term::", searchTerm);
 
-    const result = await dynamoDb.search(TABLE_NAME, HASH_KEY, SORT_KEY_PREFIX,searchTerm);
+    const result = await dynamoDb.search(TABLE_NAME, HASH_KEY, SORT_KEY,searchTerm);
     return result;
 }
 
-const getAll = middy.middy(searchHandler).use(middyLibs);
 
 
-module.exports = {
-
-    getAll
-}
+module.exports.handler = middy.middy(searchHandler).use(middyLibs);

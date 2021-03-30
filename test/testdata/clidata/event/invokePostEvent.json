@@ -1,15 +1,8 @@
 {
   "body": {
     "item": {
-      "starting_date": "2022-08-25T08:00:00.999Z",
-      "comments": [
-        "Anschl. Biertrinken",
-        "Arbeitschuhe mitbringen"
-      ],
-      "event_name": "Arbeitsdienst-1",
-      "ending_date":"2022-08-25T12: 00:00.999Z",
-      "meeting_point":"Elsensee",
-      "event_status":"OPEN"
-    }
+       "event_name": "Arbeitsdienst-5",
+      "event_short":"AD-5"
+     }
     }
 }

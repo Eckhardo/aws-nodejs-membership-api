@@ -4,8 +4,6 @@ const get = require('./get')
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const dynamoDb = require('../Dynamo');
 const HASH_KEY = process.env.HASH_KEY_EVENT;
-const SORT_KEY_PREFIX = process.env.SORT_KEY_PREFIX_EVENT;
-const databaseManager = require('../dynamoDbConnect');
 
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
@@ -39,20 +37,14 @@ const updateHandler = async (event) => {
 function getKeys() {
     let expression = [];
     expression.push([' SET event_short = :event_short', ' event_name= :event_name']);
-    expression.push([' starting_date = :starting_date', ' ending_date = :ending_date', ' meeting_point = :meeting_point']);
-    expression.push([' comments = :comments']);
     return expression.toString();
 }
 
 function getValues(theEvent) {
     return {
         ":event_short": theEvent.event_short,
-        ":event_name": theEvent.event_name,
-        ":starting_date": theEvent.starting_date,
-        ":ending_date": theEvent.ending_date,
-        ":meeting_point": theEvent.meeting_point,
-        ":comments": theEvent.comments
-    };
+        ":event_name": theEvent.event_name
+   };
 }
 
 

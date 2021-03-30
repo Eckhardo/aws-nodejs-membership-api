@@ -23,7 +23,7 @@ get-event:
 
 
 search-event:
-  handler: api/event/search.getAll
+  handler: api/event/search.handler
   description: GET event by SK + search String
   events:
     - http:

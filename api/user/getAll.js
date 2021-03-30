@@ -12,17 +12,13 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.
 /**
  * GET all users by sort key = profile
  *
- * One should consider to establish a GSI with PK = profile and SK = user_
  * Route: GET /user/
  */
 const getAllHandler = async () => {
     let users;
-    console.log("get All users", USER_INDEX);
+    console.log("get All users for index::", USER_INDEX);
 
     try {
-      //  users = await dynamoDb.getAll(TABLE_NAME, HASH_KEY);
-
-
          users = await dynamoDb.queryByIndex(TABLE_NAME, USER_INDEX,'SK =:SK',{':SK': 'USER'});
 
     } catch (err) {

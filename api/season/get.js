@@ -2,8 +2,8 @@ const util = require('../util.js');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const databaseManager = require('../dynamoDbConnect');
 const dynamoDb = databaseManager.connectDynamoDB(TABLE_NAME);
-const SORT_KEY_VALUE = process.env.SORT_KEY_MEMBERSHIP_VALUE;
-const HASH_KEY_PREFIX = process.env.HASH_KEY_PREFIX_MEMBERSHIP;
+const SORT_KEY = process.env.SORT_KEY_SEASON;
+const HASH_KEY = process.env.HASH_KEY_SEASON;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const createError = require('http-errors');
@@ -16,7 +16,7 @@ const getAllHandler = async () => {
             "#sk": "SK",
         },
         ExpressionAttributeValues: {
-            ":sk_value": SORT_KEY_VALUE
+            ":sk_value": SORT_KEY
         }
     };
     try {
@@ -43,7 +43,7 @@ const getOneHandler = async (event) => {
     const params = {
         TableName: TABLE_NAME,
         KeyConditionExpression: ':pk = PK and :sk = SK',
-        ExpressionAttributeValues: {':pk': HASH_KEY_PREFIX + year, ':sk': SORT_KEY_VALUE},
+        ExpressionAttributeValues: {':pk': HASH_KEY + year, ':sk': SORT_KEY},
         Limit: 1
 
     }
