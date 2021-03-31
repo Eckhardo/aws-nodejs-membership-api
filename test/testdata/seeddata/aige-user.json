@@ -48,6 +48,100 @@
 	},
 	{
 		"PK": {
+			"S": "user_Guenther"
+		},
+		"SK": {
+			"S": "USER"
+		},
+		"user_name": {
+			"S": "Guenther"
+		},
+		"first_name": {
+			"S": "Guenther"
+		},
+		"last_name": {
+			"S": "Hauser"
+		},
+		"password": {
+			"S": "abc"
+		},
+		"email": {
+			"S": "g.hauser@freenet.de"
+		},
+		"zip": {
+			"N": "25451"
+		},
+		"city": {
+			"S": "Quickborn"
+		},
+		"address": {
+			"S": "Marktstrasse 5"
+		},
+		"phone": {
+			"S": "04106 4455"
+		},
+		"mobil": {
+			"S": "+4916097023201"
+		},
+		"admission_date": {
+			"N": "1980"
+		},
+		"is_admin": {
+			"BOOL": false
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
+			"S": "user_Christian"
+		},
+		"SK": {
+			"S": "USER"
+		},
+		"user_name": {
+			"S": "Christian"
+		},
+		"first_name": {
+			"S": "Christian"
+		},
+		"last_name": {
+			"S": "Adloff"
+		},
+		"password": {
+			"S": "abc"
+		},
+		"email": {
+			"S": "c.adloff@freenet.de"
+		},
+		"zip": {
+			"N": "25422"
+		},
+		"city": {
+			"S": "Norderstedt"
+		},
+		"address": {
+			"S": "Ulzburger Strasse 12"
+		},
+		"phone": {
+			"S": "+4940556677"
+		},
+		"mobil": {
+			"S": "+49160222222"
+		},
+		"admission_date": {
+			"N": "1992"
+		},
+		"is_admin": {
+			"BOOL": false
+		},
+		"is_active": {
+			"BOOL": true
+		}
+	},
+	{
+		"PK": {
 			"S": "user_Maikeli"
 		},
 		"SK": {
@@ -133,10 +227,10 @@
 			"S": "Saison 2021"
 		},
 		"members": {
-			"SS": [""]
+			"SS": ["Guenther"]
 		},
 		"events": {
-			"SS": [""]
+			"SS": ["Arbeitsdienst-1"]
 		},
 		"is_active": {
 			"BOOL": true
