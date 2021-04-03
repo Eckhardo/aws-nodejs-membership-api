@@ -1,0 +1,6 @@
+sls invoke local -f get-seasonUsers --path test/testdata/clidata/seasonUser/invokeGetSeasonUser.json
+sls invoke local  -f create-seasonUser  --path test/testdata/clidata/seasonUser/invokePostSeasonUser.json
+sls invoke local  -f get-seasonUser  --path test/testdata/clidata/seasonUser/invokeGetSeasonUser.json
+sls invoke local  -f delete-seasonUser  --path test/testdata/clidata/seasonUser/invokeDeleteSeasonUser.json
+sls invoke local  -f update-seasonUser  --path test/testdata/clidata/seasonUser/invokePutSeasonUser.json
+

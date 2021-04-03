@@ -3,4 +3,4 @@ sls invoke local  -f create-season  --path test/testdata/clidata/season/invokePo
 sls invoke local  -f get-season  --path test/testdata/clidata/season/invokeGetMembership.json
 sls invoke local  -f delete-season  --path test/testdata/clidata/season/invokeDeleteMembership.json
 sls invoke local  -f update-season  --path test/testdata/clidata/season/invokePutMembership.json
-
+sls invoke local  -f get-seasonsWithChildren  --path test/testdata/clidata/season/invokeSeasonWithChildren.json

@@ -10,9 +10,7 @@
           AttributeType: S
         - AttributeName: admission_date
           AttributeType: N
-        - AttributeName: event_status
-          AttributeType: S
-        - AttributeName: ending_date
+        - AttributeName: season_year
           AttributeType: S
 
       KeySchema:
@@ -33,23 +31,20 @@
               KeyType: HASH
             - AttributeName: admission_date
               KeyType: RANGE
-
           Projection:
             ProjectionType: ALL
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
 
-
-        - IndexName: statusEndingDate-Index
+        - IndexName: GSI1_SK_season_year
           KeySchema:
-            - AttributeName: event_status
+            - AttributeName: SK
               KeyType: HASH
-            - AttributeName: ending_date
+            - AttributeName: season_year
               KeyType: RANGE
-
           Projection:
-            ProjectionType: KEYS_ONLY
+            ProjectionType: ALL
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1

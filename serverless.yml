@@ -25,6 +25,7 @@ provider:
     SORT_KEY_EVENT: ${file(resources/.config.yml):EVENT_RANGE}
     HASH_KEY_SEASON: ${file(resources/.config.yml):SEASON_KEY}
     SORT_KEY_SEASON: ${file(resources/.config.yml):SEASON_RANGE}
+    INDEX_KEY_SEASON: ${file(resources/.config.yml):SEASON_INDEX}
     SORT_KEY_PREFIX_MEMBERSHIP_MEMBER: ${file(resources/.config.yml):MSM_RANGE}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
   iamRoleStatements:
@@ -73,8 +74,8 @@ functions:
   - ${file(resources/lambda/user/lambdas.yml)}
   - ${file(resources/lambda/season/lambdas.yml)}
   - ${file(resources/lambda/event/lambdas.yml)}
-  - ${file(resources/lambda/membershipMember/lambdas.yml)}
-
+  - ${file(resources/lambda/seasonUser/lambdas.yml)}
+  - ${file(resources/lambda/seasonEvent/lambdas.yml)}
 resources:
   Resources:
     UserTable: ${file(resources/dynamodb/user/dynamodb.yml):UserTable}

@@ -1,0 +1,23 @@
+get-seasonUser:
+  handler: api/seasonUser/get.getOneHandler
+  description: GET season user by season year and user name
+  events:
+    - http:
+        path: seasonUser/{season_year}/{user_name}
+        method: get
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+get-seasonUsers:
+  handler: api/seasonUser/get.getAllHandler
+  description: GET all Users for particular season
+  events:
+    - http:
+        path: seasonUser/{season_year}
+        method: get
+        cors: true
+
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+

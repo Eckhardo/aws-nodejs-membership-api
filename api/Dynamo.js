@@ -57,10 +57,11 @@ const Dynamo = {
             },
         };
         let data = await documentClient.get(params).promise();
+
         if (data && data.Item) {
             item = data.Item;
         }
-        return item;
+         return item;
     },
     /**
      *
@@ -72,6 +73,30 @@ const Dynamo = {
         let items = [];
         const params = {
             TableName,
+            KeyConditionExpression: 'PK = :pk ',
+            ExpressionAttributeValues: {':pk': PK},
+        };
+
+        const data = await documentClient.query(params).promise();
+
+        if (data && data.Items) {
+            items = data.Items;
+        }
+        return items;
+
+
+    },
+    /**
+     *
+     * @param TableName
+     * @param PK
+     * @returns {Promise<*>}
+     */
+    async getAllWithProjections(TableName, PK, projections) {
+        let items = [];
+        const params = {
+            TableName,
+            ProjectionExpression:projections,
             KeyConditionExpression: 'PK = :pk ',
             ExpressionAttributeValues: {':pk': PK},
         };

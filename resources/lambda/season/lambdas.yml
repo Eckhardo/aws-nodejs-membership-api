@@ -20,6 +20,17 @@ get-seasons:
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
 
+get-seasonsWithChildren:
+  handler: api/season/get.getAllWithChildren
+  description: Get season for year with children
+  events:
+    - http:
+        path: season/children/{year}
+        method: get
+        cors: true
+  layers:
+    - {Ref: MiddyDependenciesLambdaLayer}
+
 create-season:
   handler: api/season/create.handler
   description: POST season

@@ -210,7 +210,7 @@
 			"SS": ["Anangeln-1", "Arbeitsdienst-1"]
 		},
 		"is_active": {
-			"BOOL": true
+			"BOOL": false
 		}
 	},
 	{
@@ -238,13 +238,16 @@
 	},
 	{
 		"PK": {
-			"S": "membership_2020"
+			"S": "season_2021"
 		},
 		"SK": {
-			"S": "membershipMember_Eckhardo"
+			"S": "user_Eckhardo"
+		},
+		"user_name": {
+			"S": "Eckhardo"
 		},
 
-		"role": {
+		"position_role": {
 			"S": "Schriftfuehrer"
 		},
 		"fees_paid": {
@@ -256,13 +259,16 @@
 	},
 	{
 		"PK": {
-			"S": "membership_2020"
+			"S": "season_2021"
 		},
 		"SK": {
-			"S": "membershipMember_Maikeli"
+			"S": "user_Guenther"
+		},
+		"user_name": {
+			"S": "Guenther"
 		},
 		"position_role": {
-			"S": "Kassenwart"
+			"S": "1. Vorsitzender"
 		},
 		"fees_paid": {
 			"BOOL": true
@@ -273,13 +279,16 @@
 	},
 	{
 		"PK": {
-			"S": "membership_2021"
+			"S": "season_2021"
 		},
 		"SK": {
-			"S": "membershipMember_Eckhardo"
+			"S": "user_Christian"
+		},
+		"user_name": {
+			"S": "Christian"
 		},
 		"position_role": {
-			"S": "Gewaesserwart"
+			"S": "Kassenwart"
 		},
 		"fees_paid": {
 			"BOOL": true
@@ -328,6 +337,64 @@
 		},
 		"event_name": {
 			"S": "Jahreshauptversammlung"
+		}
+	},
+	{
+		"PK": {
+			"S": "season_2021"
+		},
+		"SK": {
+			"S": "event_Arbeitsdienst-1"
+		},
+		"event_name": {
+			"S":"Arbeitsdienst-1"
+		},
+		"starting_date": {
+			"S": "2021-03-25T08:00:00.999Z"
+		},
+		"ending_date": {
+			"S":"2021-03-25T12:00:00.999Z"
+		},
+		"meeting_point": {
+			"S": "Elsensee"
+		},
+		"finished": {
+			"BOOL": false
+		},
+		"comments": {
+			"SS": [
+				"Stege reparieren",
+				"Grillen anschliessend"
+			]
+		}
+	},
+	{
+		"PK": {
+			"S": "season_2021"
+		},
+		"SK": {
+			"S": "event_Anangeln"
+		},
+		"event_name": {
+			"S":"Anangeln"
+		},
+		"starting_date": {
+			"S": "2021-05-01T08:00:00.999Z"
+		},
+		"ending_date": {
+			"S":"2021-05-01T12:00:00.999Z"
+		},
+		"meeting_point": {
+			"S": "Elsensee"
+		},
+		"finished": {
+			"BOOL": false
+		},
+		"comments": {
+			"SS": [
+				"Grillen ab 12",
+				"Forellen besetzt"
+			]
 		}
 	}
 ]
