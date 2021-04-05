@@ -1,0 +1,11 @@
+{
+  "body": {
+    "item": {
+      "user_name": "Kalle",
+      "season_year": "2021",
+      "position_role": "Klofrau",
+      "is_active": false,
+      "fees_paid": true
+    }
+  }
+}

@@ -3,7 +3,7 @@ get-seasonUser:
   description: GET season user by season year and user name
   events:
     - http:
-        path: seasonUser/{season_year}/{user_name}
+        path: seasonUser/{year}/{name}
         method: get
         cors: true
   layers:
@@ -14,10 +14,44 @@ get-seasonUsers:
   description: GET all Users for particular season
   events:
     - http:
-        path: seasonUser/{season_year}
+        path: seasonUser/{year}
         method: get
         cors: true
 
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+
+create-seasonUser:
+  handler: api/seasonUser/create.handler
+  description: POST season user
+  events:
+    - http:
+        path: seasonUser
+        method: post
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+update-seasonUser:
+  handler: api/seasonUser/update.handler
+  description: PUT season user
+  events:
+    - http:
+        path: seasonUser
+        method: put
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+delete-seasonUser:
+  handler: api/seasonUser/delete.handler
+  description: DELETE /season user
+  events:
+    - http:
+        path: seasonUser/{year}/{name}
+        method: delete
+        cors: true
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
 

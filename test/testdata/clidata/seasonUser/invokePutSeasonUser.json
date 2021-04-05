@@ -1,0 +1,14 @@
+{
+  "body": {
+    "item": {
+      "PK": "season_2021",
+      "SK": "user_Eckhardo",
+      "season_year": "2021",
+      "user_name": "Eckhardo",
+      "position_role": "Klomann",
+      "is_active": false,
+      "fees_paid": true
+    }
+  }
+}
+

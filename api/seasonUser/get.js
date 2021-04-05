@@ -14,11 +14,12 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
 const getAll=  async ( event) =>{
     let compUsers;
-    const {season_year} = event.pathParameters;
+    const {year} =event.pathParameters;
+    console.log("Season year", year);
 
 
     try {
-        compUsers = await dynamoDb.search(TABLE_NAME, HASH_KEY+season_year, SORT_KEY,"");
+        compUsers = await dynamoDb.search(TABLE_NAME, HASH_KEY+year, SORT_KEY,"");
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
@@ -31,10 +32,10 @@ const getAll=  async ( event) =>{
 
 const getOne =  async (event) =>{
     let compUser;
-    const {season_year, user_name} = event.pathParameters;
+    const {year, name} = event.pathParameters;
 
     try{
-     compUser = await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY +season_year, SORT_KEY+ user_name);
+     compUser = await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY +year, SORT_KEY+ name);
         console.log("CompUser",JSON.stringify(compUser));
     }
     catch (err){

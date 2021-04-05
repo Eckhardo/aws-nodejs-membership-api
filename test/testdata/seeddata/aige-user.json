@@ -246,7 +246,9 @@
 		"user_name": {
 			"S": "Eckhardo"
 		},
-
+		"season_year": {
+			"S": "2021"
+		},
 		"position_role": {
 			"S": "Schriftfuehrer"
 		},
@@ -267,6 +269,9 @@
 		"user_name": {
 			"S": "Guenther"
 		},
+		"season_year": {
+			"S": "2021"
+		},
 		"position_role": {
 			"S": "1. Vorsitzender"
 		},
@@ -286,6 +291,9 @@
 		},
 		"user_name": {
 			"S": "Christian"
+		},
+		"season_year": {
+			"S": "2021"
 		},
 		"position_role": {
 			"S": "Kassenwart"

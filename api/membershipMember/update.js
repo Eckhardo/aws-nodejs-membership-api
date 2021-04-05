@@ -8,7 +8,7 @@ const GSI_PREFIX = process.env.HASH_KEY_PREFIX_USER;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const createErrors = require('http-errors');
-const updateMembershipMemberSchema = require('./../../lib/json-schema/membershipMember/updateMembershipMember');
+const updateMembershipMemberSchema = require('../../lib/json-schema/seasonUser/updateSeasonUser');
 
 /**
  * Update new Membership Member
