@@ -37,7 +37,7 @@
 			"S": "+4916097023201"
 		},
 		"admission_date": {
-			"N": "2011"
+			"S": "2011"
 		},
 		"is_admin": {
 			"BOOL": true
@@ -84,7 +84,7 @@
 			"S": "+4916097023201"
 		},
 		"admission_date": {
-			"N": "1980"
+			"S": "1980"
 		},
 		"is_admin": {
 			"BOOL": false
@@ -131,7 +131,7 @@
 			"S": "+49160222222"
 		},
 		"admission_date": {
-			"N": "1992"
+			"S": "1992"
 		},
 		"is_admin": {
 			"BOOL": false
@@ -178,7 +178,7 @@
 			"S": "+4916097023201"
 		},
 		"admission_date": {
-			"N": "2012"
+			"S": "2012"
 		},
 		"is_admin": {
 			"BOOL": false
@@ -194,7 +194,7 @@
 		"SK": {
 			"S": "SEASON"
 		},
-		"season_year": {
+		"season_date": {
 			"S": "2020-01-01T00:00:02.021Z"
 		},
 		"season_name": {
@@ -220,7 +220,7 @@
 		"SK": {
 			"S": "SEASON"
 		},
-		"season_year": {
+		"season_date": {
 			"S": "2021-01-01T00:00:02.021Z"
 		},
 		"season_name": {
@@ -247,7 +247,7 @@
 			"S": "Eckhardo"
 		},
 		"season_year": {
-			"S": "2021"
+			"N": "2021"
 		},
 		"position_role": {
 			"S": "Schriftfuehrer"
@@ -270,7 +270,7 @@
 			"S": "Guenther"
 		},
 		"season_year": {
-			"S": "2021"
+			"N": "2021"
 		},
 		"position_role": {
 			"S": "1. Vorsitzender"
@@ -293,7 +293,7 @@
 			"S": "Christian"
 		},
 		"season_year": {
-			"S": "2021"
+			"N": "2021"
 		},
 		"position_role": {
 			"S": "Kassenwart"
@@ -354,6 +354,9 @@
 		"SK": {
 			"S": "event_Arbeitsdienst-1"
 		},
+		"season_year": {
+			"N": "2021"
+		},
 		"event_name": {
 			"S":"Arbeitsdienst-1"
 		},
@@ -383,6 +386,10 @@
 		"SK": {
 			"S": "event_Anangeln"
 		},
+		"season_year": {
+			"N": "2021"
+		},
+
 		"event_name": {
 			"S":"Anangeln"
 		},

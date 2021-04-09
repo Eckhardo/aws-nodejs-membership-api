@@ -1,0 +1,6 @@
+sls invoke local -f get-seasonEvents --path test/testdata/clidata/seasonEvent/invokeGetSeasonEvent.json
+sls invoke local  -f create-seasonEvent  --path test/testdata/clidata/seasonEvent/invokePostSeasonEvent.json
+sls invoke local  -f get-seasonEvent  --path test/testdata/clidata/seasonEvent/invokeGetSeasonEvent.json
+sls invoke local  -f delete-seasonEvent  --path test/testdata/clidata/seasonEvent/invokeDeleteSeasonEvent.json
+sls invoke local  -f update-seasonEvent  --path test/testdata/clidata/seasonEvent/invokePutSeasonEvent.json
+

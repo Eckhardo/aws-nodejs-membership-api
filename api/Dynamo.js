@@ -57,11 +57,10 @@ const Dynamo = {
             },
         };
         let data = await documentClient.get(params).promise();
-
         if (data && data.Item) {
             item = data.Item;
         }
-         return item;
+        return item;
     },
     /**
      *
@@ -86,29 +85,21 @@ const Dynamo = {
 
 
     },
-    /**
-     *
-     * @param TableName
-     * @param PK
-     * @returns {Promise<*>}
-     */
+
     async getAllWithProjections(TableName, PK, projections) {
         let items = [];
         const params = {
             TableName,
-            ProjectionExpression:projections,
+            ProjectionExpression: projections,
             KeyConditionExpression: 'PK = :pk ',
             ExpressionAttributeValues: {':pk': PK},
         };
 
         const data = await documentClient.query(params).promise();
-
         if (data && data.Items) {
             items = data.Items;
         }
         return items;
-
-
     },
     /**
      /* *
@@ -145,13 +136,11 @@ const Dynamo = {
         if (!data.PK) {
             throw Error('no PK on the data');
         }
-
         const params = {
             TableName,
             Item: data
         };
         let response = await documentClient.put(params).promise();
-        console.log('create::', response);
         return data;
     },
     /**
@@ -174,7 +163,6 @@ const Dynamo = {
             ExpressionAttributeValues: updateValues
         };
         let response = await documentClient.update(params).promise();
-        console.log('update::', response);
         return null;
 
     },
@@ -194,9 +182,7 @@ const Dynamo = {
         if (arguments.length === 3) {
             params.Key.SK = SK;
         }
-        console.log('delete Key::', params);
-        let response = await documentClient.delete(params).promise();
-        console.log('delete::', response);
+        await documentClient.delete(params).promise();
         return null;
     },
 
@@ -214,8 +200,7 @@ const Dynamo = {
                 ":sk": SK + searchTerm
             }
         }
-        console.log("search::", params);
-        const data = await documentClient.query(params).promise();
+         const data = await documentClient.query(params).promise();
 
         if (data && data.Items) {
             items = data.Items;

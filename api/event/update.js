@@ -21,7 +21,6 @@ const updateHandler = async (event) => {
             throw new createError.NotAcceptable(`Event with SK ${SK}  does not exist.`);
 
         }
-
         await dynamoDb.update(TABLE_NAME, HASH_KEY, item.SK, getKeys(), getValues(item));
 
     } catch (err) {
@@ -36,14 +35,15 @@ const updateHandler = async (event) => {
 
 function getKeys() {
     let expression = [];
-    expression.push([' SET event_short = :event_short', ' event_name= :event_name']);
+    expression.push([' SET event_short = :event_short', ' event_name= :event_name', 'comments= :comments']);
     return expression.toString();
 }
 
 function getValues(theEvent) {
     return {
         ":event_short": theEvent.event_short,
-        ":event_name": theEvent.event_name
+        ":event_name": theEvent.event_name,
+        ":comments": theEvent.comments
    };
 }
 

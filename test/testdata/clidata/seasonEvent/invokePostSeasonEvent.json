@@ -1,0 +1,16 @@
+{
+  "body": {
+    "item": {
+      "event_name": "Gemeinschaftsangeln-1",
+      "season_year": "2021",
+      "meeting_point": "Klo",
+      "starting_date": "2021-03-25T08:00:00.999Z",
+      "finished": false,
+      "ending_date": "2021-03-25T12:00:00.999Z",
+      "comments": [
+        "Angeln",
+        "Grillen"
+      ]
+    }
+  }
+}

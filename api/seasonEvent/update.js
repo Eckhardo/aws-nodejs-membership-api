@@ -1,14 +1,14 @@
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 
 const dynamoDb = require('../Dynamo');
-const SORT_KEY = process.env.SORT_KEY_SEASON;
 const HASH_KEY = process.env.HASH_KEY_SEASON;
+const SORT_KEY = process.env.HASH_KEY_EVENT;
 const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const updateMsSchema = require('../../lib/json-schema/season/updateSeason');
-
+const updateMsSchema = require('../../lib/json-schema/seasonEvent/updateSeasonEvent');
+const get = require('./get');
 /**
  *
  * @param event
@@ -17,13 +17,19 @@ const updateMsSchema = require('../../lib/json-schema/season/updateSeason');
 const updateHandler = async (event) => {
 
 
-
     const {item} = event.body;
-
-    console.log("season update::", JSON.stringify(item));
+    console.log("ITEM update:", JSON.stringify(item));
 
     try {
-       await dynamoDb.update(TABLE_NAME, item.PK, item.SK,getKeys(),getValues(item) );
+        let seasonEvent = await get.getSeasonEvent(item.PK, item.SK);
+        if (!seasonEvent) {
+            console.log("update error")
+            return {
+                statusCode: 404,
+                body: JSON.stringify(`Event with event name ${item.event_name}  does not  exists !`)
+            };
+        }
+        await dynamoDb.update(TABLE_NAME, item.PK, item.SK, getKeys(), getValues(item));
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
@@ -35,20 +41,23 @@ const updateHandler = async (event) => {
 
 function getKeys() {
     let expression = [];
-    expression.push([' SET season_name = :name, is_active= :active, season_date= :date']);
-    expression.push([' members = :members, events= :events']);
+    expression.push([' SET event_name = :name, finished = :finished, meeting_point = :point']);
+    expression.push([' comments = :comments', 'starting_date = :start', 'ending_date = :end']);
     return expression.toString();
 }
 
 function getValues(item) {
     return {
-        ":name": item.season_name,
-        ":active": item.is_active,
-        ":date": item.season_date,
-        ":members": item.members,
-        ":events": item.events
+        ":name": item.event_name,
+        ":finished": item.finished,
+        ":point": item.meeting_point,
+        ":start": item.starting_date,
+        ":end": item.ending_date,
+        ":comments": item.comments
+
     };
 }
+
 module.exports.handler = middy
     .middy(updateHandler)
     .use(middyLibs)

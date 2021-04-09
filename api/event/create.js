@@ -16,8 +16,8 @@ const createError = require('http-errors');
 const createHandler = async (event) => {
 
     const {item} = event.body;
-    const SK = SORT_KEY + item.event_short;
-
+    const SK = SORT_KEY + item.event_name;
+    console.log("create event::", JSON.stringify(item));
     try {
         const theEvent = await get.getEvent(SK);
         if (theEvent) {
@@ -26,7 +26,7 @@ const createHandler = async (event) => {
         }
 
         item.PK = HASH_KEY;
-        item.SK = SORT_KEY + item.event_short;
+        item.SK = SK;
         const params = {
             TableName: TABLE_NAME,
             Item: item

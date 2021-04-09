@@ -3,7 +3,7 @@ USER_RANGE: USER
 USER_INDEX: GSI1_SK_admission_date
 SEASON_KEY: season_
 SEASON_RANGE: SEASON
-SEASON_INDEX: GSI1_SK_season_year
+SEASON_INDEX: GSI1_SK_season_date
 MSM_RANGE: membershipMember_
-EVENT_KEY: event
+EVENT_KEY: event_
 EVENT_RANGE: profile_

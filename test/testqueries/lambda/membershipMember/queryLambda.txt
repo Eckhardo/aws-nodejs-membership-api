@@ -1,6 +1,0 @@
-sls invoke local -f get-membershipMembers --path test/testdata/clidata/membershipMember/invokeGetMembershipMembers.json
-sls invoke local  -f create-membershipMember  --path test/testdata/clidata/membershipMember/invokePostMembershipMember.json
-sls invoke local  -f get-membershipMember  --path test/testdata/clidata/membershipMember/invokeGetMembershipMember.json
-sls invoke local  -f delete-membershipMember  --path test/testdata/clidata/membershipMember/invokeDeleteMembershipMember.json
-sls invoke local  -f update-membershipMember  --path test/testdata/clidata/membershipMember/invokePutMembershipMember.json
-

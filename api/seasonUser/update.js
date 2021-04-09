@@ -9,20 +9,25 @@ const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const updateMsSchema = require('../../lib/json-schema/seasonUser/updateSeasonUser');
-
+const get = require('./get');
 /**
  *
  * @param event
  * @returns {Promise<{headers: {"Access-Control-Allow-Origin": string}, body: string, statusCode: (*|number)}|{headers: {"Access-Control-Allow-Origin": string}, body: string, statusCode: number}|{headers: {"Access-Control-Allow-Origin": string}, statusCode: number}>}
  */
 const updateHandler = async (event) => {
-
-
-
     const {item} = event.body;
-    console.log("ITEM update:", JSON.stringify(item));
 
     try {
+        let seasonUser = await get.getSeasonUser(item.PK, item.SK);
+        if (!seasonUser) {
+            console.warn("update error")
+            return {
+                statusCode: 404,
+                body: JSON.stringify(`User with user name ${item.user_name}  does not  exists !`)
+            };
+        }
+
         await dynamoDb.update(TABLE_NAME, item.PK, item.SK,getKeys(),getValues(item) );
     } catch (err) {
         throw new createError.InternalServerError(err);

@@ -3,15 +3,14 @@ const util = require('../util.js');
 const dynamoDb = require('../Dynamo');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const HASH_KEY = process.env.HASH_KEY_SEASON;
-const SORT_KEY = process.env.HASH_KEY_USER;
-
+const SORT_KEY = process.env.HASH_KEY_EVENT;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const createMsSchema = require('../../lib/json-schema/seasonUser/createSeasonUser');
+const createMsSchema = require('../../lib/json-schema/seasonEvent/createSeasonEvent');
 const createError = require('http-errors');
 const get = require('./get');
 /**
- * Create new season
+ * Create new season event
  *
  * Route: POST /season/
  */
@@ -20,19 +19,19 @@ const get = require('./get');
 const createHandler = async (event) => {
     const {item} = event.body;
     const year = item.season_year;
-    const name = item.user_name;
+    const name = item.event_name;
     item.PK = HASH_KEY + year;
     item.SK = SORT_KEY + name;
 
     console.log("create.... item: ", item);
 
     try {
-        let seasonUser = await get.getSeasonUser(item.PK, item.SK);
-        if (seasonUser) {
+        let seasonEvent = await get.getSeasonEvent(item.PK, item.SK);
+        if (seasonEvent) {
             console.log("create error")
             return {
                 statusCode: 404,
-                body: JSON.stringify(`User with user name ${item.user_name}  already exists !`)
+                body: JSON.stringify(`Event with event name ${item.event_name}  already exists !`)
             };
         }
 

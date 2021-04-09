@@ -3,7 +3,7 @@ get-seasonEvent:
   description: GET season event by season year and event name
   events:
     - http:
-        path: seasonEvent/{season_year}/{event_name}
+        path: seasonEvent/{year}/{name}
         method: get
         cors: true
   layers:
@@ -14,10 +14,44 @@ get-seasonEvents:
   description: GET all Events for particular season
   events:
     - http:
-        path: seasonEvent/{season_year}
+        path: seasonEvent/{year}
         method: get
         cors: true
 
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+
+create-seasonEvent:
+  handler: api/seasonEvent/create.handler
+  description: POST season event
+  events:
+    - http:
+        path: seasonEvent
+        method: post
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+update-seasonEvent:
+  handler: api/seasonEvent/update.handler
+  description: PUT season event
+  events:
+    - http:
+        path: seasonEvent
+        method: put
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+delete-seasonEvent:
+  handler: api/seasonEvent/delete.handler
+  description: DELETE /season event
+  events:
+    - http:
+        path: seasonEvent/{year}/{name}
+        method: delete
+        cors: true
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
 

@@ -9,8 +9,8 @@
         - AttributeName: SK
           AttributeType: S
         - AttributeName: admission_date
-          AttributeType: N
-        - AttributeName: season_year
+          AttributeType: S
+        - AttributeName: season_date
           AttributeType: S
 
       KeySchema:
@@ -37,11 +37,11 @@
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
 
-        - IndexName: GSI1_SK_season_year
+        - IndexName: GSI1_SK_season_date
           KeySchema:
             - AttributeName: SK
               KeyType: HASH
-            - AttributeName: season_year
+            - AttributeName: season_date
               KeyType: RANGE
           Projection:
             ProjectionType: ALL

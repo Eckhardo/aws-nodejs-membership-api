@@ -1,0 +1,19 @@
+{
+  "body": {
+    "item": {
+      "PK": "season_2021",
+      "SK": "event_Gemeinschaftsangeln-1",
+      "event_name": "Gemeinschaftsangeln-1",
+      "season_year": "2021",
+      "meeting_point": "Huette",
+      "starting_date": "2021-03-25T08:00:00.999Z",
+      "finished": true,
+      "ending_date": "2021-03-25T12:00:00.999Z",
+      "comments": [
+        "Angeln",
+        "Grillen"
+      ]
+    }
+  }
+}
+
