@@ -3,12 +3,14 @@ const util = require('../util.js');
 const dynamoDb = require('../Dynamo');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const HASH_KEY = process.env.HASH_KEY_SEASON;
-const SORT_KEY = process.env.HASH_KEY_EVENT;
+const SORT_KEY = process.env.SORT_KEY_EVENT;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const createMsSchema = require('../../lib/json-schema/seasonEvent/createSeasonEvent');
 const createError = require('http-errors');
 const get = require('./get');
+
+const uuid = require('uuid');
 /**
  * Create new season event
  *
@@ -34,8 +36,6 @@ const createHandler = async (event) => {
                 body: JSON.stringify(`Event with event name ${item.event_name}  already exists !`)
             };
         }
-
-
         await dynamoDb.write(TABLE_NAME, item);
 
     } catch (err) {

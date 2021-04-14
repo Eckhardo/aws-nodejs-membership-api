@@ -20,6 +20,7 @@ const getAllHandler = async () => {
 
     try {
         events = await dynamoDb.getAll(TABLE_NAME, HASH_KEY);
+        console.log("events::", JSON.stringify(events));
     } catch (err) {
         throw new createError.InternalServerError(err);
     }

@@ -307,10 +307,10 @@
 	},
 	{
 		"PK": {
-			"S": "event"
+			"S": "EVENT"
 		},
 		"SK": {
-			"S": "profile_Arbeitsdienst-1"
+			"S": "event_Arbeitsdienst-1"
 		},
 		"event_short": {
 			"S": "AD-1"
@@ -321,10 +321,10 @@
 	},
 	{
 		"PK": {
-			"S": "event"
+			"S": "EVENT"
 		},
 		"SK": {
-			"S": "profile_Arbeitsdienst-2"
+			"S": "event_Arbeitsdienst-2"
 		},
 		"event_short": {
 			"S": "AD-2"
@@ -335,10 +335,10 @@
 	},
 	{
 		"PK": {
-			"S": "event"
+			"S": "EVENT"
 		},
 		"SK": {
-			"S": "profile_Jahreshauptversammlung"
+			"S": "event_Jahreshauptversammlung"
 		},
 		"event_short": {
 			"S": "JHV"
@@ -363,8 +363,14 @@
 		"starting_date": {
 			"S": "2021-03-25T08:00:00.999Z"
 		},
+		"starting_time": {
+			"S": "08:30"
+		},
 		"ending_date": {
 			"S":"2021-03-25T12:00:00.999Z"
+		},
+		"ending_time": {
+			"S": "12:30"
 		},
 		"meeting_point": {
 			"S": "Elsensee"
@@ -373,10 +379,7 @@
 			"BOOL": false
 		},
 		"comments": {
-			"SS": [
-				"Stege reparieren",
-				"Grillen anschliessend"
-			]
+			"S": "Stege reparieren, Grillen anschliessend"
 		}
 	},
 	{
@@ -396,8 +399,14 @@
 		"starting_date": {
 			"S": "2021-05-01T08:00:00.999Z"
 		},
+		"starting_time": {
+			"S": "08:30"
+		},
 		"ending_date": {
 			"S":"2021-05-01T12:00:00.999Z"
+		},
+		"ending_time": {
+			"S": "12:30"
 		},
 		"meeting_point": {
 			"S": "Elsensee"
@@ -406,10 +415,8 @@
 			"BOOL": false
 		},
 		"comments": {
-			"SS": [
-				"Grillen ab 12",
-				"Forellen besetzt"
-			]
+			"S":"Grillen ab 12,Forellen besetzt"
+
 		}
 	}
 ]

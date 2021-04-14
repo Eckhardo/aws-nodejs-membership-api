@@ -2,7 +2,7 @@ const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 
 const dynamoDb = require('../Dynamo');
 const HASH_KEY = process.env.HASH_KEY_SEASON;
-const SORT_KEY = process.env.HASH_KEY_EVENT;
+const SORT_KEY = process.env.SORT_KEY_EVENT;
 const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');

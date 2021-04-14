@@ -5,5 +5,6 @@ SEASON_KEY: season_
 SEASON_RANGE: SEASON
 SEASON_INDEX: GSI1_SK_season_date
 MSM_RANGE: membershipMember_
-EVENT_KEY: event_
-EVENT_RANGE: profile_
+EVENT_RANGE: event_
+EVENT_KEY: EVENT
+
