@@ -8,10 +8,10 @@
           AttributeType: S
         - AttributeName: SK
           AttributeType: S
-        - AttributeName: admission_date
-          AttributeType: S
-        - AttributeName: season_date
-          AttributeType: S
+        - AttributeName: admission_year
+          AttributeType: N
+        - AttributeName: season_year
+          AttributeType: N
 
       KeySchema:
         - AttributeName: PK
@@ -25,11 +25,11 @@
         WriteCapacityUnits: 1
 
       GlobalSecondaryIndexes:
-        - IndexName: GSI1_SK_admission_date
+        - IndexName: GSI_SK_admission_year
           KeySchema:
             - AttributeName: SK
               KeyType: HASH
-            - AttributeName: admission_date
+            - AttributeName: admission_year
               KeyType: RANGE
           Projection:
             ProjectionType: ALL
@@ -37,11 +37,11 @@
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
 
-        - IndexName: GSI1_SK_season_date
+        - IndexName: GSI_SK_season_year
           KeySchema:
             - AttributeName: SK
               KeyType: HASH
-            - AttributeName: season_date
+            - AttributeName: season_year
               KeyType: RANGE
           Projection:
             ProjectionType: ALL

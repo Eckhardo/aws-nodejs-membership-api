@@ -1,9 +1,9 @@
 USER_KEY: user_
 USER_RANGE: USER
-USER_INDEX: GSI1_SK_admission_date
+USER_INDEX: GSI_SK_admission_year
 SEASON_KEY: season_
 SEASON_RANGE: SEASON
-SEASON_INDEX: GSI1_SK_season_date
+SEASON_INDEX: GSI_SK_season_year
 MSM_RANGE: membershipMember_
 EVENT_RANGE: event_
 EVENT_KEY: EVENT

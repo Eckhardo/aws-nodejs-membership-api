@@ -49,7 +49,7 @@ const getExpression = () => {
     expression.push([' SET first_name = :fname', ' last_name= :lname']);
     expression.push([' city = :city', ' zip = :zip', ' address = :address']);
     expression.push([' email = :email', ' phone = :phone', ' mobil = :mobil']);
-    expression.push([' admission_date = :admission_date'])
+    expression.push([' admission_year = :admission_year'])
     return expression.toString();
 }
 
@@ -63,7 +63,7 @@ const getValues = (user) => {
         ":email": user.email,
         ":phone": user.phone,
         ":mobil": user.mobil,
-        ":admission_date": user.admission_date
+        ":admission_year": user.admission_year
 
     };
 }

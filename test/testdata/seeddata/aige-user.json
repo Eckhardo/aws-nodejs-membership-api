@@ -36,8 +36,8 @@
 		"mobil": {
 			"S": "+4916097023201"
 		},
-		"admission_date": {
-			"S": "2011"
+		"admission_year": {
+			"N": "2011"
 		},
 		"is_admin": {
 			"BOOL": true
@@ -83,8 +83,8 @@
 		"mobil": {
 			"S": "+4916097023201"
 		},
-		"admission_date": {
-			"S": "1980"
+		"admission_year": {
+			"N": "1980"
 		},
 		"is_admin": {
 			"BOOL": false
@@ -130,8 +130,8 @@
 		"mobil": {
 			"S": "+49160222222"
 		},
-		"admission_date": {
-			"S": "1992"
+		"admission_year": {
+			"N": "1992"
 		},
 		"is_admin": {
 			"BOOL": false
@@ -177,8 +177,8 @@
 		"mobil": {
 			"S": "+4916097023201"
 		},
-		"admission_date": {
-			"S": "2012"
+		"admission_year": {
+			"N": "2012"
 		},
 		"is_admin": {
 			"BOOL": false
@@ -194,21 +194,13 @@
 		"SK": {
 			"S": "SEASON"
 		},
-		"season_date": {
-			"S": "2020-01-01T00:00:02.021Z"
+		"season_year": {
+			"N": "2020"
 		},
 		"season_name": {
 			"S": "Saison 2020"
 		},
-		"members": {
-			"SS": [
-				"Maikeli",
-				"Eckhardo"
-			]
-		},
-		"events": {
-			"SS": ["Anangeln-1", "Arbeitsdienst-1"]
-		},
+
 		"is_active": {
 			"BOOL": false
 		}
@@ -220,17 +212,11 @@
 		"SK": {
 			"S": "SEASON"
 		},
-		"season_date": {
-			"S": "2021-01-01T00:00:02.021Z"
+		"season_year": {
+			"N": "2021"
 		},
 		"season_name": {
 			"S": "Saison 2021"
-		},
-		"members": {
-			"SS": ["Guenther"]
-		},
-		"events": {
-			"SS": ["Arbeitsdienst-1"]
 		},
 		"is_active": {
 			"BOOL": true

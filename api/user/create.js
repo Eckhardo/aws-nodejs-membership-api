@@ -39,7 +39,6 @@ const createHandler = async (event) => {
         }
         item.PK = HASH_KEY_USER  + item.user_name;
         item.SK = SORT_KEY_USER;
-        item.GSI1_SK_admission_date=item.admission_date;
         //   item.email = email;
         console.log('New Create:', JSON.stringify(item));
         await dynamoDb.write(TABLE_NAME, item);

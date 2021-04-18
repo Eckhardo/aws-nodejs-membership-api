@@ -9,6 +9,6 @@ MembershipTableIAM:
     - dynamodb:DeleteItem
   Resource:
     - ${self:custom.UserTable.arn}
-    - !Join ['/', ['${self:custom.UserTable.arn}', 'index', 'GSI1_SK_admission_date']]
-    - !Join ['/', ['${self:custom.UserTable.arn}', 'index', 'GSI1_SK_season_date']]
+    - !Join ['/', ['${self:custom.UserTable.arn}', 'index', 'GSI_SK_admission_year']]
+    - !Join ['/', ['${self:custom.UserTable.arn}', 'index', 'GSI_SK_season_year']]
 

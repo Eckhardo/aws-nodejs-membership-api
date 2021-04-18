@@ -20,9 +20,9 @@ get-seasons:
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
 
-get-seasonsWithChildren:
-  handler: api/season/get.getAllWithChildren
-  description: Get season for year with children
+get-oneWithChildren:
+  handler: api/season/get.getWithChildren
+  description: Get season for year with members and events
   events:
     - http:
         path: season/children/{year}

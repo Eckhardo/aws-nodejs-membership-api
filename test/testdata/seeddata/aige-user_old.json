@@ -36,7 +36,7 @@
 		"mobil": {
 			"S": "+4916097023201"
 		},
-		"admission_date": {
+		"admission_year": {
 			"N": "2011"
 		},
 		"is_admin": {
@@ -83,7 +83,7 @@
 		"mobil": {
 			"S": "+4916097023201"
 		},
-		"admission_date": {
+		"admission_year": {
 			"N": "2012"
 		},
 		"is_admin": {

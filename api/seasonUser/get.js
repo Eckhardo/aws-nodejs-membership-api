@@ -16,16 +16,21 @@ const getAll = async (event) => {
     const {year} = event.pathParameters;
     console.log("Season year", year);
 
-
     try {
-        compUsers = await dynamoDb.search(TABLE_NAME, HASH_KEY + year, SORT_KEY, "");
-    } catch (err) {
+        compUsers = await getSeasonUsers(year);
+    } catch
+        (err) {
         throw new createError.InternalServerError(err);
     }
     return {
         statusCode: 200,
         body: JSON.stringify(compUsers)
     }
+}
+
+const getSeasonUsers = (year) => {
+    return dynamoDb.search(TABLE_NAME, HASH_KEY + year, SORT_KEY, "");
+
 }
 const getOne = async (event) => {
     let compUser;
@@ -52,5 +57,6 @@ const getAllHandler = middy.middy(getAll).use(middyLibs);
 module.exports = {
     getOneHandler,
     getAllHandler,
-    getSeasonUser
+    getSeasonUser,
+    getSeasonUsers
 }
