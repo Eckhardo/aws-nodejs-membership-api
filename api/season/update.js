@@ -35,8 +35,7 @@ const updateHandler = async (event) => {
 
 function getKeys() {
     let expression = [];
-    expression.push([' SET season_name = :name, is_active= :active, season_date= :date']);
-    expression.push([' members = :members, events= :events']);
+    expression.push([' SET season_name = :name, is_active= :active, season_year= :year']);
     return expression.toString();
 }
 
@@ -44,9 +43,7 @@ function getValues(item) {
     return {
         ":name": item.season_name,
         ":active": item.is_active,
-        ":date": item.season_date,
-        ":members": item.members,
-        ":events": item.events
+        ":year": item.season_year
     };
 }
 module.exports.handler = middy

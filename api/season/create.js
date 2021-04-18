@@ -18,10 +18,13 @@ const createMsSchema = require('../../lib/json-schema/season/createSeason');
 
 const createHandler = async (event) => {
     const {item} = event.body;
-    let date = item.season_date;
+    let year = item.season_year;
+
     console.log("season create::", JSON.stringify(item));
-    util.validate(date);
-    item.PK = HASH_KEY + new Date(date).getFullYear();
+    console.log("season year::", year);
+
+    util.validate(year);
+    item.PK = HASH_KEY + year;
     item.SK = SORT_KEY;
 
     const params = {

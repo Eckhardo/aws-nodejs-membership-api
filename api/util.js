@@ -20,8 +20,16 @@ const getResponseHeaders = () => {
 }
 
 const validate = (key) => {
-    if (!key || _.isEmpty(key)) {
-        throw Error("key value not set or empty");
+    console.log('key::', key)
+    if (!key ) {
+        throw Error("key value not set ");
+    }
+    if ( _.isNumber(key) ||   _.isBoolean(key)) {
+        return;
+    }
+
+    if ( _.isEmpty(key)) {
+        throw Error("key value ia empty");
     }
 }
 
