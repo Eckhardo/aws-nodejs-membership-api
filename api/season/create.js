@@ -1,5 +1,3 @@
-
-
 const dynamoDb = require('../Dynamo');
 const TABLE_NAME = process.env.CONFIG_USER_TABLE;
 const SORT_KEY = process.env.SORT_KEY_SEASON;
@@ -8,7 +6,7 @@ const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const createMsSchema = require('../../lib/json-schema/season/createSeason');
+const createSchema = require('../../lib/json-schema/season/createSeason');
 /**
  * Create new season
  *
@@ -20,9 +18,6 @@ const createHandler = async (event) => {
     const {item} = event.body;
     let year = item.season_year;
 
-    console.log("season create::", JSON.stringify(item));
-    console.log("season year::", year);
-
     util.validate(year);
     item.PK = HASH_KEY + year;
     item.SK = SORT_KEY;
@@ -31,12 +26,8 @@ const createHandler = async (event) => {
         TableName: TABLE_NAME,
         Item: item
     };
-    console.log("params delete:", params);
-
-    console.log("create.... item: ", item);
-
     try {
-        let data = await dynamoDb.write(TABLE_NAME,item);
+        await dynamoDb.write(TABLE_NAME, item);
 
     } catch (err) {
         throw new createError.InternalServerError(err);
@@ -51,4 +42,4 @@ const createHandler = async (event) => {
 module.exports.handler = middy
     .middy(createHandler)
     .use(middyLibs)
-    .use(middy.validator({inputSchema: createMsSchema.schema}));
+    .use(middy.validator({inputSchema: createSchema.schema}));

@@ -10,7 +10,7 @@ const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 
 /**
- * GET all users by sort key = profile
+ * GET all users by GSI
  *
  * Route: GET /user/
  */
@@ -19,7 +19,7 @@ const getAllHandler = async () => {
     console.log("get All users for index::", USER_INDEX);
 
     try {
-         users = await dynamoDb.queryByIndex(TABLE_NAME, USER_INDEX,'SK =:SK',{':SK': 'USER'});
+        users = await dynamoDb.queryByIndex(TABLE_NAME, USER_INDEX, 'SK =:SK', {':SK': 'USER'});
 
     } catch (err) {
         throw new createError.InternalServerError(err);

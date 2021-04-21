@@ -7,7 +7,7 @@ const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const updateMsSchema = require('../../lib/json-schema/seasonEvent/updateSeasonEvent');
+const updateSchema = require('../../lib/json-schema/seasonEvent/updateSeasonEvent');
 const get = require('./get');
 /**
  *
@@ -16,14 +16,10 @@ const get = require('./get');
  */
 const updateHandler = async (event) => {
 
-
     const {item} = event.body;
-    console.log("ITEM update:", JSON.stringify(item));
-
     try {
         let seasonEvent = await get.getSeasonEvent(item.PK, item.SK);
         if (!seasonEvent) {
-            console.log("update error")
             return {
                 statusCode: 404,
                 body: JSON.stringify(`Event with event name ${item.event_name}  does not  exists !`)
@@ -61,5 +57,5 @@ function getValues(item) {
 module.exports.handler = middy
     .middy(updateHandler)
     .use(middyLibs)
-    .use(middy.validator({inputSchema: updateMsSchema.schema}));
+    .use(middy.validator({inputSchema: updateSchema.schema}));
 

@@ -12,7 +12,7 @@ const deleteHandler = async (event) => {
     const year = decodeURIComponent(event.pathParameters.year);
     const pk = HASH_KEY + year;
     try {
-        await dynamoDb.remove(TABLE_NAME,pk, SORT_KEY);
+        await dynamoDb.remove(TABLE_NAME, pk, SORT_KEY);
 
     } catch (err) {
         throw  new createError.InternalServerError(err);

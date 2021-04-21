@@ -22,6 +22,15 @@ const getAll = async (event) => {
 const getOne = async (event) => {
     let userEvent;
 
+    const {year, name} = event.pathParameters;
+
+    try {
+        userEvent = await getUserEvent(HASH_KEY + year, SORT_KEY + name);
+        console.log("CompEvent", JSON.stringify(userEvent));
+    } catch (err) {
+        throw new createError.InternalServerError(err);
+    }
+
     return {
         statusCode: 200,
         body: JSON.stringify(userEvent)

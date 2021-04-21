@@ -39,7 +39,6 @@ const getOneHandler = async (event) => {
     let myEvent;
 
     const {event_name} = event.pathParameters;
-
     util.validate(event_name);
 
     try {

@@ -40,6 +40,8 @@ const Dynamo = {
         }
         return item;
     },
+
+
     /**
      *
      * @param TableName
@@ -56,7 +58,9 @@ const Dynamo = {
                 SK
             },
         };
+
         let data = await documentClient.get(params).promise();
+
         if (data && data.Item) {
             item = data.Item;
         }
@@ -200,7 +204,8 @@ const Dynamo = {
                 ":sk": SK + searchTerm
             }
         }
-         const data = await documentClient.query(params).promise();
+
+        const data = await documentClient.query(params).promise();
 
         if (data && data.Items) {
             items = data.Items;

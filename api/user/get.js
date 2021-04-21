@@ -37,7 +37,7 @@ const getOneHandler = async (event) => {
 
 const getUser = async (userName) => {
 
-   return await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY_USER + userName, SORT_KEY_USER );
+    return await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY_USER + userName, SORT_KEY_USER);
 
 }
 const handler = middy.middy(getOneHandler).use(middyLibs);

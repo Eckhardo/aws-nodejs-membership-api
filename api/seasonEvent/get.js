@@ -12,7 +12,6 @@ const getAll = async (event) => {
     let compEvents;
     const {year} = event.pathParameters;
 
-
     try {
         compEvents = await getSeasonEvents(year)
     } catch (err) {
@@ -28,18 +27,17 @@ const getAll = async (event) => {
     return   dynamoDb.search(TABLE_NAME, HASH_KEY + year, SORT_KEY, "");
  }
 const getOne = async (event) => {
-    let compEvent;
+    let seasonEvent;
     const {year, name} = event.pathParameters;
 
     try {
-        compEvent = await getSeasonEvent(HASH_KEY + year, SORT_KEY + name);
-        console.log("CompEvent", JSON.stringify(compEvent));
+        seasonEvent = await getSeasonEvent(HASH_KEY + year, SORT_KEY + name);
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
     return {
         statusCode: 200,
-        body: JSON.stringify(compEvent)
+        body: JSON.stringify(seasonEvent)
     }
 
 

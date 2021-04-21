@@ -13,7 +13,7 @@ const createError = require('http-errors');
 const updateHandler = async (event) => {
 
     const {item} = event.body;
-    const {SK}=item;
+    const {SK} = item;
 
     try {
         const theEvent = await get.getEvent(SK);
@@ -44,7 +44,7 @@ function getValues(theEvent) {
         ":event_short": theEvent.event_short,
         ":event_name": theEvent.event_name,
         ":comments": theEvent.comments
-   };
+    };
 }
 
 

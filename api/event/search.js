@@ -16,18 +16,14 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
  * Route: GET /event/search{searchTerm}
  */
 const searchHandler = async (event) => {
-    let myEvents=[];
+    let myEvents = [];
 
     const {searchTerm} = event.pathParameters;
-
-    console.log("searchTerm::", searchTerm);
-
     util.validate(searchTerm);
 
     try {
         myEvents = await searchEvent(searchTerm);
-        console.log("my events::", JSON.stringify(myEvents));
-    } catch (e) {
+     } catch (e) {
         throw new createError.InternalServerError(e)
     }
 
@@ -42,12 +38,10 @@ const searchHandler = async (event) => {
  * Retrieve an event for a distinct search term
  */
 const searchEvent = async (searchTerm) => {
-    console.log("search term::", searchTerm);
 
-    const result = await dynamoDb.search(TABLE_NAME, HASH_KEY, SORT_KEY,searchTerm);
-    return result;
+    return  await dynamoDb.search(TABLE_NAME, HASH_KEY, SORT_KEY, searchTerm);
+
 }
-
 
 
 module.exports.handler = middy.middy(searchHandler).use(middyLibs);

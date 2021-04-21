@@ -37,7 +37,7 @@ const createHandler = async (event) => {
                 body: JSON.stringify(`User with user name ${item.user_name}  already exists !`)
             };
         }
-        item.PK = HASH_KEY_USER  + item.user_name;
+        item.PK = HASH_KEY_USER + item.user_name;
         item.SK = SORT_KEY_USER;
         //   item.email = email;
         console.log('New Create:', JSON.stringify(item));

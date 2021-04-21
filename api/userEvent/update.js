@@ -7,7 +7,7 @@ const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const updateMsSchema = require('../../lib/json-schema/userEvent/updateUserEvent');
+const updateSchema = require('../../lib/json-schema/userEvent/updateUserEvent');
 const get = require('./get');
 /**
  *
@@ -45,5 +45,5 @@ function getValues(item) {
 module.exports.handler = middy
     .middy(updateHandler)
     .use(middyLibs)
-    .use(middy.validator({inputSchema: updateMsSchema.schema}));
+    .use(middy.validator({inputSchema: updateSchema.schema}));
 

@@ -12,9 +12,7 @@ const deleteHandler = async (event) => {
     const {year, name} = event.pathParameters;
     const pk = HASH_KEY + year;
     const sk = SORT_KEY + name;
-    console.log("PK:", pk);
-    console.log("SK:", sk);
-    try {
+     try {
         let seasonEvent = await get.getSeasonEvent(pk, sk);
         if (!seasonEvent) {
             console.log("delete error")

@@ -7,7 +7,7 @@ const util = require('../util.js');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const updateMsSchema = require('../../lib/json-schema/season/updateSeason');
+const updateSchema = require('../../lib/json-schema/season/updateSeason');
 
 /**
  *
@@ -16,14 +16,9 @@ const updateMsSchema = require('../../lib/json-schema/season/updateSeason');
  */
 const updateHandler = async (event) => {
 
-
-
     const {item} = event.body;
-
-    console.log("season update::", JSON.stringify(item));
-
     try {
-       await dynamoDb.update(TABLE_NAME, item.PK, item.SK,getKeys(),getValues(item) );
+        await dynamoDb.update(TABLE_NAME, item.PK, item.SK, getKeys(), getValues(item));
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
@@ -46,8 +41,9 @@ function getValues(item) {
         ":year": item.season_year
     };
 }
+
 module.exports.handler = middy
     .middy(updateHandler)
     .use(middyLibs)
-    .use(middy.validator({inputSchema: updateMsSchema.schema}));
+    .use(middy.validator({inputSchema: updateSchema.schema}));
 

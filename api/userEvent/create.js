@@ -7,7 +7,7 @@ const SORT_KEY = process.env.SORT_KEY_EVENT;
 const INDEX_KEY= process.env.INDEX_KEY_SEASON;
 const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
-const createMsSchema = require('../../lib/json-schema/userEvent/createUserEvent');
+const createSchema = require('../../lib/json-schema/userEvent/createUserEvent');
 const createError = require('http-errors');
 const get = require('./get');
 
@@ -26,7 +26,21 @@ const createHandler = async (event) => {
     const user_name = item.user_name;
     item.PK = HASH_KEY + user_name;
     item.SK = SORT_KEY + event_name;
-    item.season= INDEX_KEY + year;
+    try {
+        let userEvent = await get.getUserEvent(item.PK, item.SK);
+        if (userEvent) {
+            console.log("create error")
+            return {
+                statusCode: 404,
+                body: JSON.stringify(`User Event with user name ${item.user_name} and event name ${item.event_name}  already exists !`)
+            };
+        }
+        await dynamoDb.write(TABLE_NAME, item);
+
+    } catch (err) {
+        throw new createError.BadRequest;
+
+    }
 
     return {
         statusCode: 201
@@ -37,4 +51,4 @@ const createHandler = async (event) => {
 module.exports.handler = middy
     .middy(createHandler)
     .use(middyLibs)
-    .use(middy.validator({inputSchema: createMsSchema.schema}));
+    .use(middy.validator({inputSchema: createSchema.schema}));

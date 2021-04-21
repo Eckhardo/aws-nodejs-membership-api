@@ -11,10 +11,8 @@ const deleteHandler = async (event) => {
     console.log("delete event::", SK);
     util.validate(SK);
 
-
     try {
         await dynamoDb.remove(TABLE_NAME, HASH_KEY, SK);
-
     } catch (err) {
         throw  new createError.InternalServerError(err);
     }
@@ -22,5 +20,4 @@ const deleteHandler = async (event) => {
         statusCode: 200
     };
 }
-
 module.exports.handler = middy.middy(deleteHandler).use(middyLibs);

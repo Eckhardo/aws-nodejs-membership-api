@@ -29,7 +29,7 @@ const loginHandler = async (event) => {
             "first_name": theUser.first_name,
             "last_name": theUser.last_name,
             "is_admin": theUser.is_admin,
-            "is_active":theUser.is_active
+            "is_active": theUser.is_active
         }
         if (theUser.password === item.password) {
             console.log('login successful', myUser);

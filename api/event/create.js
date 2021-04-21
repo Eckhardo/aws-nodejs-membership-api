@@ -17,7 +17,6 @@ const createHandler = async (event) => {
 
     const {item} = event.body;
     const SK = SORT_KEY + item.event_name;
-    console.log("create event::", JSON.stringify(item));
     try {
         const theEvent = await get.getEvent(SK);
         if (theEvent) {

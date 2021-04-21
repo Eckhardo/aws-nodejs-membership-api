@@ -12,11 +12,9 @@ const seasonUser = require('../seasonUser/get');
 const seasonEvent = require('../seasonEvent/get');
 const getAllHandler = async () => {
     let seasons = [];
-    console.log("SEASONS.getALL::")
 
     try {
         let mySeasons = await dynamoDb.queryByIndex(TABLE_NAME, SEASON_INDEX, 'SK =:SK', {':SK': 'SEASON'});
-        console.log("SEASONS.getALL::", JSON.stringify(mySeasons));
         if (mySeasons) {
             for (let i = 0; i < mySeasons.length; i++) {
                 seasons[i] = await getWithMembersAndEvents(mySeasons[i].season_year);
@@ -25,7 +23,6 @@ const getAllHandler = async () => {
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
-
 
     return {
         statusCode: 200,
@@ -36,9 +33,6 @@ const getAllHandler = async () => {
 const getWithChildrenHandler = async (event) => {
     let season;
     const {year} = event.pathParameters;
-
-    console.log("withChildren::", year);
-
 
     try {
         season = await getWithMembersAndEvents(year);
@@ -56,6 +50,7 @@ const getWithMembersAndEvents = async (year) => {
     let seasonUsers = await seasonUser.getSeasonUsers(year);
     season.members = seasonUsers.map(su => su.user_name);
     let seasonEvents = await seasonEvent.getSeasonEvents(year);
+    console.log("c::", JSON.stringify(seasonEvents));
     season.events = seasonEvents.map(su => su.event_name);
     return season;
 }
@@ -68,9 +63,8 @@ const getOneHandler = async (event) => {
     let mySeason;
     const {year} = event.pathParameters;
     util.validate(year);
-
     try {
-        mySeason = getSeason(year);
+        mySeason = await getSeason(year);
     } catch (e) {
         throw new createError.InternalServerError(e)
     }
@@ -85,7 +79,9 @@ const getOneHandler = async (event) => {
 }
 
 const getSeason = async (year) => {
+
     return await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY + year, SORT_KEY);
+
 }
 
 const getOne = middy.middy(getOneHandler).use(middyLibs);
