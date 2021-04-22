@@ -75,6 +75,7 @@ functions:
   - ${file(resources/lambda/event/lambdas.yml)}
   - ${file(resources/lambda/seasonUser/lambdas.yml)}
   - ${file(resources/lambda/seasonEvent/lambdas.yml)}
+  - ${file(resources/lambda/userEvent/lambdas.yml)}
 resources:
   Resources:
     UserTable: ${file(resources/dynamodb/user/dynamodb.yml):UserTable}

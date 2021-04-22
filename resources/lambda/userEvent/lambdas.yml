@@ -1,0 +1,57 @@
+get-userEvent:
+  handler: api/userEvent/get.getOneHandler
+  description: GET user event by season year, event name and user name
+  events:
+    - http:
+        path: userEvent/{year}/{event_name}/{user_name}
+        method: get
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+get-userEvents:
+  handler: api/userEvent/get.getAllHandler
+  description: GET all user events for particular season and event
+  events:
+    - http:
+        path: userEvent/{year}/{event_name}
+        method: get
+        cors: true
+
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+
+create-userEvent:
+  handler: api/userEvent/create.handler
+  description: POST user event
+  events:
+    - http:
+        path: userEvent
+        method: post
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+update-userEvent:
+  handler: api/userEvent/update.handler
+  description: PUT user event
+  events:
+    - http:
+        path: userEvent
+        method: put
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+delete-userEvent:
+  handler: api/userEvent/delete.handler
+  description: DELETE user event
+  events:
+    - http:
+        path: userEvent/{year}/{event_name}/{user_name}
+        method: delete
+        cors: true
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+

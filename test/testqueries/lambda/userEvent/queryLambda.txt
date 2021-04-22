@@ -1,0 +1,6 @@
+sls invoke local -f get-userEvents --path test/testdata/clidata/userEvent/invokeGetAll.json
+sls invoke local  -f create-userEvent  --path test/testdata/clidata/userEvent/invokePost.json
+sls invoke local  -f get-userEvent  --path test/testdata/clidata/userEvent/invokeGetOne.json
+sls invoke local  -f delete-userEvent  --path test/testdata/clidata/userEvent/invokeDelete.json
+sls invoke local  -f update-userEvent  --path test/testdata/clidata/userEvent/invokePut.json
+

@@ -1,0 +1,14 @@
+{
+  "body": {
+    "item": {
+      "PK": "2021Arbeitsdienst-1",
+      "SK": "user_Maikeli",
+      "user_name": "Maikeli",
+      "season_year": "2021",
+      "event_name": "Arbeitsdienst-1",
+      "registered": true,
+      "took_part": false
+    }
+  }
+}
+

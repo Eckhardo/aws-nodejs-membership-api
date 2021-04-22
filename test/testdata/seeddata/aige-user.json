@@ -404,13 +404,19 @@
   },
   {
     "PK": {
+      "S": "2021Arbeitsdienst-1"
+    },
+    "SK": {
       "S": "user_Eckhardo"
     },
-    "SK": {
-      "S": "event_Arbeitsdienst-1"
-    },
     "season_year": {
       "N": "2021"
+    },
+    "event_name": {
+      "S": "Arbeitsdienst-1"
+    },
+    "user_name": {
+      "S": "Eckhardo"
     },
     "registered": {
       "BOOL": false
@@ -421,30 +427,42 @@
   },
   {
     "PK": {
-      "S": "user_Christian"
+      "S": "2021Arbeitsdienst-1"
     },
     "SK": {
-      "S": "event_Arbeitsdienst-1"
-    },
-    "season_year": {
-      "N": "2021"
-    },
-    "registered": {
-      "BOOL": false
-    },
-    "took_part": {
-      "BOOL": false
-    }
-  },
-  {
-    "PK": {
       "S": "user_Guenther"
     },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Arbeitsdienst-1"
+    },
+    "user_name": {
+      "S": "Guenther"
+    },
+    "registered": {
+      "BOOL": false
+    },
+    "took_part": {
+      "BOOL": false
+    }
+  },
+  {
+    "PK": {
+      "S": "2021Arbeitsdienst-1"
+    },
     "SK": {
-      "S": "event_Arbeitsdienst-1"
+      "S": "user_Christian"
     },
     "season_year": {
       "N": "2021"
+    },
+    "event_name": {
+      "S": "Arbeitsdienst-1"
+    },
+    "user_name": {
+      "S": "Christian"
     },
     "registered": {
       "BOOL": false

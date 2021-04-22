@@ -58,7 +58,7 @@ const Dynamo = {
                 SK
             },
         };
-
+        console.log("getByKeys::", JSON.stringify(params));
         let data = await documentClient.get(params).promise();
 
         if (data && data.Item) {
@@ -204,7 +204,7 @@ const Dynamo = {
                 ":sk": SK + searchTerm
             }
         }
-
+        console.log("search::", JSON.stringify(params));
         const data = await documentClient.query(params).promise();
 
         if (data && data.Items) {
