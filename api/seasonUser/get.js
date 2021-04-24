@@ -14,7 +14,6 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 const getAll = async (event) => {
     let compUsers;
     const {year} = event.pathParameters;
-    console.log("Season year", year);
 
     try {
         compUsers = await getSeasonUsers(year);

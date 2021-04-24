@@ -23,7 +23,7 @@ const searchHandler = async (event) => {
 
     try {
         myEvents = await searchEvent(searchTerm);
-     } catch (e) {
+    } catch (e) {
         throw new createError.InternalServerError(e)
     }
 
@@ -39,7 +39,7 @@ const searchHandler = async (event) => {
  */
 const searchEvent = async (searchTerm) => {
 
-    return  await dynamoDb.search(TABLE_NAME, HASH_KEY, SORT_KEY, searchTerm);
+    return await dynamoDb.search(TABLE_NAME, HASH_KEY, SORT_KEY, searchTerm);
 
 }
 

@@ -11,7 +11,6 @@ const deleteHandler = async (event) => {
 
     let {username} = event.pathParameters;
 
-
     try {
         await dynamoDb.remove(TABLE_NAME, HASH_KEY_USER + username, SORT_KEY_USER);
 

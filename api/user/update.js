@@ -31,7 +31,6 @@ const updateHandler = async (event) => {
                 body: JSON.stringify(`User with user name ${item.user_name}  does not exist !`)
             };
         }
-        console.log("Item:", JSON.stringify(item));
         await dynamoDb.update(TABLE_NAME, PK + item.user_name, SK_Prefix, getExpression(), getValues(item));
 
     } catch (err) {

@@ -8,7 +8,6 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 const createError = require('http-errors');
 const deleteHandler = async (event) => {
     const {SK} = event.pathParameters;
-    console.log("delete event::", SK);
     util.validate(SK);
 
     try {

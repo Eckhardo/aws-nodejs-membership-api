@@ -20,7 +20,6 @@ const getResponseHeaders = () => {
 }
 
 const validate = (key) => {
-    console.log('key::', key)
     if (!key) {
         throw Error("key value not set ");
     }

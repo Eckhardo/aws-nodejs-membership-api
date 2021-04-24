@@ -48,3 +48,13 @@
           ProvisionedThroughput:
             ReadCapacityUnits: 1
             WriteCapacityUnits: 1
+
+        - IndexName: GSI_PK_season_year
+          KeySchema:
+            - AttributeName: season_year
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1

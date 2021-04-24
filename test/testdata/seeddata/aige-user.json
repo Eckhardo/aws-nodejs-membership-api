@@ -215,6 +215,49 @@
       "S": "Arbeitsdienst-2"
     }
   },
+
+  {
+    "PK": {
+      "S": "EVENT"
+    },
+    "SK": {
+      "S": "event_Anangeln"
+    },
+    "event_short": {
+      "S": "A-1"
+    },
+    "event_name": {
+      "S": "Anangeln"
+    }
+  },
+  {
+    "PK": {
+      "S": "EVENT"
+    },
+    "SK": {
+      "S": "event_Gemeinschaftsangeln"
+    },
+    "event_short": {
+      "S": "A-2"
+    },
+    "event_name": {
+      "S": "Gemeinschaftsangeln"
+    }
+  },
+  {
+    "PK": {
+      "S": "EVENT"
+    },
+    "SK": {
+      "S": "event_Abangeln"
+    },
+    "event_short": {
+      "S": "A-3"
+    },
+    "event_name": {
+      "S": "Abangeln"
+    }
+  },
   {
     "PK": {
       "S": "EVENT"
@@ -460,6 +503,144 @@
     },
     "event_name": {
       "S": "Arbeitsdienst-1"
+    },
+    "user_name": {
+      "S": "Christian"
+    },
+    "registered": {
+      "BOOL": false
+    },
+    "took_part": {
+      "BOOL": false
+    }
+  },
+  {
+    "PK": {
+      "S": "2021Arbeitsdienst-2"
+    },
+    "SK": {
+      "S": "user_Eckhardo"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Arbeitsdienst-2"
+    },
+    "user_name": {
+      "S": "Eckhardo"
+    },
+    "registered": {
+      "BOOL": false
+    },
+    "took_part": {
+      "BOOL": false
+    }
+  },
+  {
+    "PK": {
+      "S": "2021Arbeitsdienst-2"
+    },
+    "SK": {
+      "S": "user_Guenther"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Arbeitsdienst-2"
+    },
+    "user_name": {
+      "S": "Guenther"
+    },
+    "registered": {
+      "BOOL": false
+    },
+    "took_part": {
+      "BOOL": false
+    }
+  },
+  {
+    "PK": {
+      "S": "2021Arbeitsdienst-2"
+    },
+    "SK": {
+      "S": "user_Christian"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Arbeitsdienst-2"
+    },
+    "user_name": {
+      "S": "Christian"
+    },
+    "registered": {
+      "BOOL": false
+    },
+    "took_part": {
+      "BOOL": false
+    }
+  },
+  {
+    "PK": {
+      "S": "2021Jahreshaupversammlung"
+    },
+    "SK": {
+      "S": "user_Eckhardo"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Jahreshaupversammlung"
+    },
+    "user_name": {
+      "S": "Eckhardo"
+    },
+    "registered": {
+      "BOOL": false
+    },
+    "took_part": {
+      "BOOL": false
+    }
+  },
+  {
+    "PK": {
+      "S": "2021Jahreshaupversammlung"
+    },
+    "SK": {
+      "S": "user_Guenther"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Jahreshaupversammlung"
+    },
+    "user_name": {
+      "S": "Guenther"
+    },
+    "registered": {
+      "BOOL": false
+    },
+    "took_part": {
+      "BOOL": false
+    }
+  },
+  {
+    "PK": {
+      "S": "2021Jahreshaupversammlung"
+    },
+    "SK": {
+      "S": "user_Christian"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Jahreshaupversammlung"
     },
     "user_name": {
       "S": "Christian"

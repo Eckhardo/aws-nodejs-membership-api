@@ -26,6 +26,7 @@ provider:
     HASH_KEY_SEASON: ${file(resources/.config.yml):SEASON_KEY}
     SORT_KEY_SEASON: ${file(resources/.config.yml):SEASON_RANGE}
     INDEX_KEY_SEASON: ${file(resources/.config.yml):SEASON_INDEX}
+    INDEX_KEY_USER_EVENT: ${file(resources/.config.yml):USER_EVENT_INDEX}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
   iamRoleStatements:
     - ${file(resources/iam/iamMembershipTable.yml):MembershipTableIAM}

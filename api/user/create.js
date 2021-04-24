@@ -31,7 +31,6 @@ const createHandler = async (event) => {
     try {
         const theUser = await get.getUser(item.user_name);
         if (theUser) {
-            console.log('theUser:', theUser);
             return {
                 statusCode: 400,
                 body: JSON.stringify(`User with user name ${item.user_name}  already exists !`)
@@ -40,7 +39,6 @@ const createHandler = async (event) => {
         item.PK = HASH_KEY_USER + item.user_name;
         item.SK = SORT_KEY_USER;
         //   item.email = email;
-        console.log('New Create:', JSON.stringify(item));
         await dynamoDb.write(TABLE_NAME, item);
 
 

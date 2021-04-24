@@ -26,9 +26,7 @@ const createHandler = async (event) => {
     const user_name = item.user_name;
     item.PK = year +  event_name;
     item.SK = SORT_KEY + user_name;
-
-    console.log("user event create::", JSON.stringify(item));
-    try {
+  try {
         let userEvent = await get.getUserEvent(year,event_name, user_name);
         if (userEvent) {
             console.log("create error")

@@ -50,7 +50,6 @@ const getWithMembersAndEvents = async (year) => {
     let seasonUsers = await seasonUser.getSeasonUsers(year);
     season.members = seasonUsers.map(su => su.user_name);
     let seasonEvents = await seasonEvent.getSeasonEvents(year);
-    console.log("c::", JSON.stringify(seasonEvents));
     season.events = seasonEvents.map(su => su.event_name);
     return season;
 }

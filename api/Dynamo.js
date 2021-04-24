@@ -130,6 +130,24 @@ const Dynamo = {
 
 
     },
+    async queryByIndexWithProjection(TableName, index, keys, values, projections) {
+        let items = [];
+        const params = {
+            TableName,
+            IndexName: index,
+            ProjectionExpression: projections,
+            KeyConditionExpression: keys,
+            ExpressionAttributeValues: values
+        };
+        console.log("params::", JSON.stringify(params));
+        const data = await documentClient.query(params).promise();
+        if (data && data.Items) {
+            items = data.Items;
+        }
+        return items;
+
+
+    },
     /**
      *
      * @param TableName

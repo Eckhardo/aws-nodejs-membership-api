@@ -7,4 +7,5 @@ SEASON_INDEX: GSI_SK_season_year
 MSM_RANGE: membershipMember_
 EVENT_RANGE: event_
 EVENT_KEY: EVENT
+USER_EVENT_INDEX: GSI_PK_season_year
 

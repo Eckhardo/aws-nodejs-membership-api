@@ -11,9 +11,6 @@ const get = require('./get');
 const deleteHandler = async (event) => {
 
     const {year,event_name, user_name} = event.pathParameters;
-    console.log("year delete::", year);
-    console.log("user event delete::", event_name);
-    console.log("user event delete::", user_name);
 
     try {
         await dynamoDb.remove(TABLE_NAME, year + event_name, SORT_KEY + user_name);

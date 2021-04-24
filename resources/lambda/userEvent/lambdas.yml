@@ -21,6 +21,18 @@ get-userEvents:
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
 
+get-eventsForYear:
+  handler: api/userEvent/get.getEventsHandler
+  description: GET all  events for particular season
+  events:
+    - http:
+        path: userEvent/{year}
+        method: get
+        cors: true
+
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
 
 create-userEvent:
   handler: api/userEvent/create.handler
