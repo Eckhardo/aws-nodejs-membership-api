@@ -5,4 +5,8 @@ sls invoke local  -f delete-userEvent  --path test/testdata/clidata/userEvent/in
 sls invoke local  -f update-userEvent  --path test/testdata/clidata/userEvent/invokePut.json
 
 sls invoke local -f get-eventsForYear --path test/testdata/clidata/userEvent/invokeGetAllEvents.json
+sls invoke local -f get-usersForYear --path test/testdata/clidata/userEvent/invokeGetAllUsers.json
+
+sls invoke local -f create-assembleForUser --path test/testdata/clidata/userEvent/invokeAssembleUser.json
+sls invoke local -f create-assembleForEvent --path test/testdata/clidata/userEvent/invokeAssembleEvent.json
 

@@ -10,26 +10,20 @@ const _ = require('underscore');
 
 const getAllEventsForSeason = async (event) => {
     const {year} = event.pathParameters;
+    console.log("getAllEventsForSeason::");
 
-
-    let events=[];
+    let events = [];
     try {
         let userEvents = await dynamoDb.queryByIndexWithProjection(TABLE_NAME, USER_EVENT_INDEX, 'season_year =:year', {':year': parseInt(year)}, 'event_name');
         if (userEvents && userEvents.length > 0) {
-
-
-            events = _.uniq(userEvents, x => {
-                return x.event_name
-            });
-            console.log("events::", JSON.stringify(events));
-
+            events = _.uniq(userEvents, x => x.event_name);
             events.forEach((x, index) => {
                 if (_.isEmpty(x)) {
                     events.splice(index, 1);
                 }
             });
-            console.log("events::", JSON.stringify(events));
         }
+        console.log("EVENTS::", JSON.stringify(events));
     } catch (err) {
         throw new createError.InternalServerError(err);
 
@@ -40,6 +34,35 @@ const getAllEventsForSeason = async (event) => {
     }
 
 }
+
+
+const getAllUsersForSeason = async (event) => {
+    const {year} = event.pathParameters;
+
+    let users = [];
+    try {
+        let userEvents = await dynamoDb.queryByIndexWithProjection(TABLE_NAME, USER_EVENT_INDEX, 'season_year =:year', {':year': parseInt(year)}, 'user_name');
+        if (userEvents && userEvents.length > 0) {
+            users = _.uniq(userEvents, x => x.user_name);
+            users.forEach((x, index) => {
+                if (_.isEmpty(x)) {
+                    users.splice(index, 1);
+                }
+            });
+        }
+
+        console.log("USERS::", JSON.stringify(users));
+    } catch (err) {
+        throw new createError.InternalServerError(err);
+
+    }
+    return {
+        statusCode: 200,
+        body: JSON.stringify(users)
+    }
+
+}
+
 
 const getAll = async (event) => {
     let userEvents;
@@ -84,11 +107,12 @@ const getUserEvent = async (year, event_name, user_name) => {
 const getOneHandler = middy.middy(getOne).use(middyLibs);
 const getAllHandler = middy.middy(getAll).use(middyLibs);
 const getEventsHandler = middy.middy(getAllEventsForSeason).use(middyLibs);
-
+const getUsersHandler = middy.middy(getAllUsersForSeason).use(middyLibs);
 module.exports = {
     getOneHandler,
     getAllHandler,
     getEventsHandler,
+    getUsersHandler,
     getUserEvent,
     getUserEvents
 }

@@ -53,6 +53,8 @@
           KeySchema:
             - AttributeName: season_year
               KeyType: HASH
+            - AttributeName: SK
+              KeyType: RANGE
           Projection:
             ProjectionType: ALL
           ProvisionedThroughput:

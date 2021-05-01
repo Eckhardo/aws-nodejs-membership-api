@@ -58,7 +58,7 @@ const Dynamo = {
                 SK
             },
         };
-        console.log("getByKeys::", JSON.stringify(params));
+        console.log('getByKeys', JSON.stringify(params));
         let data = await documentClient.get(params).promise();
 
         if (data && data.Item) {
@@ -139,7 +139,8 @@ const Dynamo = {
             KeyConditionExpression: keys,
             ExpressionAttributeValues: values
         };
-        console.log("params::", JSON.stringify(params));
+
+
         const data = await documentClient.query(params).promise();
         if (data && data.Items) {
             items = data.Items;
@@ -162,7 +163,39 @@ const Dynamo = {
             TableName,
             Item: data
         };
-        let response = await documentClient.put(params).promise();
+        await documentClient.put(params).promise();
+        return data;
+    },
+    /**
+     *
+     * @param TableName
+     * @param data
+     * @returns {Promise<{body: *, statusCode: number}>}
+     */
+    async batchWrite(TableName, data) {
+        if (data && data.length > 0) {
+console.log("dynamodb#batchWrite");
+            let items = [];
+            data.forEach(x => {
+                items.push({
+                    PutRequest: {
+                        Item: x
+                    }
+                });
+            });
+            let params = {
+                RequestItems: {
+                    [TableName]: items
+                }
+            };
+            let response = await documentClient.batchWrite(params, function (err, data) {
+                if (err) {
+                    console.log("ERROR:",err)
+                } else {
+                    console.log("DATA::", data);
+                }
+            });
+        }
         return data;
     },
     /**

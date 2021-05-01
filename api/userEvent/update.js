@@ -7,6 +7,8 @@ const middy = require('./../../lib/commonMiddleware');
 const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const updateSchema = require('../../lib/json-schema/userEvent/updateUserEvent');
 const get = require('./get');
+
+
 /**
  *
  * @param event

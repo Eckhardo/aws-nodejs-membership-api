@@ -26,13 +26,51 @@ get-eventsForYear:
   description: GET all  events for particular season
   events:
     - http:
-        path: userEvent/{year}
+        path: userEvent/event/{year}
         method: get
         cors: true
 
   layers:
     - { Ref: MiddyDependenciesLambdaLayer }
 
+
+get-usersForYear:
+  handler: api/userEvent/get.getUsersHandler
+  description: GET all users for particular season
+  events:
+    - http:
+        path: userEvent/user/{year}
+        method: get
+        cors: true
+
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+
+create-assembleForUser:
+  handler: api/userEvent/assemble.userHandler
+  description: Create new user events for particular season and user
+  events:
+    - http:
+        path: assembleUser/{year}/{user_name}
+        method: get
+        cors: true
+
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
+
+
+create-assembleForEvent:
+  handler: api/userEvent/assemble.eventHandler
+  description: Create new user events for particular season and user
+  events:
+    - http:
+        path: assembleEvent/{year}/{event_name}
+        method: get
+        cors: true
+
+  layers:
+    - { Ref: MiddyDependenciesLambdaLayer }
 
 create-userEvent:
   handler: api/userEvent/create.handler

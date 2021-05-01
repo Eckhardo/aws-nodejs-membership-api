@@ -15,7 +15,7 @@ const uuid = require('uuid');
 /**
  * Create new season event
  *
- * Route: POST /season/
+ * Route: POST /userEvent/
  */
 
 

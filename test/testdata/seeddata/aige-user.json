@@ -415,6 +415,41 @@
       "S": "season_2021"
     },
     "SK": {
+      "S": "event_Arbeitsdienst-2"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Arbeitsdienst-2"
+    },
+    "starting_date": {
+      "S": "2021-03-25T08:00:00.999Z"
+    },
+    "starting_time": {
+      "S": "08:30"
+    },
+    "ending_date": {
+      "S": "2021-03-25T12:00:00.999Z"
+    },
+    "ending_time": {
+      "S": "12:30"
+    },
+    "meeting_point": {
+      "S": "Elsensee"
+    },
+    "finished": {
+      "BOOL": false
+    },
+    "comments": {
+      "S": "Stege reparieren, Grillen anschliessend"
+    }
+  },
+  {
+    "PK": {
+      "S": "season_2021"
+    },
+    "SK": {
       "S": "event_Anangeln"
     },
     "season_year": {
@@ -422,6 +457,111 @@
     },
     "event_name": {
       "S": "Anangeln"
+    },
+    "starting_date": {
+      "S": "2021-05-01T08:00:00.999Z"
+    },
+    "starting_time": {
+      "S": "08:30"
+    },
+    "ending_date": {
+      "S": "2021-05-01T12:00:00.999Z"
+    },
+    "ending_time": {
+      "S": "12:30"
+    },
+    "meeting_point": {
+      "S": "Elsensee"
+    },
+    "finished": {
+      "BOOL": false
+    },
+    "comments": {
+      "S": "Grillen ab 12,Forellen besetzt"
+    }
+  },
+  {
+    "PK": {
+      "S": "season_2021"
+    },
+    "SK": {
+      "S": "event_Abangeln"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Abangeln"
+    },
+    "starting_date": {
+      "S": "2021-05-01T08:00:00.999Z"
+    },
+    "starting_time": {
+      "S": "08:30"
+    },
+    "ending_date": {
+      "S": "2021-05-01T12:00:00.999Z"
+    },
+    "ending_time": {
+      "S": "12:30"
+    },
+    "meeting_point": {
+      "S": "Elsensee"
+    },
+    "finished": {
+      "BOOL": false
+    },
+    "comments": {
+      "S": "Grillen ab 12,Forellen besetzt"
+    }
+  },
+  {
+    "PK": {
+      "S": "season_2021"
+    },
+    "SK": {
+      "S": "event_Gemeinschaftsangeln"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Gemeinschaftsangeln"
+    },
+    "starting_date": {
+      "S": "2021-05-01T08:00:00.999Z"
+    },
+    "starting_time": {
+      "S": "08:30"
+    },
+    "ending_date": {
+      "S": "2021-05-01T12:00:00.999Z"
+    },
+    "ending_time": {
+      "S": "12:30"
+    },
+    "meeting_point": {
+      "S": "Elsensee"
+    },
+    "finished": {
+      "BOOL": false
+    },
+    "comments": {
+      "S": "Grillen ab 12,Forellen besetzt"
+    }
+  },
+  {
+    "PK": {
+      "S": "season_2021"
+    },
+    "SK": {
+      "S": "event_Jahreshauptversammlung"
+    },
+    "season_year": {
+      "N": "2021"
+    },
+    "event_name": {
+      "S": "Jahreshauptversammlung"
     },
     "starting_date": {
       "S": "2021-05-01T08:00:00.999Z"
@@ -585,7 +725,7 @@
   },
   {
     "PK": {
-      "S": "2021Jahreshaupversammlung"
+      "S": "2021Jahreshauptversammlung"
     },
     "SK": {
       "S": "user_Eckhardo"
@@ -594,7 +734,7 @@
       "N": "2021"
     },
     "event_name": {
-      "S": "Jahreshaupversammlung"
+      "S": "Jahreshauptversammlung"
     },
     "user_name": {
       "S": "Eckhardo"
@@ -608,7 +748,7 @@
   },
   {
     "PK": {
-      "S": "2021Jahreshaupversammlung"
+      "S": "2021Jahreshauptversammlung"
     },
     "SK": {
       "S": "user_Guenther"
@@ -617,7 +757,7 @@
       "N": "2021"
     },
     "event_name": {
-      "S": "Jahreshaupversammlung"
+      "S": "Jahreshauptversammlung"
     },
     "user_name": {
       "S": "Guenther"
@@ -631,7 +771,7 @@
   },
   {
     "PK": {
-      "S": "2021Jahreshaupversammlung"
+      "S": "2021Jahreshauptversammlung"
     },
     "SK": {
       "S": "user_Christian"
@@ -640,7 +780,7 @@
       "N": "2021"
     },
     "event_name": {
-      "S": "Jahreshaupversammlung"
+      "S": "Jahreshauptversammlung"
     },
     "user_name": {
       "S": "Christian"

@@ -19,7 +19,7 @@ const getAllHandler = async () => {
     let events;
 
     try {
-        events = await dynamoDb.getAll(TABLE_NAME, HASH_KEY);
+        events = await getEvents();
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
@@ -27,6 +27,10 @@ const getAllHandler = async () => {
         statusCode: 200,
         body: JSON.stringify(events)
     }
+}
+
+const getEvents= async() =>{
+    return   await dynamoDb.getAll(TABLE_NAME, HASH_KEY);;
 }
 
 
@@ -61,9 +65,7 @@ const getOneHandler = async (event) => {
  * Retrieve an event for a distinct name
  */
 const getEvent = async (SK) => {
-
     return await dynamoDb.getByKeys(TABLE_NAME, HASH_KEY, SK);
-
 }
 
 const getOne = middy.middy(getOneHandler).use(middyLibs);
@@ -72,5 +74,6 @@ const getAll = middy.middy(getAllHandler).use(middyLibs);
 module.exports = {
     getAll,
     getOne,
-    getEvent
+    getEvent,
+    getEvents
 }

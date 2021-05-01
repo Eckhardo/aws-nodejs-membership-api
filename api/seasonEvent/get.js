@@ -9,17 +9,18 @@ const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
 
 
 const getAll = async (event) => {
-    let compEvents;
+    let seasonEvents;
     const {year} = event.pathParameters;
 
     try {
-        compEvents = await getSeasonEvents(year)
+        seasonEvents = await getSeasonEvents(year);
+        console.log("seasonEvents::", JSON.stringify(seasonEvents));
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
     return {
         statusCode: 200,
-        body: JSON.stringify(compEvents)
+        body: JSON.stringify(seasonEvents)
     }
 }
 

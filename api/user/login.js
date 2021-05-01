@@ -24,23 +24,34 @@ const loginHandler = async (event) => {
 
     try {
         const theUser = await get.getUser(item.user_name);
-        const myUser = {
-            "user_name": theUser.user_name,
-            "first_name": theUser.first_name,
-            "last_name": theUser.last_name,
-            "is_admin": theUser.is_admin,
-            "is_active": theUser.is_active
+        if (theUser) {
+            const myUser = {
+                "user_name": theUser.user_name,
+                "first_name": theUser.first_name,
+                "last_name": theUser.last_name,
+                "is_admin": theUser.is_admin,
+                "is_active": theUser.is_active
+            }
+            if (theUser.password === item.password) {
+                console.log('login successful', myUser);
+                return {
+                    statusCode: 200,
+                    body: JSON.stringify(myUser)
+                };
+            }
+            else{
+                return {
+                    statusCode: 401
+                };
+            }
         }
-        if (theUser.password === item.password) {
-            console.log('login successful', myUser);
+        else{
             return {
-                statusCode: 200,
-                body: JSON.stringify(myUser)
+                statusCode: 401
             };
         }
-
-
     } catch (err) {
+        console.error("User unknown")
         throw new createErrors.InternalServerError(err);
     }
     return {

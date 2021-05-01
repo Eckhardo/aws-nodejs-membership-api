@@ -19,8 +19,7 @@ const getAllHandler = async () => {
     console.log("get All users for index::", USER_INDEX);
 
     try {
-        users = await dynamoDb.queryByIndex(TABLE_NAME, USER_INDEX, 'SK =:SK', {':SK': 'USER'});
-
+           users= await getUsers();
     } catch (err) {
         throw new createError.InternalServerError(err);
     }
@@ -30,4 +29,14 @@ const getAllHandler = async () => {
         body: JSON.stringify(users)
     }
 }
-module.exports.handler = middy.middy(getAllHandler).use(middyLibs);
+const getUsers =async () =>{
+   return await dynamoDb.queryByIndex(TABLE_NAME, USER_INDEX, 'SK =:SK', {':SK': 'USER'});
+
+}
+
+const handler  = middy.middy(getAllHandler).use(middyLibs);
+
+module.exports = {
+    handler,
+    getUsers
+}
