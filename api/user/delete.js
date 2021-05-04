@@ -4,7 +4,7 @@ const dynamoDb = require('../Dynamo');
 const HASH_KEY_USER = process.env.HASH_KEY_USER;
 const SORT_KEY_USER = process.env.SORT_KEY_USER;
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const createErrors = require('http-errors');
 
 const deleteHandler = async (event) => {

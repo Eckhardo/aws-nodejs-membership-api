@@ -11,7 +11,8 @@ serverless create --template aws-nodejs --name aws-nodejs-membership-api -p aws-
 7.) git checkout -b master  && git checkout -b dev
 8.) create new repo in GitHub "aws-nodejs-membership-api"
 9.) git remote add origin https://github.com/Eckhardo/aws-nodejs-membership-api.git
-9.)  git  branch --set-upstream-to origin master ODER  git  push --set-upstream origin devgit branch -r
+9.)  git  branch --set-upstream-to origin master ODER  git  push --set-upstream origin dev
+git branch -r
 
 10.) sls dynamodb install
 11.)sls dynamodb start -s dev

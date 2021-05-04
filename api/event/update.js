@@ -6,7 +6,7 @@ const dynamoDb = require('../Dynamo');
 const HASH_KEY = process.env.HASH_KEY_EVENT;
 
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 const updateEventSchema = require('../../lib/json-schema/event/updateEvent');
 const createError = require('http-errors');
 

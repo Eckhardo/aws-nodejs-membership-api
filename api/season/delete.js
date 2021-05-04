@@ -4,7 +4,7 @@ const SORT_KEY = process.env.SORT_KEY_SEASON;
 const HASH_KEY = process.env.HASH_KEY_SEASON;
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 
 
 const deleteHandler = async (event) => {

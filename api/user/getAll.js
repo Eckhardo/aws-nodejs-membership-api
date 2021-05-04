@@ -7,7 +7,7 @@ const dynamoDb = require('../Dynamo');
 const util = require('../util');
 const createError = require('http-errors');
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 
 /**
  * GET all users by GSI

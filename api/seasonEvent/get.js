@@ -5,7 +5,7 @@ const dynamoDb = require('../Dynamo');
 const HASH_KEY = process.env.HASH_KEY_SEASON;
 const SORT_KEY = process.env.SORT_KEY_EVENT;
 const middy = require('./../../lib/commonMiddleware');
-const middyLibs = [middy.httpEventNormalizer(), middy.httpErrorHandler()];
+const middyLibs = [middy.httpJsonBodyParser(), middy.httpEventNormalizer(), middy.httpErrorHandler(), middy.httpCors()];
 
 
 const getAll = async (event) => {
