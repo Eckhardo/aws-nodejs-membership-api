@@ -1,10 +1,10 @@
 {
-  "name": "aws-nodejs-membership-api",
+  "name": "aige-aws-serverless",
   "version": "1.0.0",
   "description": "An AWS Serverless Backend Application comprising of different AWS Services like Lambda, API Gateway, Cognito, DynamoDB",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "AWS",
@@ -16,27 +16,27 @@
   "author": "Eckhard Kirschning",
   "license": "ISC",
   "dependencies": {
-    "@middy/http-cors": "^1.4.0",
-    "underscore": "^1.10.2",
-    "uuid": "^8.3.2"
+    "moment": "^2.29.1",
+    "underscore": "^1.13.1",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
-    "@middy/core": "^1.5.2",
-    "@middy/http-error-handler": "^1.5.2",
-    "@middy/http-event-normalizer": "^1.5.2",
-    "@middy/http-json-body-parser": "^1.5.2",
-    "@middy/validator": "^1.5.2",
+    "@middy/core": "^2.2.0",
+    "@middy/http-cors": "^2.2.0",
+    "@middy/http-error-handler": "^2.2.0",
+    "@middy/http-event-normalizer": "^2.2.0",
+    "@middy/http-json-body-parser": "^2.2.0",
+    "@middy/validator": "^2.2.0",
     "@shelf/jest-dynamodb": "^1.8.1",
-    "aws-sdk": "^2.834.0",
-    "dotenv": "^8.2.0",
+    "aws-sdk": "^2.900.0",
+    "dotenv": "^8.5.1",
     "http-errors": "^1.8.0",
     "jest": "^26.6.3",
     "serverless": "^2.21.1",
     "serverless-dynamodb-local": "^0.2.39",
-    "serverless-export-env": "github:arabold/serverless-export-env",
     "serverless-http": "^2.7.0",
     "serverless-jest-plugin": "^0.3.0",
-    "serverless-offline": "^6.8.0",
+    "serverless-offline": "^6.9.0",
     "serverless-pseudo-parameters": "^2.5.0"
   },
   "jest": {

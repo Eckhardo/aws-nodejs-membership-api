@@ -1,4 +1,6 @@
 service: aws-nodejs-membership-api
+disabledDeprecations:
+  - '*' # To disable all deprecation messages
 useDotenv: true
 provider:
   name: aws
@@ -99,5 +101,4 @@ package:
 plugins:
   - serverless-dynamodb-local
   - serverless-pseudo-parameters
-  - serverless-export-env
   - serverless-offline # should be last in list
