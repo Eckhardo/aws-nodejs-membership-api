@@ -31,4 +31,4 @@ eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImItaGlFN1Z6UlNMTllKOWFPZlEwayJ9.eyJ
 
 Verify token on jwt.io WEbsite
 
-Private endpoint: https://v0xpt8fozd.execute-api.eu-central-1.amazonaws.com/dev/private
+Private endpoint: https://abcdefg.execute-api.eu-central-1.amazonaws.com/dev/private
