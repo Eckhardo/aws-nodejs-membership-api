@@ -1,4 +1,4 @@
-taerna@gmx.de/RudiKarg@75
+
 Tenant Domain: aige-membership.eu.auth0.com
 
 -> Application _> new Application -> Name:aige-membership
